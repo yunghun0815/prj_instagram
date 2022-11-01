@@ -1,0 +1,84 @@
+@charset "UTF-8";
+body{
+	    background-color: rgb(250, 250, 250);
+}
+.main{
+	margin-top: 30px;
+}
+.feed-ul{
+	width: 800px;
+	margin: 0 auto;
+}
+.feed-li{
+	height: 650px;
+	border: 1px solid rgb(219, 219, 219);
+	border-radius: 8px;
+	margin-top:10px;
+}
+.feed-img-box{
+	width: 450px;
+	overflow: hidden;
+	border-right: 1px solid rgb(219, 219, 219);
+}
+.feed-img-box span{
+	font-size: 14px;
+	font-weight: bold;
+}
+.feed-header{
+	height: 55px;
+	padding-left: 15px;
+}
+.feed-img{
+	width: 450px;
+	height: 600px;
+}
+.profile-img{
+	background-color: #dfdfdf;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    display: inline-block;
+    border: 1px solid black;
+       position: relative;
+   	top: 11px;	
+   	margin-right: 10px;
+}
+.feed-desc-box{
+	width: 350px;
+}
+.feed-desc-box ol{
+	padding: 10px 0 0 10px;
+    height: 600px;
+    border-bottom: 1px solid rgb(219, 219, 219);
+}
+.feed-desc-box li:nth-child(2){
+    margin: 5px 0;
+}
+.feed-desc-box span{
+	font-size: 14px;
+}
+.feed-desc-box img{
+	width: 24px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+.feed-desc-box form{
+	padding-top: 5px;
+}
+.feed-desc-box form img{
+	position: relative;
+    top: 8px;
+   	left: 10px;
+}
+.feed-desc-box form input[type="text"]{
+    height: 40px;
+    border: none;
+    width: 265px;
+}
+.feed-desc-box form input[type="submit"]{
+	color: #0095F6;
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+}
