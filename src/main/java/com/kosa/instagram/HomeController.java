@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
 <<<<<<< HEAD
+ * Handles requests for the application home page.,amsnx,asnfdfd gggggggg
+=======
+<<<<<<< HEAD
  * Handles requests for the application home page.,amsnx,asnxgfdfdf ihi
 =======
  * Handles requests for the application home page.,amsnx,asnasdasd
 >>>>>>> refs/remotes/origin/master
+>>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
  */
 @Controller
 public class HomeController {
@@ -39,5 +43,5 @@ public class HomeController {
 		
 		return "home";
 	}
-	
+	 
 }
