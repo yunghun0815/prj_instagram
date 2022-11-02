@@ -1,9 +1,11 @@
+
 package com.kosa.instagram.feed.model;
 
 import java.sql.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
+
 
 public class FeedVo {
 	private int feedNo;
@@ -14,7 +16,7 @@ public class FeedVo {
 	private String place;
 	private int likeCount;
 	private List<String> hashtagList;
-	private MultipartFile file;
+	private List<MultipartFile> file;
 	
 	public int getFeedNo() {
 		return feedNo;
@@ -64,17 +66,17 @@ public class FeedVo {
 	public void setHashtagList(List<String> hashtagList) {
 		this.hashtagList = hashtagList;
 	}
-	public MultipartFile getFile() {
+	public List<MultipartFile> getFile() {
 		return file;
 	}
-	public void setFile(MultipartFile file) {
+	public void setFile(List<MultipartFile> file) {
 		this.file = file;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "FeedVo [feedNo=" + feedNo + ", memberId=" + memberId + ", fileNo=" + fileNo + ", feedContent="
 				+ feedContent + ", uploadDate=" + uploadDate + ", place=" + place + ", likeCount=" + likeCount
-				+ ", hashtagList=" + hashtagList + "]";
+				+ ", hashtagList=" + hashtagList + ", file=" + file + "]";
 	}
 }
