@@ -42,11 +42,10 @@ body{
     border: 1px solid black;
        position: relative;
    	top: 11px;	
-   	margin-right: 10px;
+   	margin-right: 3px;
    	/* background-image: url("/image/dog.png"); */
    	background-size: 30px 30px;
     background-repeat: no-repeat;
-    top: 0px;
 }
 .feed-desc-box{
 	width: 350px;
@@ -100,6 +99,16 @@ body{
 .hashtag{
     color: #00376B;
 }
+.reply-list{
+	height: 460px;
+    overflow: auto;
+}
+ .reply-list::-webkit-scrollbar {
+    width: 0px;
+} 
 .reply-list>div{
 	margin-top: 10px;
+}
+.reply-profile{
+	top: 0px;
 }
