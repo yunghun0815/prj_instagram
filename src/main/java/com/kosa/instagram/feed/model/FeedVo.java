@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FeedVo {
 	private int feedNo;
 	private String memberId;
-	private int fileId;
+	private int fileNo;
 	private String feedContent;
 	private Date uploadDate;
 	private String place;
@@ -28,11 +28,11 @@ public class FeedVo {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	public int getFileId() {
-		return fileId;
+	public int getFileNo() {
+		return fileNo;
 	}
-	public void setFileId(int fileId) {
-		this.fileId = fileId;
+	public void setFileNo(int fileNo) {
+		this.fileNo = fileNo;
 	}
 	public String getFeedContent() {
 		return feedContent;
@@ -73,7 +73,7 @@ public class FeedVo {
 	
 	@Override
 	public String toString() {
-		return "FeedVo [feedNo=" + feedNo + ", memberId=" + memberId + ", fileId=" + fileId + ", feedContent="
+		return "FeedVo [feedNo=" + feedNo + ", memberId=" + memberId + ", fileNo=" + fileNo + ", feedContent="
 				+ feedContent + ", uploadDate=" + uploadDate + ", place=" + place + ", likeCount=" + likeCount
 				+ ", hashtagList=" + hashtagList + "]";
 	}
