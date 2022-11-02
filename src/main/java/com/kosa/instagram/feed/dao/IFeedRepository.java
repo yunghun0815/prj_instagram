@@ -20,7 +20,7 @@ public interface IFeedRepository {
 	MemberVo getMember(String memberId);
 	List<byte[]> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
-
+	List<FeedVo> searchListByKeyword(@Param("keyword") String keyword);
 	void countContent(String memberId);
 	void countFollower(String memberId);
 	void countFollow(String memberId);
