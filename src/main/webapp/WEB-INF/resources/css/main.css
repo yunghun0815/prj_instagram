@@ -8,6 +8,7 @@ body{
 .feed-ul{
 	width: 800px;
 	margin: 0 auto;
+	background-color: white;
 }
 .feed-li{
 	height: 650px;
@@ -33,7 +34,7 @@ body{
 	height: 600px;
 }
 .profile-img{
-	background-color: #dfdfdf;
+/* 	background-color: #dfdfdf; */
     width: 30px;
     height: 30px;
     border-radius: 15px;
@@ -41,7 +42,10 @@ body{
     border: 1px solid black;
        position: relative;
    	top: 11px;	
-   	margin-right: 10px;
+   	margin-right: 3px;
+   	/* background-image: url("/image/dog.png"); */
+   	background-size: 30px 30px;
+    background-repeat: no-repeat;
 }
 .feed-desc-box{
 	width: 350px;
@@ -49,10 +53,19 @@ body{
 .feed-desc-box ol{
 	padding: 10px 0 0 10px;
     height: 600px;
-    border-bottom: 1px solid rgb(219, 219, 219);
 }
-.feed-desc-box li:nth-child(2){
+.feed-desc-box li:nth-child(1){
+	margin-bottom: 10px;	
+}
+.feed-desc-box li:nth-child(3){
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
     margin: 5px 0;
+}
+.upload-date{
+	color: #8E8E8E;
+	font-size: 10px !important;	
 }
 .feed-desc-box span{
 	font-size: 14px;
@@ -74,6 +87,7 @@ body{
     height: 40px;
     border: none;
     width: 265px;
+    padding-left: 10px;
 }
 .feed-desc-box form input[type="submit"]{
 	color: #0095F6;
@@ -81,4 +95,20 @@ body{
 	border: none;
 	cursor: pointer;
 	font-weight: bold;
+}
+.hashtag{
+    color: #00376B;
+}
+.reply-list{
+	height: 460px;
+    overflow: auto;
+}
+ .reply-list::-webkit-scrollbar {
+    width: 0px;
+} 
+.reply-list>div{
+	margin-top: 10px;
+}
+.reply-profile{
+	top: 0px;
 }
