@@ -58,12 +58,7 @@
 		]]>
 	</select>
 	
-	<select id="insertFeedData" parameterType="com.kosa.instagram.model.FeedVo">
-		<![CDATA[
-			
-			
-		]]>
-	</select>
+	
 	
 
 </mapper>
