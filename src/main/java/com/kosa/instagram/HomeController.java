@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
+<<<<<<< HEAD
+ * Handles requests for the application home page.,amsnx,asnxgfdfdf ihi
+=======
  * Handles requests for the application home page.,amsnx,asnasdasd
+>>>>>>> refs/remotes/origin/master
  */
 @Controller
 public class HomeController {
