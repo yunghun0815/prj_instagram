@@ -13,6 +13,7 @@ public class MemberVo {
 	private String phoneNumber;
 	private int fileNo;
 	private int followerCount;
+	private byte[] fileData;
 	
 	public String getMemberId() {
 		return memberId;
@@ -73,6 +74,12 @@ public class MemberVo {
 	}
 	public void setFollowerCount(int followerCount) {
 		this.followerCount = followerCount;
+	}
+	public byte[] getFileData() {
+		return fileData;
+	}
+	public void setFileData(byte[] fileData) {
+		this.fileData = fileData;
 	}
 	
 	@Override
