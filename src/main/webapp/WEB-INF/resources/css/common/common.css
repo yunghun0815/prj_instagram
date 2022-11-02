@@ -1,0 +1,33 @@
+@charset "UTF-8";
+/* header */
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.bold{
+	font-weight: bold;
+}
+ul, li, ol{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+.flex{
+	display: flex;
+}
+.header-inner img{
+    width: 110px;	
+}
+.header{
+	height: 60px;
+	background-color: white;
+	border-bottom: 1px solid rgb(219, 219, 219);
+}
+.header-inner{
+	margin:0 auto;
+	width: 1000px;
+	height: 60px;
+	padding-top: 10px;
+}

@@ -1,14 +1,51 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" type="text/css" href="/css/main.css">
+<meta charset="UTF-8">
 <html>
 <head>
-	<title>Home</title>
+	<title>Instagram</title>
 </head>
+<jsp:include page="common/header.jsp"></jsp:include>
 <body>
-<h1>
-	Hello world!  
-</h1>
-
-<P>  The time on the server is ${serverTime}. </P>
+	<section class="main">
+		<ul class="feed-ul"> 
+			<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 -->
+				<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 -->
+					<div class="feed-header">
+						<div class="profile-img"></div>
+						<span>hyeonu_0407</span>
+					</div>
+					<img class="feed-img" src="/image/sample.jpg">				
+				</div>
+				<div class="feed-desc-box">
+					<ol >
+						<li>
+							<img src="/image/heart.png">
+							<img src="/image/speech.png">
+							<img src="/image/plane.png">
+						</li>
+						<li>
+							<span class="bold">좋아요 90개</span>	
+						</li>
+						<li class="reply-list">
+							<p><!-- 최대 24개 가능  -->
+								<span class="bold">sdkfo2494</span><!-- 아이디 -->
+								<span>안녕하세요~</span><!-- 댓글내용  -->
+							</p>
+						</li>
+					</ol>
+					<div><!-- 댓글달기 -->
+						<form action="/" method="post">
+							<img src="/image/face.png">
+							<input type="text" placeholder="댓글 달기...">
+							<input type="submit" value="게시">
+						</form> 
+					</div>
+				</div>
+			</li>
+		</ul>
+	</section>
 </body>
 </html>
