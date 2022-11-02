@@ -8,14 +8,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class FeedVo {
 	private int feedNo;
 	private String memberId;
-	private int fileId;
+	private int fileNo;
 	private String feedContent;
 	private Date uploadDate;
 	private String place;
 	private int likeCount;
 	private List<String> hashtagList;
 	private MultipartFile file;
-	
 	public int getFeedNo() {
 		return feedNo;
 	}
@@ -28,11 +27,11 @@ public class FeedVo {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	public int getFileId() {
-		return fileId;
+	public int getFileNo() {
+		return fileNo;
 	}
-	public void setFileId(int fileId) {
-		this.fileId = fileId;
+	public void setFileNo(int fileNo) {
+		this.fileNo = fileNo;
 	}
 	public String getFeedContent() {
 		return feedContent;
@@ -70,11 +69,12 @@ public class FeedVo {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	
 	@Override
 	public String toString() {
-		return "FeedVo [feedNo=" + feedNo + ", memberId=" + memberId + ", fileId=" + fileId + ", feedContent="
+		return "FeedVo [feedNo=" + feedNo + ", memberId=" + memberId + ", fileNo=" + fileNo + ", feedContent="
 				+ feedContent + ", uploadDate=" + uploadDate + ", place=" + place + ", likeCount=" + likeCount
-				+ ", hashtagList=" + hashtagList + "]";
+				+ ", hashtagList=" + hashtagList + ", file=" + file + "]";
 	}
+	
+	
 }
