@@ -1,3 +1,4 @@
+
 package com.kosa.instagram.feed.dao;
 
 public interface IFeedRepository {
@@ -6,3 +7,4 @@ public interface IFeedRepository {
 	void likeFeed(int feedNo);
 	void cancelLike(int feedNo, String memberId);
 }
+
