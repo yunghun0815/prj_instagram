@@ -17,6 +17,9 @@ a{
 .flex{
 	display: flex;
 }
+.inline-block{
+	display: inline-block;
+}
 .header-inner img{
     width: 110px;	
 }
