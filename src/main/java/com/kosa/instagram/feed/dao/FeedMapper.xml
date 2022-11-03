@@ -2,41 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosa.instagram.feed.dao.IFeedRepository">
 
-<<<<<<< HEAD
-<insert id="writeReply" parameterType="com.kosa.instagram.feed.model.ReplyVo">
+
+	<insert id="writeReply"
+		parameterType="com.kosa.instagram.feed.model.ReplyVo">
 <![CDATA[	
 	INSERT INTO reply(reply_no, feed_no, member_id, reply_content, reply_date)
 	VALUES (#{replyNo}, #{feedNo}, #{memberId}, #{replyContent}, SYSDATE)
 ]]>
-</insert>
+	</insert>
 
-<delete id="deleteReply" parameterType="int">
+	<delete id="deleteReply" parameterType="int">
 <![CDATA[
 	DELETE FROM reply WHERE reply_no=#{replyNo}
 ]]>
-</delete>
+	</delete>
 
-<insert id="increaseLike">
+	<insert id="increaseLike">
 <![CDATA[
 	INSERT INTO like_table(feed_no, member_id)
 	VALUES (#{feedNo}, #{memberId})
 ]]>
-</insert>
+	</insert>
 
-<delete id="decreaseLike" parameterType="int">
+	<delete id="decreaseLike" parameterType="int">
 <![CDATA[
 	DELETE FROM like_table WHERE feed_no=#{feedNo}
 ]]>
-</delete>
+	</delete>
 
-<insert id="makeLog" parameterType="com.kosa.instagram.LogVo">
+	<insert id="makeLog" parameterType="com.kosa.instagram.LogVo">
 <![CDATA[
 	INSERT INTO log(log_no, log_time, log_uri, member_id, log_keyword, feed_no, log_like_check)
 	VALUES (#{logNo}, #{logTime}, #{logURI}, #{memberId}, #{logKeyword}, #{feedNo}, #{logLikeCheck})
 ]]>
-</insert>
+	</insert>
 
-<select id="getFeed" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
+	<select id="getFeed" parameterType="String"
+		resultType="com.kosa.instagram.feed.model.FeedVo">
 <![CDATA[
 	SELECT 
 		feed_no AS "feedNo",
@@ -47,9 +49,9 @@
 	FROM feed
 	WHERE f.feed_no=#{feedNo}
 ]]>
-</select>
-=======
-	<select id="countContent" parameterType="String" resultType="int">
+	</select>
+	<select id="countContent" parameterType="String"
+		resultType="int">
 		<![CDATA[
 			select count(feed_no) 
 			from feed
@@ -57,15 +59,16 @@
 		
 		]]>
 	</select>
-	
-	<select id="countFollower" parameterType="String" resultType="int">
+
+	<select id="countFollower" parameterType="String"
+		resultType="int">
 		<![CDATA[
 			select count(from_id)
 			from follow
 			where to_id=#{memberId}
 		]]>
 	</select>
-	
+
 	<select id="countFollow" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(to_id)
@@ -73,8 +76,9 @@
 			where from_id=#{memberId}
 		]]>
 	</select>
-	
-	<select id="selectFollowerByUser" parameterType="String" resultType="String">
+
+	<select id="selectFollowerByUser" parameterType="String"
+		resultType="String">
 		<![CDATA[
 			select nickname
 			from member
@@ -83,8 +87,9 @@
 				   where to_id=#{memberId});
 		]]>
 	</select>
-	
-	<select id="selectFollowByUser" parameterType="String" resultType="String">
+
+	<select id="selectFollowByUser" parameterType="String"
+		resultType="String">
 		<![CDATA[
 			select nickname
 			from member
@@ -93,8 +98,9 @@
 							where from_id=#{memebrId});
 		]]>
 	</select>
-	
-	<select id="selectContentListByUser" parameterType="String" resultType="byte">
+
+	<select id="selectContentListByUser" parameterType="String"
+		resultType="byte">
 		<![CDATA[
 			select file_data
 			from file
@@ -104,9 +110,8 @@
 			
 		]]>
 	</select>
-	
-	
-	
 
->>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
+
+
+
 </mapper>
