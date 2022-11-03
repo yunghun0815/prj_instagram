@@ -6,18 +6,20 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.model.FeedVo;
+import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.model.MemberVo;
 
 public interface IFeedRepository {
+
 	void writeReply(ReplyVo reply);
 	void deleteReply(int replyNo);
 	void increaseLike(@Param("feedNo")int feedNo, @Param("memberId")String memberId);
 	void decreaseLike(int feedNo);
 	void makeLog(LogVo log);
-	
-	FeedVo getFeed(String feedNo); //fileNo, likeCount, hashtagList, file없음
-	MemberVo getMember(String memberId);
+	List<FeedVo> getTenFeeds(@Param("memberId")String memberId, @Param("start")int start, @Param("end")int end); //fileNo, hashtagList, file없음
+	List<String> getHashtagList(int feedNo);
+	MemberVo getWriter(int feedNo);
 	List<byte[]> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
 	List<FeedVo> searchListByKeyword(@Param("keyword") String keyword);
