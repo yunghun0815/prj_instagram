@@ -3,11 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="/css/main.css">
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<<script type="text/javascript" src="/js/main.js">
-<!--
-
-//-->
-</script>
+<script type="text/javascript" src="/js/main.js"></script>
 <meta charset="UTF-8">
 <html>
 <head>
