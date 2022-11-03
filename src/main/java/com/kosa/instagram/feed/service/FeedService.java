@@ -89,4 +89,34 @@ public class FeedService implements IFeedService {
 		json.setReply(reply);
 		return json;
 	}
+	@Override
+	public int countContent(String memberId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int countFollowerByUser(String memberId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int countFollowByUser(String memberId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public List<FeedVo> selectContentListByUser(String memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<MemberVo> selectFollowerListByUser(String memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<MemberVo> selectFollowListByUser(String memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
