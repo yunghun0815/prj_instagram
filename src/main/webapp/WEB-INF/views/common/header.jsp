@@ -16,12 +16,13 @@
 				</form>			
 			</div>
 			<div class="menu-img">
-				<img src="/image/header/house.png">
+				<img src="/image/header/chart.png">
+				<img src="/image/header/house.png" onclick="window.scrollTo(0,0);">
 				<img src="/image/header/plane.png">
 				<img src="/image/header/plus.png">
 				<img src="/image/header/compass.png">
 				<img src="/image/header/heart.png">
-				<div class="profile-img" style="background-image: url('/image/dog.png')"></div>
+				<img class="profile-img" src="/image/profile_null.jpg">
 			</div>
 		</div>
 	</section>
