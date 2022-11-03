@@ -5,7 +5,7 @@
 <insert id="writeReply" parameterType="com.kosa.instagram.feed.model.ReplyVo">
 <![CDATA[	
 	INSERT INTO reply(reply_no, feed_no, member_id, reply_content, reply_date)
-	VALUES (#{replyNo}, #{feedNo}, #{memberId}, #{replyContent}, SYSDATE)
+	VALUES (REPLY_NO_SEQ.NEXTVAL, #{feedNo}, #{memberId}, #{replyContent}, SYSDATE)
 ]]>
 </insert>
 
@@ -35,19 +35,62 @@
 ]]>
 </insert>
 
-<select id="getFeed" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
+<select id="getTenFeeds" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
 <![CDATA[
-	SELECT 
-		feed_no AS "feedNo",
-		member_id AS "memberId",
-		feed_content AS "feedContent",
-		upload_date AS "uploadDate",
-		place AS "place"
-	FROM feed
-	WHERE f.feed_no=#{feedNo}
+	select *
+		from (select 
+        	f.feed_no as "feedNo", 
+	        f.member_id as "memberId", 
+    	    f.feed_content as "feedContent", 
+        	f.upload_date as "uploadDate", 
+        	f.place as "place", 
+        	(select count(*) from like_table where feed_no = f.feed_no) as "likeCount",
+        	row_number() over(order by f.upload_date desc) as num
+        		from feed f 
+        		where member_id in (select to_id from follow where from_id = #{memberId})
+    		) 
+		where num between #{start} and #{end}
 ]]>
 </select>
 
+<select id="getHashtagList" parameterType="int" resultType="String">
+<![CDATA[	SELECT hashtag FROM hashtag WHERE feed_no=#{feedNo}
+]]>
+</select>
+
+<select id="getWriter" parameterType="int" resultType="com.kosa.instagram.member.model.MemberVo">
+<![CDATA[
+	select 
+	    m.nickname as "nickname", 
+    	f.file_no as "fileNo", 
+    	f.file_data as "fileData"
+	from member m join upload_file f on m.file_no = f.file_no 
+	where m.member_id = (SELECT member_id FROM feed WHERE feed_no = #{feedNo})    
+]]>
+</select>
+
+<select id="getUploadFiles" parameterType="int" resultType="byte[]">
+<![CDATA[
+	SELECT 
+		file_data AS "fileData"
+	FROM upload_file
+	WHERE feed_no=#{feedNo}
+]]>
+</select>
+<select id="getReply" parameterType="int" resultType="com.kosa.instagram.feed.model.ReplyVo">
+<![CDATA[
+	select 
+	    r.reply_no as "replyNo", 
+    	m.nickname as "nickname", 
+    	r.reply_content as "replyContent", 
+    	r.reply_date as "replyDate", 
+    	f.file_data as "fileData" 
+	from reply r 
+		join member m on r.member_id = m.member_id 
+		join upload_file f on m.file_no = f.file_no 
+	where r.feed_no = #{feedNo};
+]]>
+</select>
 	<select id="countContent" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(feed_no) 
@@ -103,6 +146,5 @@
 			
 		]]>
 	</select>
-	
-	
+
 </mapper>
