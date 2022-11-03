@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosa.instagram.member.dao.IMemberRepository">
+<select id="selectMember" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
+<![CDATA[
+	SELECT
+		member_id AS "memberId",
+		password AS "password",
+		nickname AS "nickname",
+		name AS "name",
+		gender AS "gender",
+		email AS "email",
+		birth AS "birth",
+		phone_number AS "phoneNumber",
+		file_no AS "fileNo"
+]]>
+</select>
 </mapper>
