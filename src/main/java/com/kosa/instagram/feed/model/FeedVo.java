@@ -1,9 +1,11 @@
+
 package com.kosa.instagram.feed.model;
 
 import java.sql.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
+
 
 public class FeedVo {
 	private int feedNo;

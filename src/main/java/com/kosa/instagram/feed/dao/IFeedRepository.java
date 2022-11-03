@@ -9,6 +9,8 @@ import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.model.MemberVo;
 
+
+
 public interface IFeedRepository {
 	void writeReply(ReplyVo reply);
 	void deleteReply(int replyNo);
@@ -16,14 +18,14 @@ public interface IFeedRepository {
 	void decreaseLike(int feedNo);
 	void makeLog(LogVo log);
 	
-	FeedVo getFeed(String feedNo); //fileNo, likeCount, hashtagList, file¾øÀ½
+	FeedVo getFeed(String feedNo); //fileNo, likeCount, hashtagList, fileï¿½ï¿½ï¿½ï¿½
 	MemberVo getMember(String memberId);
 	List<byte[]> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
-
-	void countContent(String memberId);
-	void countFollower(String memberId);
-	void countFollow(String memberId);
+	List<FeedVo> searchListByKeyword(@Param("keyword") String keyword);
+	int countContent(String memberId);
+	int countFollower(String memberId);
+	int countFollow(String memberId);
 	List<FeedVo> selectContentListByUser(String memberId);
 	List<MemberVo> selectFollowerByUser(String memberId);
 	List<MemberVo> selectFollowByUser(String memberId);
