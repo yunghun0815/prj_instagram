@@ -15,7 +15,7 @@ public interface IFeedRepository {
 	void writeReply(ReplyVo reply);
 	void deleteReply(int replyNo);
 	void increaseLike(@Param("feedNo")int feedNo, @Param("memberId")String memberId);
-	void decreaseLike(int feedNo);
+	void decreaseLike(@Param("feedNo")int feedNo, @Param("memberId")String memberId);
 	void makeLog(LogVo log);
 	List<FeedVo> getTenFeeds(@Param("memberId")String memberId, @Param("start")int start, @Param("end")int end); //fileNo, hashtagList, file¾øÀ½
 	List<String> getHashtagList(int feedNo);

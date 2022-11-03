@@ -22,16 +22,16 @@
 ]]>
 </insert>
 
-<delete id="decreaseLike" parameterType="int">
+<delete id="decreaseLike">
 <![CDATA[
-	DELETE FROM like_table WHERE feed_no=#{feedNo}
+	DELETE FROM like_table WHERE feed_no=#{feedNo} AND member_id=#{memberId}
 ]]>
 </delete>
 
 <insert id="makeLog" parameterType="com.kosa.instagram.LogVo">
 <![CDATA[
 	INSERT INTO log(log_no, log_time, log_uri, member_id, log_keyword, feed_no, log_like_check)
-	VALUES (#{logNo}, #{logTime}, #{logURI}, #{memberId}, #{logKeyword}, #{feedNo}, #{logLikeCheck})
+	VALUES (LOG_NO_SEQ.NEXTVAL, SYSTIME, #{logURI}, #{memberId}, #{logKeyword}, #{feedNo}, #{logLikeCheck})
 ]]>
 </insert>
 
