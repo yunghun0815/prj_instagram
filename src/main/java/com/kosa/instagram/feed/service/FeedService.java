@@ -1,11 +1,17 @@
 package com.kosa.instagram.feed.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.dao.IFeedRepository;
+import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.dao.IMemberRepository;
 import com.kosa.instagram.member.model.MemberVo;
@@ -59,5 +65,19 @@ public class FeedService implements IFeedService {
 		feedRepository.makeLog(log);
 	}
 	
-	
+	@Override
+	@Transactional
+	public JsonVo makeJsonVo(FeedVo feed, MemberVo member, List<byte[]> uploadFiles, List<ReplyVo> reply) {
+		JsonVo json = new JsonVo();
+		Map<String, FeedVo> feedMap = new HashMap<String, FeedVo>();
+		feed.setHashtagList(feedRepository.getHashtagList(feed.getFeedNo()));
+		feedMap.put("feed", feed);
+		json.setFeed(feedMap);
+		Map<String, MemberVo> memberMap = new HashMap<String, MemberVo>();
+		memberMap.put("member", member);
+		json.setMember(memberMap);
+		json.setUploadFiles(uploadFiles);
+		json.setReply(reply);
+		return json;
+	}
 }
