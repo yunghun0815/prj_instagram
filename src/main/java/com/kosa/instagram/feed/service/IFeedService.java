@@ -2,13 +2,11 @@ package com.kosa.instagram.feed.service;
 
 import java.util.List;
 
-import com.kosa.instagram.feed.dao.IFeedRepository;
+import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.feed.model.FeedVo;
+import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.model.MemberVo;
-
-
-import com.kosa.instagram.feed.model.FeedVo;
-
+import com.kosa.instagram.feed.dao.IFeedRepository;
 
 public interface IFeedService {
 	
@@ -26,4 +24,5 @@ public interface IFeedService {
 	void deleteReply(int replyNo);
 	void increaseLike(int feedNo, String memberId, String logURI);
 	void decreaseLike(int feedNo, String memberId, String logURI);
+	JsonVo makeJsonVo(FeedVo feed, MemberVo member, List<byte[]> uploadFiles, List<ReplyVo> reply);
 }
