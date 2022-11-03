@@ -44,7 +44,7 @@
 	<!-- mapper.xml 경로 설정-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mapperLocations" value="classpath:com/kosa/instagram/**/*.xml" />
+		<property name="mapperLocations" value="classpath:com/kosa/instagram/member/**/*.xml" />
 	</bean>
 	
 	<!-- 트랜잭션 -->
@@ -55,6 +55,6 @@
 	<!-- 트랜잭션 어노테이션 -->
 	<tx:annotation-driven/>
 	
-	<mybatis-spring:scan base-package="com.kosa.instagram"/>
+	<mybatis-spring:scan base-package="com.kosa.instagram.member.dao"/>
 	<context:component-scan base-package="com.kosa.instagram" />
 </beans>

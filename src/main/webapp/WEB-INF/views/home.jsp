@@ -195,7 +195,9 @@ $(function(){
 	}
 </script>
 <body>
-<%-- <a href="<c:url value='/member/insert'/>"></a> --%>
+<a href="<c:url value='/member/insert'/>">회원가입</a>
+<a href="<c:url value='/member/login'/>">로그인</a>
+
 	<button id="add">test</button>
 	<section class="main">
 		<ul class="feed-ul"> 

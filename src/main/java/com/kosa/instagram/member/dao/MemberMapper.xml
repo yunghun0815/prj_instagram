@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosa.instagram.member.dao.IMemberRepository">
+
+<insert id="insertMember" parameterType="com.kosa.instagram.member.model.MemberVo">
+
+INSERT INTO MEMBER 
+	(MEMBER_ID, PASSWORD, NICKNAME, NAME, GENDER, EMAIL, BIRTH, PHONE_NUMBER)
+VALUES
+	(#{memberId}, #{password}, #{nickname}, #{name}, #{gender}, #{email}, #{birth}, #{phoneNumber}) 
+</insert>
+
+<select id="selectMember" resultType="com.kosa.instagram.member.model.MemberVo" parameterType="String">
+	SELECT  
+		M.MEMBER_ID  	AS  "memberId", 
+		M.PASSWORD 		AS  "password", 
+		M.NICKNAME		AS  "nickname", 
+		M.NAME			AS  "name", 
+		M.GENDER		AS	"gender", 
+		M.EMAIL			AS	"email", 
+		M.BIRTH			AS	"birth", 
+		M.PHONE_NUMBER 	AS "phoneNumber",
+        F.FILE_DATA 	AS "fileData"
+	FROM MEMBER M LEFT JOIN UPLOAD_FILE F
+    ON M.FILE_NO = F.FILE_NO
+	WHERE M.MEMBER_ID = #{memberId} 
+</select>
+
+
+
+
 </mapper>
