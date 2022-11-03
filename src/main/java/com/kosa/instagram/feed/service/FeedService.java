@@ -2,6 +2,7 @@ package com.kosa.instagram.feed.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,4 +70,37 @@ public class FeedService implements IFeedService {
 		log.setLogLikeCheck(0);
 		feedRepository.makeLog(log);
 	}
+
+@Override
+public int countContent(String memberId) {
+	// TODO Auto-generated method stub
+	return 0;
+}
+@Override
+public int countFollowerByUser(String memberId) {
+	// TODO Auto-generated method stub
+	return 0;
+}
+@Override
+public int countFollowByUser(String memberId) {
+	// TODO Auto-generated method stub
+	return 0;
+}
+@Override
+public List<FeedVo> selectContentListByUser(String memberId) {
+	// TODO Auto-generated method stub
+	return null;
+}
+@Override
+public List<MemberVo> selectFollowerListByUser(String memberId) {
+	// TODO Auto-generated method stub
+	return null;
+}
+@Override
+public List<MemberVo> selectFollowListByUser(String memberId) {
+	// TODO Auto-generated method stub
+	return null;
+
+}
+
 }
