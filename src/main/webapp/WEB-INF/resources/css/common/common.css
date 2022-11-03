@@ -14,6 +14,13 @@ ul, li, ol{
 a{
 	text-decoration: none;
 }
+body{
+	    background-color: rgb(250, 250, 250);
+	    height: 100%;
+}
+.main{
+	margin-top: 100px;
+}
 .flex{
 	display: flex;
 }
@@ -67,4 +74,14 @@ header{
 .gray-line{
     border: none;
     border-top: 1px solid rgb(219,219,219);
+}
+.profile-img{
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 15px;
+    display: inline-block;
+    position: relative;
+   	top: 11px;	
+   	margin-right: 3px;
+   	z-index: 0;
 }
