@@ -1,13 +1,15 @@
 package com.kosa.instagram.feed.model;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 public class ReplyVo {
 	private int replyNo;
 	private int feedNo;
-	private String memberId;
+	private String nickname;
 	private String replyContent;
 	private Date replyDate;
+	private byte[] fileData;
 	
 	public int getReplyNo() {
 		return replyNo;
@@ -21,11 +23,17 @@ public class ReplyVo {
 	public void setFeedNo(int feedNo) {
 		this.feedNo = feedNo;
 	}
-	public String getMemberId() {
-		return memberId;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public byte[] getFileData() {
+		return fileData;
+	}
+	public void setFileData(byte[] fileData) {
+		this.fileData = fileData;
 	}
 	public String getReplyContent() {
 		return replyContent;
@@ -39,10 +47,9 @@ public class ReplyVo {
 	public void setReplyDate(Date replyDate) {
 		this.replyDate = replyDate;
 	}
-	
 	@Override
 	public String toString() {
-		return "ReplyVo [replyNo=" + replyNo + ", feedNo=" + feedNo + ", memberId=" + memberId + ", replyContent="
-				+ replyContent + ", replyDate=" + replyDate + "]";
+		return "ReplyVo [replyNo=" + replyNo + ", feedNo=" + feedNo + ", nickname=" + nickname + ", replyContent="
+				+ replyContent + ", replyDate=" + replyDate + ", fileData=" + Arrays.toString(fileData) + "]";
 	}
 }
