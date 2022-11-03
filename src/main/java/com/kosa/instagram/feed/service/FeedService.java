@@ -7,12 +7,22 @@ import org.springframework.stereotype.Service;
 
 import com.kosa.instagram.feed.dao.IFeedRepository;
 import com.kosa.instagram.feed.model.ReplyVo;
+import com.kosa.instagram.feed.model.FeedVo;
 
 @Service
 public class FeedService implements IFeedService {
-
 	@Autowired
 	IFeedRepository feedRepository;
+	
+	@Override  
+	public List<FeedVo> searchListByKeyword(String keyword) {
+		return feedRepository.searchListByKeyword("%"+ keyword+"%");
+		
+	}
+	@Override
+	public List<FeedVo> searchListByHashtag(String hashtag) {
+		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
+	}
 	
 	@Override
 	public void writeReply(int feedNo, String memberId, String replyContent) {

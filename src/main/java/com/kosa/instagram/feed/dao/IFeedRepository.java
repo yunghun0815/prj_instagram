@@ -23,6 +23,7 @@ public interface IFeedRepository {
 	List<byte[]> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
 	List<FeedVo> searchListByKeyword(@Param("keyword") String keyword);
+	List<FeedVo> searchListByHashtag(@Param("hashtaglist") String hashtagist);
 	void countContent(String memberId);
 	void countFollower(String memberId);
 	void countFollow(String memberId);
