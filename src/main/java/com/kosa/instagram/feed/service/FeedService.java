@@ -13,15 +13,24 @@ import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.dao.IFeedRepository;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.ReplyVo;
+import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.member.dao.IMemberRepository;
 import com.kosa.instagram.member.model.MemberVo;
 
 @Service
 public class FeedService implements IFeedService {
-
 	@Autowired
 	IFeedRepository feedRepository;
 	
+	@Override  
+	public List<FeedVo> searchListByKeyword(String keyword) {
+		return feedRepository.searchListByKeyword("%"+ keyword+"%");
+		
+	}
+	@Override
+	public List<FeedVo> searchListByHashtag(String hashtag) {
+		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
+	}
 	@Autowired
 	IMemberRepository memberRepository;
 	
@@ -64,7 +73,7 @@ public class FeedService implements IFeedService {
 		log.setLogLikeCheck(0);
 		feedRepository.makeLog(log);
 	}
-	
+
 	@Override
 	@Transactional
 	public JsonVo makeJsonVo(FeedVo feed, MemberVo member, List<byte[]> uploadFiles, List<ReplyVo> reply) {
