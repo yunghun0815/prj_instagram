@@ -195,6 +195,7 @@ $(function(){
 	}
 </script>
 <body>
+<%-- <a href="<c:url value='/member/insert'/>"></a> --%>
 	<button id="add">test</button>
 	<section class="main">
 		<ul class="feed-ul"> 

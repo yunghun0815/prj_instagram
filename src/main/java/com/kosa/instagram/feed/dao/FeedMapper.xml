@@ -49,6 +49,11 @@
 	FROM feed
 	WHERE f.feed_no=#{feedNo}
 ]]>
+
+	</select>
+	<select id="countContent" parameterType="String"
+		resultType="int">
+
 	</select>
 	<select id="countContent" parameterType="String"
 		resultType="int">
@@ -110,8 +115,5 @@
 			
 		]]>
 	</select>
-
-
-
 
 </mapper>

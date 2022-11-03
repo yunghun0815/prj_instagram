@@ -14,7 +14,6 @@
 title="<fmt:message key='MEMBER_TITLE'/> pattern="\w+" 
 placeholder='<fmt:message key="MEMBER_ID"/>' required="required">
 
-<fmt:message key="MEMBER_PASSWORD"/>
 </form>
 </body>
 </html>
