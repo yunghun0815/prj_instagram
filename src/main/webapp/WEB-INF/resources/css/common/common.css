@@ -23,6 +23,12 @@ a{
 .inline-block{
 	display: inline-block;
 }
+header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
 .header{
 	height: 60px;
 	background-color: white;
