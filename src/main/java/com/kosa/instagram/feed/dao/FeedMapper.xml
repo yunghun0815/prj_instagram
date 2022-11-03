@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kosa.instagram.feed.dao.IFeedRepository">
 
-<<<<<<< HEAD
+
 <insert id="writeReply" parameterType="com.kosa.instagram.feed.model.ReplyVo">
 <![CDATA[	
 	INSERT INTO reply(reply_no, feed_no, member_id, reply_content, reply_date)
@@ -48,7 +48,7 @@
 	WHERE f.feed_no=#{feedNo}
 ]]>
 </select>
-=======
+
 	<select id="countContent" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(feed_no) 
@@ -108,5 +108,5 @@
 	
 	
 
->>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
+
 </mapper>
