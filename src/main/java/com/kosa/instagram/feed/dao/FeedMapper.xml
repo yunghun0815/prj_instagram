@@ -103,7 +103,7 @@
 		]]>
 	</select>
 	
-	<select id="searchListByKeyword" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
+	<select id="searchListByKeyword" parameterType="String" resultType="hashmap">
 		<![CDATA[ 
 			select member_id, nickname
 			from member
@@ -113,16 +113,13 @@
 		 ]]>
 	</select>
 
-	<select id="searchListByHashtag" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
+	<select id="searchListByHashtag" parameterType="String" resultType="hashmap">
 		<![CDATA[  
 			select count(hashtag), hashtag
 			from hashtag
 			where hashtag like #{hashtag}
 		 ]]>		 
 	</select>
-	
-	
-	
 	
 	
 </mapper>
