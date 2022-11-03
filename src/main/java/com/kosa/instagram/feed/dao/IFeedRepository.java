@@ -17,12 +17,13 @@ public interface IFeedRepository {
 	void increaseLike(@Param("feedNo")int feedNo, @Param("memberId")String memberId);
 	void decreaseLike(@Param("feedNo")int feedNo, @Param("memberId")String memberId);
 	void makeLog(LogVo log);
-	List<FeedVo> getTenFeeds(@Param("memberId")String memberId, @Param("start")int start, @Param("end")int end); //fileNo, hashtagList, file¾øÀ½
+	List<FeedVo> getTenFeeds(@Param("memberId")String memberId, @Param("start")int start, @Param("end")int end); //fileNo, hashtagList, fileï¿½ï¿½ï¿½ï¿½
 	List<String> getHashtagList(int feedNo);
 	MemberVo getWriter(int feedNo);
 	List<byte[]> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
 	List<FeedVo> searchListByKeyword(@Param("keyword") String keyword);
+	List<FeedVo> searchListByHashtag(@Param("hashtaglist") String hashtagist);
 	void countContent(String memberId);
 	void countFollower(String memberId);
 	void countFollow(String memberId);
