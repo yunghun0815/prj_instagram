@@ -16,7 +16,8 @@
 				</form>			
 			</div>
 			<div class="menu-img">
-				<img src="/image/header/chart.png">
+			
+				<a href="/log"><img src="/image/header/chart.png"></a>	
 				<img src="/image/header/house.png" onclick="window.scrollTo(0,0);">
 				<img src="/image/header/plane.png">
 				<img src="/image/header/plus.png">
