@@ -22,6 +22,9 @@ public class FeedService implements IFeedService {
 	@Autowired
 	IFeedRepository feedRepository;
 	
+	@Autowired
+	IMemberRepository memberRepository;
+	
 	@Override  
 	public List<FeedVo> searchListByKeyword(String keyword) {
 		return feedRepository.searchListByKeyword("%"+ keyword+"%");
@@ -31,8 +34,6 @@ public class FeedService implements IFeedService {
 	public List<FeedVo> searchListByHashtag(String hashtag) {
 		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
 	}
-	@Autowired
-	IMemberRepository memberRepository;
 	
 	@Override
 	public void writeReply(int feedNo, String memberId, String replyContent) {
@@ -75,20 +76,29 @@ public class FeedService implements IFeedService {
 	}
 
 	@Override
+	public List<FeedVo> getTenFeeds(String memberId, int start, int end) {
+		return feedRepository.getTenFeeds(memberId, start, end);
+	}
+	
+	@Override
 	@Transactional
-	public JsonVo makeJsonVo(FeedVo feed, MemberVo member, List<byte[]> uploadFiles, List<ReplyVo> reply) {
+	public JsonVo makeJsonVo(FeedVo feed) {
 		JsonVo json = new JsonVo();
 		Map<String, FeedVo> feedMap = new HashMap<String, FeedVo>();
 		feed.setHashtagList(feedRepository.getHashtagList(feed.getFeedNo()));
 		feedMap.put("feed", feed);
 		json.setFeed(feedMap);
+		MemberVo member = memberRepository.selectMember(feed.getMemberId());
 		Map<String, MemberVo> memberMap = new HashMap<String, MemberVo>();
 		memberMap.put("member", member);
 		json.setMember(memberMap);
-		json.setUploadFiles(uploadFiles);
-		json.setReply(reply);
+		List<byte[]> fileList = feedRepository.getUploadFiles(feed.getFeedNo());
+		json.setUploadFiles(fileList);
+		List<ReplyVo> replyList = feedRepository.getReply(feed.getFeedNo());
+		json.setReply(replyList);
 		return json;
 	}
+	
 	@Override
 	public int countContent(String memberId) {
 		// TODO Auto-generated method stub
