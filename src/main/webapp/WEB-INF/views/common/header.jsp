@@ -23,7 +23,16 @@
 				<img src="/image/header/plus.png">
 				<img src="/image/header/compass.png">
 				<img src="/image/header/heart.png">
-				<img class="profile-img" src="/image/profile_null.jpg">
+				<c:if test="${empty sessionScope.fileData}">
+					<a href="#"> <!-- ${sessionScope.nickname} -->
+						<img class="profile-img" src="/image/profile_null.jpg">
+					</a>				
+				</c:if>
+				<c:if test="${not empty sessionScope.fileData}">
+					<a href="#">
+						<img src="">
+					</a>
+				</c:if>
 			</div>
 		</div>
 	</section>

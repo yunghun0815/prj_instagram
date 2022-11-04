@@ -10,6 +10,7 @@
 }
 ul, li, ol{
 	list-style: none;
+	padding: 0;
 }
 a{
 	text-decoration: none;
@@ -81,7 +82,6 @@ header{
     border-radius: 15px;
     display: inline-block;
     position: relative;
-   	top: 11px;	
    	margin-right: 3px;
    	z-index: 0;
 }
