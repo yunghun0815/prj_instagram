@@ -16,39 +16,14 @@ $(function(){
 });
 
 function searchRanking(param){
-	$("canvas").hide();
+	$(".chart").hide();
 	var object = $(param);
 	$(".log-nav-content").css("font-weight", "500");
 	object.css("font-weight", "bold");
 	$("#searchRanking").show();
-	const d = new Date();
-	const year = d.getFullYear(); 
-	const month = d.getMonth();   
-	const day = d.getDate();     
 	
-/* 	const date = [];
-	for(var i=6; i>=0; i--){
-		date.push(new Date(year, month, day - i).toLocaleDateString());
-	}
-		 const data = {
-		   labels: date,
-		   datasets: [{
-		     label: '날짜별 내 피드 좋아요 수',
-		     backgroundColor: 'rgb(255, 99, 132)',
-		     borderColor: 'rgb(255, 99, 132)',
-		     data: [10, 7, 10, 5, 2, 20, 30]
-		   }]
-		 };
-		
-		 const config = {
-		   type: 'line',
-		   data: data,
-		   options: {}
-		 };
-		 const myChart = new Chart(
-				 $("#likeCount"),
-			    config
-			  );	 */
+	
+
 };
 
 function visitorCount(param){
@@ -56,7 +31,7 @@ function visitorCount(param){
 }
 //날짜별 좋아요 수 차트
 function likeCount(param){
-	$("canvas").hide();
+	$(".chart").hide();
 	var object = $(param);
 	$(".log-nav-content").css("font-weight", "500");
 	object.css("font-weight", "bold");
@@ -101,7 +76,7 @@ function likeCount(param){
 };
 //날짜별 방문자 수 차트
 function visitorCount(param){
-	$("canvas").hide();
+	$(".chart").hide();
 	var object = $(param);
 	$(".log-nav-content").css("font-weight", "500");
 	object.css("font-weight", "bold");
@@ -145,7 +120,7 @@ function visitorCount(param){
 			  );	
 };
 function genderRatio(param){
-	$("canvas").hide();
+	$(".chart").hide();
 	var object = $(param);
 	$(".log-nav-content").css("font-weight", "500");
 	object.css("font-weight", "bold");
@@ -224,6 +199,30 @@ function genderRatio(param){
 	canvas{
 		display: none;
 	}
+	table{
+		box-shadow:  7px 7px 10px #8e8e8e;
+	}
+	table, tr, td, th{
+	border-collapse: collapse;
+	border: 2px solid gray;
+	text-align: center;
+	}
+	#searchRanking h1{
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	#searchRanking table tr:first-child{
+	    background-color: rgb(100,100,100);
+    	color: white;
+	}
+	#searchRanking table tr th:first-child{
+		width: 30%;
+	}
+	#searchRanking, table{
+		width: 600px;
+	    margin: 0 auto;
+	    height: 350px;
+	}
 </style>
 <jsp:include page="../common/header.jsp"></jsp:include>
 <body>
@@ -237,11 +236,47 @@ function genderRatio(param){
 				<li class="log-nav-content" onclick="visitorCount(this)">날짜별 방문자 수 조회</li>
 				<li class="log-nav-content" onclick="genderRatio(this)">좋아요 성비 조회</li>
 			</ul>
-			<div class="chart-box">	
-				<canvas id="searchRanking"></canvas>
-				<canvas id="likeCount"></canvas>
-				<canvas id="visitorCount"></canvas>
-				<canvas id="genderRatio"></canvas>
+			<div class="chart-box">
+				<div id="searchRanking" class="chart">
+					<h1>연령대별 검색어 1위</h1>	
+					<table>
+						<tr>
+							<th>연령대</th>
+							<th>키워드</th>
+						</tr>
+						<tr>
+							<td>전체</td>
+							<td>축구</td>
+						</tr>
+						<tr>
+							<td>10대</td>
+							<td>뉴진스</td>
+						</tr>
+						<tr>
+							<td>20대</td>
+							<td>축구</td>
+						</tr>
+						<tr>
+							<td>30대</td>
+							<td>asdfqwer</td>
+						</tr>
+						<tr>
+							<td>40대</td>
+							<td>골프</td>
+						</tr>
+						<tr>
+							<td>50대</td>
+							<td>hello</td>
+						</tr>
+						<tr>
+							<td>60대</td>
+							<td>-</td>
+						</tr>
+					</table>
+				</div>
+				<canvas id="likeCount" class="chart"></canvas>
+				<canvas id="visitorCount" class="chart"></canvas>
+				<canvas id="genderRatio" class="chart"></canvas>
 			</div>
 		</div>
 	</section>
