@@ -14,6 +14,7 @@ public class MemberVo {
 	private int followerCount;
 	private byte[] fileData;
 	
+	
 	public String getMemberId() {
 		return memberId;
 	}

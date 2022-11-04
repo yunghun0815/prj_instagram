@@ -55,6 +55,7 @@
 	<!-- 트랜잭션 어노테이션 -->
 	<tx:annotation-driven/>
 	
-	<mybatis-spring:scan base-package="com.kosa.instagram"/>
+	<mybatis-spring:scan base-package="com.kosa.instagram.member.dao"/>
+	<mybatis-spring:scan base-package="com.kosa.instagram.feed.dao"/>
 	<context:component-scan base-package="com.kosa.instagram" />
 </beans>
