@@ -15,4 +15,33 @@
 		file_no AS "fileNo"
 ]]>
 </select>
+
+<select id="selectFeedMemberInfo" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
+	<![CDATA[
+		select nickname AS "nickname",
+				name As "name"
+				from member
+				where member_id=#{memberId}
+	]]>
+</select>
+
+<select id="selectFollowerByUser" parameterType="String" resultType="String">
+	<![CDATA[
+		select nickname
+			from member
+			where member_id=(select from_id 
+				   from follow 
+				   where to_id=#{memberId});
+	]]>
+</select>
+
+<select id="selectFollowByUser" parameterType="String" resultType="String">
+	<![CDATA[
+		select nickname
+			from member
+			where member_id=(select to_id
+							from follow
+							where from_id=#{memebrId});
+	]]>
+</select>
 </mapper>

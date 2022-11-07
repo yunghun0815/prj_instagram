@@ -118,30 +118,12 @@
 		]]>
 	</select>
 	
-	<select id="selectFollowerByUser" parameterType="String" resultType="String">
-		<![CDATA[
-			select nickname
-			from member
-			where member_id=(select from_id 
-				   from follow 
-				   where to_id=#{memberId});
-		]]>
-	</select>
-	
-	<select id="selectFollowByUser" parameterType="String" resultType="String">
-		<![CDATA[
-			select nickname
-			from member
-			where member_id=(select to_id
-							from follow
-							where from_id=#{memebrId});
-		]]>
-	</select>
+
 	
 	<select id="selectContentListByUser" parameterType="String" resultType="byte">
 		<![CDATA[
 			select file_data
-			from file
+			from upload_file
 			where feed_no in (select feed_no
 							  from feed
 							  where member_id=${memberId});

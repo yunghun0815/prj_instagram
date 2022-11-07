@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.model.FeedVo;
-
+import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.model.MemberVo;
 
@@ -29,12 +29,12 @@ public interface IFeedRepository {
 
 
 	List<FeedVo> searchListByHashtag(@Param("hashtaglist") String hashtagist);
-	void countContent(String memberId);
-	void countFollower(String memberId);
-	void countFollow(String memberId);
+	int countContent(String memberId);
+	int countFollower(String memberId);
+	int countFollow(String memberId);
 
-	List<FeedVo> selectContentListByUser(String memberId);
-	List<MemberVo> selectFollowerByUser(String memberId);
-	List<MemberVo> selectFollowByUser(String memberId);
+	List<FileVo> selectContentListByUser(String memberId);
+	
+	
 	
 }
