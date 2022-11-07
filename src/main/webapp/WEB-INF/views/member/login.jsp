@@ -21,7 +21,7 @@
 <h4>${email }</h4>
 <a href="<c:url value='/member/update'/>">수정</a>
 <a href="<c:url value='/member/logout'/>">로그아웃</a>
-<a href="<c:url value='/'/>">회원탈퇴</a>
+<a href="<c:url value='/member/delete'/>">회원탈퇴</a>
 </c:if>
 </body>
 </html>

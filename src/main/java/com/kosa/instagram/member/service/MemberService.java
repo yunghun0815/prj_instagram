@@ -9,7 +9,7 @@ import com.kosa.instagram.member.model.MemberVo;
 
 @Service
 public class MemberService implements IMemberService{
-	
+
 	@Autowired
 	IMemberRepository memberRepository;
 
@@ -24,16 +24,41 @@ public class MemberService implements IMemberService{
 		return memberRepository.selectMember(memberId);
 	}
 
-	//멤버아이디를 조회해서 파일이 있으면 업데이트, 없으면 인서트
+	//멤버아이디를 조회해서 feed_no가 null이면 업데이트, 없으면 인서트
 	@Override
 	public void updateMember(MemberVo member, FileVo file) {
-		memberRepository.insertFile(file);
+		if (file != null && file.getFileNo()==0) {
+			System.out.println("insert file ");
+			memberRepository.insertFile(file);
+		}
+		else{
+			System.out.println("update file");
+			memberRepository.updateFile(file);
+			
+		}
 		memberRepository.updateMember(member);
 	}
 
 	@Override
 	public void updateMember(MemberVo member) {
 		memberRepository.updateMember(member);
+	}
+
+	//fileNo 조회
+	@Override
+	public Integer selectFileNo(String memberId) {
+		return memberRepository.selectFileNo(memberId);
+	}
+
+	//회원정보 삭제
+	@Override
+	public void deleteMember(MemberVo member) {
+		memberRepository.deleteMember(member);
+	}
+
+	@Override
+	public String getPassword(String password) {
+		return memberRepository.getPassword(password);
 	}
 
 
