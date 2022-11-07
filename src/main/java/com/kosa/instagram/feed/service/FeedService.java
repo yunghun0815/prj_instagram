@@ -12,6 +12,7 @@ import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.dao.IFeedRepository;
 import com.kosa.instagram.feed.model.FeedVo;
+import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.member.dao.IMemberRepository;
@@ -41,7 +42,7 @@ public class FeedService implements IFeedService {
 		reply.setFeedNo(feedNo);
 		reply.setNickname(member.getNickname());
 		reply.setReplyContent(replyContent);
-		reply.setFileData(member.getFileData());
+	//	reply.setFileData(member.getFileData());
 		feedRepository.writeReply(reply);
 	}
 	
@@ -118,5 +119,9 @@ public class FeedService implements IFeedService {
 	public List<MemberVo> selectFollowListByUser(String memberId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public FileVo getFile(int fileNo) {
+		return feedRepository.getFile(fileNo);
 	}
 }

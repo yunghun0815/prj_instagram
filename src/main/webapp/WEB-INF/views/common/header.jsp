@@ -16,21 +16,20 @@
 				</form>			
 			</div>
 			<div class="menu-img">
-			
 				<a href="/log"><img src="/image/header/chart.png"></a>	
 				<img src="/image/header/house.png" onclick="window.scrollTo(0,0);">
 				<img src="/image/header/plane.png">
 				<img src="/image/header/plus.png">
 				<img src="/image/header/compass.png">
 				<img src="/image/header/heart.png">
-				<c:if test="${empty sessionScope.fileData}">
+				<c:if test="${empty sessionScope.fileNo || sessionScope.fileNo ==0}">
 					<a href="#"> <!-- ${sessionScope.nickname} -->
 						<img class="profile-img" src="/image/profile_null.jpg">
 					</a>				
 				</c:if>
-				<c:if test="${not empty sessionScope.fileData}">
+				<c:if test="${not empty sessionScope.fileNo && sessionScope.fileNo != 0}">
 					<a href="#">
-						<img src="">
+						<img id="myProfileImg" src="/file/${sessionScope.fileNo}">
 					</a>
 				</c:if>
 			</div>
