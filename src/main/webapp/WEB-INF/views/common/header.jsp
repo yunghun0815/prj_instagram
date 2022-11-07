@@ -10,10 +10,10 @@
 				<img class="logo" src="/image/header/instagram.png">
 			</a>
 			<div> <!-- 검색바 -->
-				<form action="#" method="get">
-					<input class="search-bar" type="text" placeholder="검색">
+				<form action="memberlist" method="post">
+					<input class="search-bar" type="text" name="keyword" placeholder="검색">
 					<input type="submit" style="display: none;">
-				</form>			
+				</form>
 			</div>
 			<div class="menu-img">
 			
