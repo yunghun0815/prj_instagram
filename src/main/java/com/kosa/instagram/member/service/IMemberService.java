@@ -12,5 +12,11 @@ public interface IMemberService {
 	public void updateMember(MemberVo member, FileVo file);
 	
 	public void updateMember(MemberVo member);
+	
+	public Integer selectFileNo(String memberId);
+	
+	public void deleteMember(MemberVo member);
+	
+	public String getPassword(String password);
 
 }

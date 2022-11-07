@@ -16,7 +16,7 @@ VALUES
 		M.PASSWORD 		AS  "password", 
 		M.NICKNAME		AS  "nickname", 
 		M.NAME			AS  "name", 
-		M.GENDER		AS	"gender", 
+		M.GENDER		AS	"gender",
 		M.EMAIL			AS	"email", 
 		M.BIRTH			AS	"birth", 
 		M.PHONE_NUMBER 	AS "phoneNumber",
@@ -33,11 +33,33 @@ VALUES
 			(FILE_NO_SEQ.NEXTVAL, #{fileData}, #{fileName}, #{fileSize}, #{fileType}, #{memberId})
 </insert>
 
+<update id="updateFile" parameterType="com.kosa.instagram.feed.model.FileVo">
+	UPDATE UPLOAD_FILE
+	SET FILE_DATA=#{fileData}, FILE_NAME=#{fileName}, FILE_SIZE=#{fileSize}, FILE_TYPE=#{fileType}
+	WHERE MEMBER_ID = #{memberId}
+</update>
 
 <update id="updateMember" parameterType="com.kosa.instagram.member.model.MemberVo">
 	UPDATE MEMBER
 	SET PASSWORD=#{password}, NICKNAME=#{nickname}, PHONE_NUMBER=#{phoneNumber}
-	WHERE MEMBER_ID=#{memberId}
+	WHERE MEMBER_ID=#{memberId} 
 </update>
+
+<select id="selectFileNo" parameterType="String" resultType="integer">
+	select file_no as "fileNo"
+	from upload_file 
+	where member_id =#{memberId} and feed_no is null
+</select>
+
+<delete id="deleteMember" parameterType="com.kosa.instagram.member.model.MemberVo">
+	DELETE FROM MEMBER
+	WHERE MEMBER_ID = #{memberId} AND PASSWORD = #{password} 
+</delete>
+
+<select id="getPassword" parameterType="String" resultType="String">
+	SELECT PASSWORD
+	FROM MEMBER
+	WHERE MEMBER_ID = #{memberId}
+</select>
 
 </mapper>

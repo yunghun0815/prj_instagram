@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,7 +64,7 @@ public class MemberController {
 					session.setAttribute("name", member.getName());
 					session.setAttribute("nickname", member.getNickname());
 					session.setAttribute("fileNo", member.getFileNo());
-					return "redirect:/";
+					return "member/login";
 				}else {
 					//��й�ȣ ����ġ
 					model.addAttribute("message", "WRONG_PASSOWRD");
@@ -80,15 +82,35 @@ public class MemberController {
 		session.invalidate();
 		return "home";
 	}
-
+		//수정 페이지 비밀번호로 정보 확인
+	   @GetMapping("/member/check")
+	   public String check() {
+	      return "member/check";
+	   }
+	   @PostMapping("/member/check")
+	   public String checkPassword(String password, HttpSession session, Model model) {
+	      //로그인
+	      String memberId = (String)session.getAttribute("memberId");
+	      MemberVo member = memberService.selectMember(memberId);
+	      if(password.equals(member.getPassword())) {
+	         return "redirect:/member/update";
+	      }else {
+	         model.addAttribute("message", "비밀번호가 틀렸습니다");
+	         return "redirect:/member/check";
+	      }
+	   }
+	
 	//회원정보 수정
 	@RequestMapping(value="/member/update", method=RequestMethod.GET)
 	public String updateMember(HttpSession session, Model model) {
 		String memberId = (String)session.getAttribute("memberId");
 		if (memberId != null && !memberId.equals("")) {
 			MemberVo member = memberService.selectMember(memberId);
+			
 			model.addAttribute("member", member);
 			model.addAttribute("message", "UPDATE_USER_INFO");
+			//fileNo 조회
+			model.addAttribute("fileNo", memberService.selectFileNo(memberId));
 		}else {
 			//memberId가 세션에 없을 떄 (로그인 하지 않았을 때)
 			model.addAttribute("message", "NOT_LOGIN_USER");
@@ -117,6 +139,34 @@ public class MemberController {
 		e.printStackTrace();
 	}
 	return "member/login";
+	}
+	
+	@RequestMapping(value="/member/delete", method=RequestMethod.GET)
+	public String deleteMember(HttpSession session, Model model) {
+		String memberId = (String)session.getAttribute("memberId");
+		if (memberId != null && !memberId.equals("")) {
+			MemberVo member = memberService.selectMember(memberId);
+			model.addAttribute("member", member);
+			return "member/delete";
+		}else {
+			System.out.println("delete 아이디 없음");
+			return "member/login";
+		}
+	}
+	@RequestMapping(value="/member/delete", method=RequestMethod.POST)
+	public String deleteMember(String password, HttpSession session, Model model) {
+		MemberVo member = new MemberVo();
+		member.setMemberId((String)session.getAttribute("memberId"));
+		String dbpw = memberService.getPassword(password);
+		if (password != null && password.equals(dbpw)) {
+			member.setPassword(password);
+			memberService.deleteMember(member);
+			session.invalidate();
+			return "member/login";
+		}else {
+			System.out.println("탈퇴 비밀번호 불일치");
+			return "member/delete";
+		}
 	}
 
 

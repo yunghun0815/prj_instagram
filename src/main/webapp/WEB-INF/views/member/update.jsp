@@ -25,7 +25,12 @@
 	
 	휴대폰<input type="text" name="phoneNumber"
 	value="${member.phoneNumber }">
-	
+	<c:if test="${empty fileNo }">
+		<input type="hidden" name="fileNo" value=0>
+	</c:if>
+	<c:if test="${not empty fileNo }">
+		<input type="hidden" name="fileNo" value="${fileNo }"> 
+	</c:if>
 	사진<input type="file" name="file">
 	
 	<input type="submit" value="수정">
