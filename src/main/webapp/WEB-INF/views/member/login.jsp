@@ -5,7 +5,7 @@
 <<fmt:setBundle basename="i18n/member"/>
 <!DOCTYPE html>
 <html>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
 <body>
 <c:if test="${empty sessionScope.memberId}">
 <form action="<c:url value='/member/login'/>" method="post">
@@ -19,7 +19,7 @@
 <c:if test="${not empty sessionScope.memberId}">
 <h4>${memberId }</h4>
 <h4>${email }</h4>
-<a href="<c:url value='/'/>">수정</a>
+<a href="<c:url value='/member/update'/>">수정</a>
 <a href="<c:url value='/member/logout'/>">로그아웃</a>
 <a href="<c:url value='/'/>">회원탈퇴</a>
 </c:if>

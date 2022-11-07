@@ -22,11 +22,22 @@ VALUES
 		M.PHONE_NUMBER 	AS "phoneNumber",
         F.FILE_DATA 	AS "fileData"
 	FROM MEMBER M LEFT JOIN UPLOAD_FILE F
-    ON M.FILE_NO = F.FILE_NO
+    ON M.MEMBER_ID = F.MEMBER_ID
 	WHERE M.MEMBER_ID = #{memberId} 
 </select>
 
+<insert id="insertFile" parameterType="com.kosa.instagram.feed.model.FileVo">
+	INSERT INTO UPLOAD_FILE
+			(FILE_NO, FILE_DATA, FILE_NAME, FILE_SIZE, FILE_TYPE, MEMBER_ID)
+	VALUES 
+			(FILE_NO_SEQ.NEXTVAL, #{fileData}, #{fileName}, #{fileSize}, #{fileType}, #{memberId})
+</insert>
 
 
+<update id="updateMember" parameterType="com.kosa.instagram.member.model.MemberVo">
+	UPDATE MEMBER
+	SET PASSWORD=#{password}, NICKNAME=#{nickname}, PHONE_NUMBER=#{phoneNumber}
+	WHERE MEMBER_ID=#{memberId}
+</update>
 
 </mapper>

@@ -9,64 +9,62 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
 @Controller
 public class MemberController {
 	static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
+
 	@Autowired
 	IMemberService memberService;
-	
-	//È¸¿ø°¡ÀÔ
+
+	//íšŒì›ê°€ì…
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
 	public String joinForm() {
 		return "member/form";
 	};
-	
-	//È¸¿ø°¡ÀÔ ÀúÀå
+
+	//íšŒì›ê°€ì…
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
 	public String memberInsert(MemberVo member, HttpSession session) {
 		System.out.println("CONTROLLER");
 		System.out.println(member.toString());
 		memberService.insertMember(member);
-		
+
 		return "home";
 	}
-	
-	//·Î±×ÀÎ
+
+	//ë¡œê·¸ì¸
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public String login() {
 		return "member/login";
 	}
-	
-	//·Î±×ÀÎ
+
+	//ë¡œê·¸ì¸
 	@RequestMapping(value="member/login", method=RequestMethod.POST)
 	public String login(String memberId, String password, HttpSession session, Model model) {
 		MemberVo member = memberService.selectMember(memberId);
 		if (member != null) {
-			System.out.println("¾ÆÀÌµğ ÀÔ·ÂµÊ");
+			System.out.println("ì•„ì´ë”” ìˆìŒ");
 			String dbPassword = member.getPassword();
 			if (dbPassword==null) {
-				//¾ÆÀÌµğ°¡ ¾øÀ½
-				System.out.println("¾ÆÀÌµğ ¾øÀ½");
+				System.out.println("ë¹„ë°€ë²ˆí˜¸ í‹€ë¦¼");
 				model.addAttribute("message", "NOT_VALID_MEMBER");
 			}else {
-				//¾ÆÀÌµğ ÀÖÀ½
-				System.out.println("¾ÆÀÌµğ ÀÖÀ½");
+				System.out.println("ê°™ìŒ");
 				if (dbPassword.equals(password)) {
-					//ºñ¹Ğ¹øÈ£ ÀÏÄ¡
-					System.out.println("ºñ¹Ğ¹øÈ£ ÀÏÄ¡");
+					//ï¿½ï¿½Ğ¹ï¿½È£ ï¿½ï¿½Ä¡
 					session.setAttribute("memberId", memberId);
 					session.setAttribute("name", member.getName());
 					session.setAttribute("nickname", member.getNickname());
 					session.setAttribute("fileData", member.getFileData());
 					return "member/login";
 				}else {
-					//ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡
-					System.out.println("ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡");
+					//ï¿½ï¿½Ğ¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½Ä¡
 					model.addAttribute("message", "WRONG_PASSOWRD");
 				}
 			}
@@ -76,10 +74,50 @@ public class MemberController {
 		session.invalidate();
 		return "member/login";
 	}
+	//ë¡œê·¸ì•„ì›ƒ
 	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
 		return "home";
 	}
-	
+
+	//íšŒì›ì •ë³´ ìˆ˜ì •
+	@RequestMapping(value="/member/update", method=RequestMethod.GET)
+	public String updateMember(HttpSession session, Model model) {
+		String memberId = (String)session.getAttribute("memberId");
+		if (memberId != null && !memberId.equals("")) {
+			MemberVo member = memberService.selectMember(memberId);
+			model.addAttribute("member", member);
+			model.addAttribute("message", "UPDATE_USER_INFO");
+		}else {
+			//memberIdê°€ ì„¸ì…˜ì— ì—†ì„ ë–„ (ë¡œê·¸ì¸ í•˜ì§€ ì•Šì•˜ì„ ë•Œ)
+			model.addAttribute("message", "NOT_LOGIN_USER");
+			return "member/login";
+		}
+		return "member/update";
+	}
+	@RequestMapping(value="/member/update", method=RequestMethod.POST)
+	public String updateMember(MemberVo member, FileVo file ,HttpSession session, Model model) {
+	try {
+		MultipartFile mfile = file.getFile();
+		logger.info("íŒŒì¼ : "+mfile);
+		if (mfile != null && !mfile.isEmpty()) {
+			file.setFileName(mfile.getOriginalFilename());
+			file.setFileSize(mfile.getSize());
+			file.setFileType(mfile.getContentType());
+			file.setFileData(mfile.getBytes());
+			logger.info("/board/write : " + file.toString());
+			
+			memberService.updateMember(member, file);
+		}else {
+			logger.info("íŒŒì¼ ì•ˆë“¤ì–´ì˜´");
+			memberService.updateMember(member);
+		}
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
+	return "member/login";
+	}
+
+
 }//class end
