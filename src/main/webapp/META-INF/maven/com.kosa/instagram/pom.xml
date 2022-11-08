@@ -195,7 +195,6 @@
 			<artifactId>jasypt-spring4</artifactId>
 			<version>1.9.3</version>
 		</dependency>
-		
 		<!-- jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -214,7 +213,7 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.9.5</version>
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>
