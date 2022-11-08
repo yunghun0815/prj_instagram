@@ -1,5 +1,6 @@
 package com.kosa.instagram.feed.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,17 +24,74 @@ public class FeedService implements IFeedService {
 	@Autowired
 	IFeedRepository feedRepository;
 	
+	@Autowired
+	IMemberRepository memberRepository;
+	
 	@Override  
-	public List<FeedVo> searchListByKeyword(String keyword) {
-		return feedRepository.searchListByKeyword("%"+ keyword+"%");
+	public List<MemberVo> searchListByKeyword(String keyword) {
+		
+		// ���� DB�� �����ϱ� �ϴ� DB�� ��ü�� �� �����
+		List<MemberVo> memberList = new ArrayList<MemberVo>(); 
+		
+		// ������1 ������ ����Ʈ�� ����ֱ�
+		MemberVo data1 = new MemberVo();
+		data1.setMemberId("jjojjo_0101");
+		data1.setNickname("����");
+		data1.setName("�ɺ�");
+		
+		memberList.add(data1);
+		
+
+		MemberVo data2 = new MemberVo();
+		data2.setMemberId("chocho5");
+		data2.setNickname("��������");
+		data2.setName("�Ϳ�����");
+		
+		memberList.add(data2);
+				
+		
+		MemberVo data3 = new MemberVo();
+		data3.setMemberId("sns_zzozzo");
+		data3.setNickname("������sns");
+		data3.setName("zzozzo��");
+		data3.setPhoneNumber("010-1111-1111"); 
+		
+		memberList.add(data3);
+		
+		
+		MemberVo data4 = new MemberVo();
+		data4.setMemberId("chocho6");
+		data4.setNickname("������");
+		data4.setName("������");
+		
+		memberList.add(data4);		
+				
+		
+		// ���� ��ü ���ؼ�
+		List<MemberVo> resultList = new ArrayList<MemberVo>(); // ������ �͵� (��ȸ�ϴ� ����)
+		// DB���� ã�� �������� (��ü�˻�)
+		for (int i = 0; i < memberList.size(); i++) {
+	
+			MemberVo tempMember = memberList.get(i);
+
+			String id = tempMember.getMemberId();
+			String name = tempMember.getMemberId();
+			
+
+			if (id.contains(keyword) || name.contains(keyword)) {
+				resultList.add(tempMember);
+			}
+		}	
+	
+		return resultList;
+		// ���� ����: �ؿ�ó�� �˻�
+		// return memberRepository.searchListByKeyword("%"+ keyword+"%");
 		
 	}
 	@Override
 	public List<FeedVo> searchListByHashtag(String hashtag) {
 		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
 	}
-	@Autowired
-	IMemberRepository memberRepository;
 	
 	@Override
 	public void writeReply(int feedNo, String memberId, String replyContent) {
@@ -76,20 +134,29 @@ public class FeedService implements IFeedService {
 	}
 
 	@Override
+	public List<FeedVo> getTenFeeds(String memberId, int start, int end) {
+		return feedRepository.getTenFeeds(memberId, start, end);
+	}
+	
+	@Override
 	@Transactional
-	public JsonVo makeJsonVo(FeedVo feed, MemberVo member, List<byte[]> uploadFiles, List<ReplyVo> reply) {
+	public JsonVo makeJsonVo(FeedVo feed) {
 		JsonVo json = new JsonVo();
 		Map<String, FeedVo> feedMap = new HashMap<String, FeedVo>();
 		feed.setHashtagList(feedRepository.getHashtagList(feed.getFeedNo()));
 		feedMap.put("feed", feed);
 		json.setFeed(feedMap);
+		MemberVo member = memberRepository.selectMember(feed.getMemberId());
 		Map<String, MemberVo> memberMap = new HashMap<String, MemberVo>();
 		memberMap.put("member", member);
 		json.setMember(memberMap);
-		json.setUploadFiles(uploadFiles);
-		json.setReply(reply);
+		List<Integer> fileNoList = feedRepository.getUploadFiles(feed.getFeedNo());
+		json.setUploadFiles(fileNoList);
+		List<ReplyVo> replyList = feedRepository.getReply(feed.getFeedNo());
+		json.setReply(replyList);
 		return json;
 	}
+	
 	@Override
 	public int countContent(String memberId) {
 		// TODO Auto-generated method stub

@@ -70,10 +70,10 @@
 ]]>
 </select>
 
-<select id="getUploadFiles" parameterType="int" resultType="byte[]">
+<select id="getUploadFiles" parameterType="int" resultType="int">
 <![CDATA[
 	SELECT 
-		file_data AS "fileData"
+		file_no AS "fileNo"
 	FROM upload_file
 	WHERE feed_no=#{feedNo}
 ]]>
@@ -153,9 +153,9 @@
 	
 
 
-	<select id="searchListByKeyword" parameterType="String" resultType="hashmap">
+	<select id="searchListByKeyword" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
 		<![CDATA[ 
-			select member_id, nickname
+			select member_id as "memberId", nickname as "nickname"
 			from member
 			where member_id like #{keyword}
 					or
@@ -163,9 +163,9 @@
 		 ]]>
 	</select>
 
-	<select id="searchListByHashtag" parameterType="String" resultType="hashmap">
+	<select id="searchListByHashtag" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
 		<![CDATA[  
-			select count(hashtag), hashtag
+			select count(hashtag), hashtag as "hashtagList"
 			from hashtag
 			where hashtag like #{hashtag}
 		 ]]>		 

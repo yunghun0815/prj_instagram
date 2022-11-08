@@ -1,6 +1,11 @@
 package com.kosa.instagram.member.dao;
 
 import com.kosa.instagram.feed.model.FileVo;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.member.model.MemberVo;
 
 public interface IMemberRepository {
@@ -21,4 +26,5 @@ public interface IMemberRepository {
 	public void deleteMember(MemberVo member);
 	
 	public String getPassword(String password);
+	List<MemberVo> searchListByKeyword(@Param("keyword") String keyword);
 }

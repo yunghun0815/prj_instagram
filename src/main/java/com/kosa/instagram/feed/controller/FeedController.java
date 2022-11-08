@@ -1,7 +1,9 @@
 package com.kosa.instagram.feed.controller;
 
 import java.io.UnsupportedEncodingException;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.service.IFeedService;
@@ -61,5 +68,30 @@ public class FeedController {
 			
 			return null; 
 		}
+	}
+	@RequestMapping("/mainfeed/test")
+	public @ResponseBody List<JsonVo> getTenFeeds(@PathVariable String memberId, @PathVariable int page) {
+		List<JsonVo> jsonList = new ArrayList<JsonVo>();
+		int start = page*10+1;
+		int end = start+9;
+		List<FeedVo> feedList = feedService.getTenFeeds(memberId, start, end);
+		for(FeedVo feed : feedList) {
+			jsonList.add(feedService.makeJsonVo(feed));
+		}
+		return jsonList;
+	}
+
+	//@RequestMapping("/memberlist")
+	@RequestMapping(value="memberlist", method=RequestMethod.POST)
+	//public String getMemberList(String keyword, Model model ) {
+	public String getMemberList(String keyword, HttpSession session, Model model) {
+		
+		// 지금 DB가 없으니까 일단 임시로 데이터
+		List<MemberVo> memberList = feedService.searchListByKeyword(keyword);  
+		model.addAttribute("memberList", memberList); 
+		  
+		model.addAttribute("attribute1", "Hello world");
+		
+		return "feed/search"; 
 	}
 }

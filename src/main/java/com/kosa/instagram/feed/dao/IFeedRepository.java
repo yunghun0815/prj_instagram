@@ -22,9 +22,9 @@ public interface IFeedRepository {
 	List<String> getHashtagList(int feedNo);
 	MemberVo getWriter(int feedNo);
 
-	List<byte[]> getUploadFiles(int feedNo);
+	List<Integer> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
-	List<FeedVo> searchListByKeyword(@Param("keyword") String keyword);
+
 
 
 
