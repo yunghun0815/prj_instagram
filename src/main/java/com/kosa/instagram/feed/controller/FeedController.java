@@ -2,13 +2,17 @@ package com.kosa.instagram.feed.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.feed.model.FeedVo;
@@ -47,3 +51,20 @@ public class FeedController {
 		return jsonList;
 	}
 }
+
+	//@RequestMapping("/memberlist")
+	@RequestMapping(value="memberlist", method=RequestMethod.POST)
+	//public String getMemberList(String keyword, Model model ) {
+	public String getMemberList(String keyword, HttpSession session, Model model) {
+		
+		// 지금 DB가 없으니까 일단 임시로 데이터
+		List<MemberVo> memberList = feedService.searchListByKeyword(keyword);  
+		model.addAttribute("memberList", memberList); 
+		  
+		model.addAttribute("attribute1", "Hello world");
+		
+		return "feed/search"; 
+	}
+}
+	
+
