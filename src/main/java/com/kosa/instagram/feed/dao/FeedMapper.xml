@@ -70,10 +70,10 @@
 ]]>
 </select>
 
-<select id="getUploadFiles" parameterType="int" resultType="byte[]">
+<select id="getUploadFiles" parameterType="int" resultType="int">
 <![CDATA[
 	SELECT 
-		file_data AS "fileData"
+		file_no AS "fileNo"
 	FROM upload_file
 	WHERE feed_no=#{feedNo}
 ]]>
