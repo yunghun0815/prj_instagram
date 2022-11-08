@@ -50,7 +50,6 @@ public class FeedController {
 		}
 		return jsonList;
 	}
-}
 
 	//@RequestMapping("/memberlist")
 	@RequestMapping(value="memberlist", method=RequestMethod.POST)
