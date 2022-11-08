@@ -13,8 +13,8 @@ public class FeedVo {
 	private int fileNo;
 	private String feedContent;
 	private Date uploadDate;
-	private String place; //키워드
-	//쪼인해서 상세주소로 넣어줘야함 detail어쩌구.
+	private String placeTitle; //키워드
+	private String placeDetail;
 	private int likeCount;
 	private List<String> hashtagList;
 	private List<MultipartFile> file;
@@ -49,11 +49,17 @@ public class FeedVo {
 	public void setUploadDate(Date uploadDate) {
 		this.uploadDate = uploadDate;
 	}
-	public String getPlace() {
-		return place;
+	public String getPlaceTitle() {
+		return placeTitle;
 	}
-	public void setPlace(String place) {
-		this.place = place;
+	public void setPlaceTitle(String placeTitle) {
+		this.placeTitle = placeTitle;
+	}
+	public String getPlaceDetail() {
+		return placeDetail;
+	}
+	public void setPlaceDetail(String placeDetail) {
+		this.placeDetail = placeDetail;
 	}
 	public int getLikeCount() {
 		return likeCount;
@@ -73,11 +79,11 @@ public class FeedVo {
 	public void setFile(List<MultipartFile> file) {
 		this.file = file;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "FeedVo [feedNo=" + feedNo + ", memberId=" + memberId + ", fileNo=" + fileNo + ", feedContent="
-				+ feedContent + ", uploadDate=" + uploadDate + ", place=" + place + ", likeCount=" + likeCount
-				+ ", hashtagList=" + hashtagList + ", file=" + file + "]";
+				+ feedContent + ", uploadDate=" + uploadDate + ", placeTitle=" + placeTitle + ", placeDetail="
+				+ placeDetail + ", likeCount=" + likeCount + ", hashtagList=" + hashtagList + ", file=" + file + "]";
 	}
 }

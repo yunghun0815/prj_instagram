@@ -60,9 +60,9 @@
 					</ol>
 					<!-- <hr class="gray-line"> -->
 					<div><!-- 댓글달기 -->
-						<form action="/" method="post">
+						<form action="/writeReply/32/test" method="post">
 							<img src="/image/face.png">
-							<input id="replyInput" type="text" placeholder="댓글 달기...">
+							<input name="replyInput" type="text" placeholder="댓글 달기...">
 							<input type="submit" value="게시" >
 						</form> 
 					</div>

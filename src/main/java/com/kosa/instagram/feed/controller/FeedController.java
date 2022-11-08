@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.feed.model.FeedVo;
@@ -69,7 +70,8 @@ public class FeedController {
 			return null; 
 		}
 	}
-	@RequestMapping("/mainfeed/test")
+
+	@RequestMapping("/mainfeed/{memberId}/{page}")
 	public @ResponseBody List<JsonVo> getTenFeeds(@PathVariable String memberId, @PathVariable int page) {
 		List<JsonVo> jsonList = new ArrayList<JsonVo>();
 		int start = page*10+1;
@@ -81,6 +83,12 @@ public class FeedController {
 		return jsonList;
 	}
 
+	@RequestMapping(value="/writeReply/{feedNo}/{memberId}", method=RequestMethod.POST)
+	public void writeReply(@PathVariable int feedNo, @PathVariable String memberId, @RequestParam String replyInput) {
+//		System.out.println("replyInput: "+replyInput);
+		feedService.writeReply(feedNo, memberId, replyInput);
+	}
+	
 	//@RequestMapping("/memberlist")
 	@RequestMapping(value="memberlist", method=RequestMethod.POST)
 	//public String getMemberList(String keyword, Model model ) {
