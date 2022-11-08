@@ -62,7 +62,7 @@ public class MemberController {
 					session.setAttribute("memberId", memberId);
 					session.setAttribute("name", member.getName());
 					session.setAttribute("nickname", member.getNickname());
-					session.setAttribute("fileData", member.getFileData());
+					session.setAttribute("fileNo", member.getFileNo());
 					return "member/login";
 				}else {
 					//비밀번호 불일치

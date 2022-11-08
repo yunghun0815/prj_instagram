@@ -12,7 +12,8 @@ public class MemberVo {
 	private Date birth;
 	private String phoneNumber;
 	private int followerCount;
-	private byte[] fileData;
+//	private byte[] fileData;
+	private int fileNo;
 	
 	
 	public String getMemberId() {
@@ -69,17 +70,23 @@ public class MemberVo {
 	public void setFollowerCount(int followerCount) {
 		this.followerCount = followerCount;
 	}
-	public byte[] getFileData() {
-		return fileData;
+//	public byte[] getFileData() {
+//		return fileData;
+//	}
+//	public void setFileData(byte[] fileData) {
+//		this.fileData = fileData;
+//	}
+	public int getFileNo() {
+		return fileNo;
 	}
-	public void setFileData(byte[] fileData) {
-		this.fileData = fileData;
+	public void setFileNo(int fileNo) {
+		this.fileNo = fileNo;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "MemberVo [memberId=" + memberId + ", password=" + password + ", nickname=" + nickname + ", name=" + name
 				+ ", gender=" + gender + ", email=" + email + ", birth=" + birth + ", phoneNumber=" + phoneNumber
-				+ ", followerCount=" + followerCount + "]";
+				+ ", followerCount=" + followerCount + ", fileNo=" + fileNo + "]";
 	}
 }

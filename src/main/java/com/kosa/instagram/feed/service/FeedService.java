@@ -99,7 +99,8 @@ public class FeedService implements IFeedService {
 		reply.setFeedNo(feedNo);
 		reply.setNickname(member.getNickname());
 		reply.setReplyContent(replyContent);
-		reply.setFileData(member.getFileData());
+		reply.setFileNo(member.getFileNo());
+//		System.out.println(reply.toString());
 		feedRepository.writeReply(reply);
 	}
 	
