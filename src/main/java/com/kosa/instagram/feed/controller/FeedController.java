@@ -3,6 +3,8 @@ package com.kosa.instagram.feed.controller;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.FileVo;
+import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.feed.service.IFeedService;
 import com.kosa.instagram.member.model.MemberVo;
 
@@ -84,9 +87,22 @@ public class FeedController {
 	}
 
 	@RequestMapping(value="/writeReply/{feedNo}/{memberId}", method=RequestMethod.POST)
-	public void writeReply(@PathVariable int feedNo, @PathVariable String memberId, @RequestParam String replyInput) {
+	public List<ReplyVo> writeReply(@PathVariable int feedNo, @PathVariable String memberId, @RequestParam String replyInput) {
 //		System.out.println("replyInput: "+replyInput);
 		feedService.writeReply(feedNo, memberId, replyInput);
+		return feedService.getReply(feedNo);
+	}
+	
+	@RequestMapping("/deleteReply/{feedNo}/{replyNo}")
+	public List<ReplyVo> deleteReply(@PathVariable int feedNo, @PathVariable int replyNo) {
+		feedService.deleteReply(replyNo);
+		return feedService.getReply(feedNo);
+	}
+	
+	@RequestMapping("/increaseLike/{feedNo}/{memberId}")
+	public void increaseLike(@PathVariable int feedNo, @PathVariable String memberId, HttpServletRequest request) {
+		feedService.increaseLike(feedNo, memberId, request.getRequestURI());
+//		return 0; //누른 후 좋아요 갯수
 	}
 	
 	//@RequestMapping("/memberlist")

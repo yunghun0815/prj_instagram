@@ -112,27 +112,25 @@ public class FeedService implements IFeedService {
 	}
 
 	@Override
-	@Transactional
 	public void increaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.increaseLike(feedNo, memberId);
-		LogVo log = new LogVo();
-		log.setLogURI(logURI);
-		log.setMemberId(memberId);
-		log.setFeedNo(feedNo);
-		log.setLogLikeCheck(1);
-		feedRepository.makeLog(log);
+//		LogVo log = new LogVo();
+//		log.setLogURI(logURI);
+//		log.setMemberId(memberId);
+//		log.setFeedNo(feedNo);
+//		log.setLogLikeCheck(1);
+//		feedRepository.makeLog(log);
 	}
 	
 	@Override
-	@Transactional
 	public void decreaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.decreaseLike(feedNo, memberId);
-		LogVo log = new LogVo();
-		log.setLogURI(logURI);
-		log.setMemberId(memberId);
-		log.setFeedNo(feedNo);
-		log.setLogLikeCheck(0);
-		feedRepository.makeLog(log);
+//		LogVo log = new LogVo();
+//		log.setLogURI(logURI);
+//		log.setMemberId(memberId);
+//		log.setFeedNo(feedNo);
+//		log.setLogLikeCheck(0);
+//		feedRepository.makeLog(log);
 	}
 
 	@Override
@@ -157,6 +155,11 @@ public class FeedService implements IFeedService {
 		List<ReplyVo> replyList = feedRepository.getReply(feed.getFeedNo());
 		json.setReply(replyList);
 		return json;
+	}
+	
+	@Override
+	public List<ReplyVo> getReply(int feedNo) {
+		return feedRepository.getReply(feedNo);
 	}
 	
 	@Override
