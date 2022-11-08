@@ -19,7 +19,7 @@ public interface IFeedService {
 	List<MemberVo> selectFollowListByUser(String memberId);
 
 	void writeReply(int feedNo, String memberId, String replyContent);
-	List<FeedVo> searchListByKeyword(String keyword);
+	List<MemberVo> searchListByKeyword(String keyword);
 	List<FeedVo> searchListByHashtag(String hashtag); 
 	void deleteReply(int replyNo);
 	void increaseLike(int feedNo, String memberId, String logURI);

@@ -24,7 +24,7 @@ public interface IFeedRepository {
 
 	List<byte[]> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
-	List<FeedVo> searchListByKeyword(@Param("keyword") String keyword);
+
 
 
 
