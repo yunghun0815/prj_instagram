@@ -24,13 +24,13 @@ public class MemberController {
 	@Autowired
 	IMemberService memberService;
 
-	//회원가입
+	//�쉶�썝媛��엯
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
 	public String joinForm() {
 		return "member/form";
 	};
 
-	//회원가입
+	//�쉶�썝媛��엯
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
 	public String memberInsert(MemberVo member, HttpSession session) {
 		System.out.println("CONTROLLER");
@@ -40,33 +40,33 @@ public class MemberController {
 		return "home";
 	}
 
-	//로그인
+	//濡쒓렇�씤
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public String login() {
 		return "member/login";
 	}
 
-	//로그인
+	//濡쒓렇�씤
 	@RequestMapping(value="member/login", method=RequestMethod.POST)
 	public String login(String memberId, String password, HttpSession session, Model model) {
 		MemberVo member = memberService.selectMember(memberId);
 		if (member != null) {
-			System.out.println("아이디 있음");
+			System.out.println("�븘�씠�뵒 �엳�쓬");
 			String dbPassword = member.getPassword();
 			if (dbPassword==null) {
-				System.out.println("비밀번호 틀림");
+				System.out.println("鍮꾨�踰덊샇 ��由�");
 				model.addAttribute("message", "NOT_VALID_MEMBER");
 			}else {
-				System.out.println("같음");
+				System.out.println("媛숈쓬");
 				if (dbPassword.equals(password)) {
-					//��й�ȣ ��ġ
+					//占쏙옙橘占싫� 占쏙옙치
 					session.setAttribute("memberId", memberId);
 					session.setAttribute("name", member.getName());
 					session.setAttribute("nickname", member.getNickname());
 					session.setAttribute("fileNo", member.getFileNo());
 					return "member/login";
 				}else {
-					//��й�ȣ ����ġ
+					//占쏙옙橘占싫� 占쏙옙占쏙옙치
 					model.addAttribute("message", "WRONG_PASSOWRD");
 				}
 			}
@@ -76,31 +76,31 @@ public class MemberController {
 		session.invalidate();
 		return "member/login";
 	}
-	//로그아웃
+	//濡쒓렇�븘�썐
 	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
 		return "home";
 	}
-		//수정 페이지 비밀번호로 정보 확인
+		//�닔�젙 �럹�씠吏� 鍮꾨�踰덊샇濡� �젙蹂� �솗�씤
 	   @GetMapping("/member/check")
 	   public String check() {
 	      return "member/check";
 	   }
 	   @PostMapping("/member/check")
 	   public String checkPassword(String password, HttpSession session, Model model) {
-	      //로그인
+	      //濡쒓렇�씤
 	      String memberId = (String)session.getAttribute("memberId");
 	      MemberVo member = memberService.selectMember(memberId);
 	      if(password.equals(member.getPassword())) {
 	         return "redirect:/member/update";
 	      }else {
-	         model.addAttribute("message", "비밀번호가 틀렸습니다");
+	         model.addAttribute("message", "鍮꾨�踰덊샇媛� ���졇�뒿�땲�떎");
 	         return "redirect:/member/check";
 	      }
 	   }
 	
-	//회원정보 수정
+	//�쉶�썝�젙蹂� �닔�젙
 	@RequestMapping(value="/member/update", method=RequestMethod.GET)
 	public String updateMember(HttpSession session, Model model) {
 		String memberId = (String)session.getAttribute("memberId");
@@ -109,10 +109,10 @@ public class MemberController {
 			
 			model.addAttribute("member", member);
 			model.addAttribute("message", "UPDATE_USER_INFO");
-			//fileNo 조회
+			//fileNo 議고쉶
 			model.addAttribute("fileNo", memberService.selectFileNo(memberId));
 		}else {
-			//memberId가 세션에 없을 떄 (로그인 하지 않았을 때)
+			//memberId媛� �꽭�뀡�뿉 �뾾�쓣 �뻹 (濡쒓렇�씤 �븯吏� �븡�븯�쓣 �븣)
 			model.addAttribute("message", "NOT_LOGIN_USER");
 			return "member/login";
 		}
@@ -122,7 +122,7 @@ public class MemberController {
 	public String updateMember(MemberVo member, FileVo file ,HttpSession session, Model model) {
 	try {
 		MultipartFile mfile = file.getFile();
-		logger.info("파일 : "+mfile);
+		logger.info("�뙆�씪 : "+mfile);
 		if (mfile != null && !mfile.isEmpty()) {
 			file.setFileName(mfile.getOriginalFilename());
 			file.setFileSize(mfile.getSize());
@@ -132,7 +132,7 @@ public class MemberController {
 			
 			memberService.updateMember(member, file);
 		}else {
-			logger.info("파일 안들어옴");
+			logger.info("�뙆�씪 �븞�뱾�뼱�샂");
 			memberService.updateMember(member);
 		}
 	}catch (Exception e) {
@@ -149,7 +149,7 @@ public class MemberController {
 			model.addAttribute("member", member);
 			return "member/delete";
 		}else {
-			System.out.println("delete 아이디 없음");
+			System.out.println("delete �븘�씠�뵒 �뾾�쓬");
 			return "member/login";
 		}
 	}
@@ -164,7 +164,7 @@ public class MemberController {
 			session.invalidate();
 			return "member/login";
 		}else {
-			System.out.println("탈퇴 비밀번호 불일치");
+			System.out.println("�깉�눜 鍮꾨�踰덊샇 遺덉씪移�");
 			return "member/delete";
 		}
 	}
