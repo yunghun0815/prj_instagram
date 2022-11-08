@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <header>
 	<section class="header">
+		<input type="hidden" id="memberId" value="${memberId }">
 		<div class="flex header-inner between">
 			<a href="/">
 				<img class="logo" src="/image/header/instagram.png">
