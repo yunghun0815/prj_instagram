@@ -13,6 +13,7 @@ import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.dao.IFeedRepository;
 import com.kosa.instagram.feed.model.FeedVo;
+import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.member.dao.IMemberRepository;
@@ -29,30 +30,30 @@ public class FeedService implements IFeedService {
 	@Override  
 	public List<MemberVo> searchListByKeyword(String keyword) {
 		
-		// Áö±İ DB°¡ ¾øÀ¸´Ï±î ÀÏ´Ü DB¸¦ ´ëÃ¼ÇÒ °Å ¸¸µé±â
+		// å ì™ì˜™å ì™ì˜™ DBå ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì‹¹ê¹ì˜™ å ì‹¹ëŒì˜™ DBå ì™ì˜™ å ì™ì˜™ì²´å ì™ì˜™ å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ï¿½
 		List<MemberVo> memberList = new ArrayList<MemberVo>(); 
 		
-		// µ¥ÀÌÅÍ1 »ı¼ºÈÄ ¸®½ºÆ®¿¡ Áı¾î³Ö±â
+		// å ì™ì˜™å ì™ì˜™å ì™ì˜™1 å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™íŠ¸å ì™ì˜™ å ì™ì˜™å ì™ì˜™æ®®å ï¿½
 		MemberVo data1 = new MemberVo();
 		data1.setMemberId("jjojjo_0101");
-		data1.setNickname("ÂÉÂÉ");
-		data1.setName("ÂÉºí¸®");
+		data1.setNickname("å ì™ì˜™å ì™ì˜™");
+		data1.setName("å ì‹¬ë¸ì˜™");
 		
 		memberList.add(data1);
 		
 
 		MemberVo data2 = new MemberVo();
 		data2.setMemberId("chocho5");
-		data2.setNickname("°­¾ÆÁö´Ô");
-		data2.setName("±Í¿©¿îÂÉ");
+		data2.setNickname("å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™");
+		data2.setName("å ì‹¶ìš¸ì˜™å ì™ì˜™å ì™ì˜™");
 		
 		memberList.add(data2);
 				
 		
 		MemberVo data3 = new MemberVo();
 		data3.setMemberId("sns_zzozzo");
-		data3.setNickname("ÂÉÂÉÀÇsns");
-		data3.setName("zzozzoÂÉ");
+		data3.setNickname("å ì™ì˜™å ì™ì˜™å ì™ì˜™sns");
+		data3.setName("zzozzoå ì™ì˜™");
 		data3.setPhoneNumber("010-1111-1111"); 
 		
 		memberList.add(data3);
@@ -60,15 +61,15 @@ public class FeedService implements IFeedService {
 		
 		MemberVo data4 = new MemberVo();
 		data4.setMemberId("chocho6");
-		data4.setNickname("°­¾ÆÁö");
-		data4.setName("¿ÀÂÉÂÉ");
+		data4.setNickname("å ì™ì˜™å ì™ì˜™å ì™ì˜™");
+		data4.setName("å ì™ì˜™å ì™ì˜™å ì™ì˜™");
 		
 		memberList.add(data4);		
 				
 		
-		// Äõ¸® ´ëÃ¼ À§ÇØ¼­
-		List<MemberVo> resultList = new ArrayList<MemberVo>(); // ¸®ÅÏÇÒ °Íµé (Á¶È¸ÇÏ´Â °³³ä)
-		// DB¿¡¼­ Ã£´Â ´À³¦À¸·Î (ÀüÃ¼°Ë»ö)
+		// å ì™ì˜™å ì™ì˜™ å ì™ì˜™ì²´ å ì™ì˜™å ìŒ”ì‡½ì˜™
+		List<MemberVo> resultList = new ArrayList<MemberVo>(); // å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì‹¶ë“¸ì˜™ (å ì™ì˜™íšŒå ì‹¹ëŒì˜™ å ì™ì˜™å ì™ì˜™)
+		// DBå ì™ì˜™å ì™ì˜™ ì°¾å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ (å ì™ì˜™ì²´å ì‹¯ì‚¼ì˜™)
 		for (int i = 0; i < memberList.size(); i++) {
 	
 			MemberVo tempMember = memberList.get(i);
@@ -83,7 +84,7 @@ public class FeedService implements IFeedService {
 		}	
 	
 		return resultList;
-		// ¿ø·¡ ³»¿ë: ¹Ø¿¡Ã³·³ °Ë»ö
+		// å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™: å ìŒ”ìš¸ì˜™ì²˜å ì™ì˜™ å ì‹¯ì‚¼ì˜™
 		// return memberRepository.searchListByKeyword("%"+ keyword+"%");
 		
 	}
@@ -101,6 +102,7 @@ public class FeedService implements IFeedService {
 		reply.setReplyContent(replyContent);
 		reply.setFileNo(member.getFileNo());
 //		System.out.println(reply.toString());
+	//	reply.setFileData(member.getFileData());
 		feedRepository.writeReply(reply);
 	}
 	
@@ -186,5 +188,9 @@ public class FeedService implements IFeedService {
 	public List<MemberVo> selectFollowListByUser(String memberId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public FileVo getFile(int fileNo) {
+		return feedRepository.getFile(fileNo);
 	}
 }

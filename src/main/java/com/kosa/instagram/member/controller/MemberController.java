@@ -7,66 +7,66 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
 @Controller
 public class MemberController {
 	static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
+
 	@Autowired
 	IMemberService memberService;
-	
-	//È¸¿ø°¡ÀÔ
+
+	//ï¿½ì‰¶ï¿½ìåª›ï¿½ï¿½ì—¯
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
 	public String joinForm() {
 		return "member/form";
 	};
-	
-	//È¸¿ø°¡ÀÔ ÀúÀå
+
+	//ï¿½ì‰¶ï¿½ìåª›ï¿½ï¿½ì—¯
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
 	public String memberInsert(MemberVo member, HttpSession session) {
 		System.out.println("CONTROLLER");
 		System.out.println(member.toString());
 		memberService.insertMember(member);
-		
+
 		return "home";
 	}
-	
-	//·Î±×ÀÎ
+
+	//æ¿¡ì’“ë ‡ï¿½ì”¤
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public String login() {
 		return "member/login";
 	}
-	
-	//·Î±×ÀÎ
+
+	//æ¿¡ì’“ë ‡ï¿½ì”¤
 	@RequestMapping(value="member/login", method=RequestMethod.POST)
 	public String login(String memberId, String password, HttpSession session, Model model) {
 		MemberVo member = memberService.selectMember(memberId);
 		if (member != null) {
-			System.out.println("¾ÆÀÌµğ ÀÔ·ÂµÊ");
+			System.out.println("ï¿½ë¸˜ï¿½ì” ï¿½ëµ’ ï¿½ì—³ï¿½ì“¬");
 			String dbPassword = member.getPassword();
 			if (dbPassword==null) {
-				//¾ÆÀÌµğ°¡ ¾øÀ½
-				System.out.println("¾ÆÀÌµğ ¾øÀ½");
+				System.out.println("é®ê¾¨ï¿½è¸°ëŠìƒ‡ ï¿½ï¿½ç”±ï¿½");
 				model.addAttribute("message", "NOT_VALID_MEMBER");
 			}else {
-				//¾ÆÀÌµğ ÀÖÀ½
-				System.out.println("¾ÆÀÌµğ ÀÖÀ½");
+				System.out.println("åª›ìˆˆì“¬");
 				if (dbPassword.equals(password)) {
-					//ºñ¹Ğ¹øÈ£ ÀÏÄ¡
-					System.out.println("ºñ¹Ğ¹øÈ£ ÀÏÄ¡");
+					//å ì™ì˜™æ©˜å ì‹«ï¿½ å ì™ì˜™ì¹˜
 					session.setAttribute("memberId", memberId);
 					session.setAttribute("name", member.getName());
 					session.setAttribute("nickname", member.getNickname());
 					session.setAttribute("fileNo", member.getFileNo());
 					return "member/login";
 				}else {
-					//ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡
-					System.out.println("ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡");
+					//å ì™ì˜™æ©˜å ì‹«ï¿½ å ì™ì˜™å ì™ì˜™ì¹˜
 					model.addAttribute("message", "WRONG_PASSOWRD");
 				}
 			}
@@ -76,10 +76,98 @@ public class MemberController {
 		session.invalidate();
 		return "member/login";
 	}
+	//æ¿¡ì’“ë ‡ï¿½ë¸˜ï¿½ì
 	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
 		return "home";
 	}
+		//ï¿½ë‹”ï¿½ì ™ ï¿½ëŸ¹ï¿½ì” ï§ï¿½ é®ê¾¨ï¿½è¸°ëŠìƒ‡æ¿¡ï¿½ ï¿½ì ™è¹‚ï¿½ ï¿½ì†—ï¿½ì”¤
+	   @GetMapping("/member/check")
+	   public String check() {
+	      return "member/check";
+	   }
+	   @PostMapping("/member/check")
+	   public String checkPassword(String password, HttpSession session, Model model) {
+	      //æ¿¡ì’“ë ‡ï¿½ì”¤
+	      String memberId = (String)session.getAttribute("memberId");
+	      MemberVo member = memberService.selectMember(memberId);
+	      if(password.equals(member.getPassword())) {
+	         return "redirect:/member/update";
+	      }else {
+	         model.addAttribute("message", "é®ê¾¨ï¿½è¸°ëŠìƒ‡åª›ï¿½ ï¿½ï¿½ï¿½ì¡‡ï¿½ë’¿ï¿½ë•²ï¿½ë–");
+	         return "redirect:/member/check";
+	      }
+	   }
 	
+	//ï¿½ì‰¶ï¿½ìï¿½ì ™è¹‚ï¿½ ï¿½ë‹”ï¿½ì ™
+	@RequestMapping(value="/member/update", method=RequestMethod.GET)
+	public String updateMember(HttpSession session, Model model) {
+		String memberId = (String)session.getAttribute("memberId");
+		if (memberId != null && !memberId.equals("")) {
+			MemberVo member = memberService.selectMember(memberId);
+			
+			model.addAttribute("member", member);
+			model.addAttribute("message", "UPDATE_USER_INFO");
+			//fileNo è­°ê³ ì‰¶
+			model.addAttribute("fileNo", memberService.selectFileNo(memberId));
+		}else {
+			//memberIdåª›ï¿½ ï¿½ê½­ï¿½ë€¡ï¿½ë¿‰ ï¿½ë¾¾ï¿½ì“£ ï¿½ë»¹ (æ¿¡ì’“ë ‡ï¿½ì”¤ ï¿½ë¸¯ï§ï¿½ ï¿½ë¸¡ï¿½ë¸¯ï¿½ì“£ ï¿½ë¸£)
+			model.addAttribute("message", "NOT_LOGIN_USER");
+			return "member/login";
+		}
+		return "member/update";
+	}
+	@RequestMapping(value="/member/update", method=RequestMethod.POST)
+	public String updateMember(MemberVo member, FileVo file ,HttpSession session, Model model) {
+	try {
+		MultipartFile mfile = file.getFile();
+		logger.info("ï¿½ë™†ï¿½ì”ª : "+mfile);
+		if (mfile != null && !mfile.isEmpty()) {
+			file.setFileName(mfile.getOriginalFilename());
+			file.setFileSize(mfile.getSize());
+			file.setFileType(mfile.getContentType());
+			file.setFileData(mfile.getBytes());
+			logger.info("/board/write : " + file.toString());
+			
+			memberService.updateMember(member, file);
+		}else {
+			logger.info("ï¿½ë™†ï¿½ì”ª ï¿½ë¸ï¿½ë±¾ï¿½ë¼±ï¿½ìƒ‚");
+			memberService.updateMember(member);
+		}
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
+	return "member/login";
+	}
+	
+	@RequestMapping(value="/member/delete", method=RequestMethod.GET)
+	public String deleteMember(HttpSession session, Model model) {
+		String memberId = (String)session.getAttribute("memberId");
+		if (memberId != null && !memberId.equals("")) {
+			MemberVo member = memberService.selectMember(memberId);
+			model.addAttribute("member", member);
+			return "member/delete";
+		}else {
+			System.out.println("delete ï¿½ë¸˜ï¿½ì” ï¿½ëµ’ ï¿½ë¾¾ï¿½ì“¬");
+			return "member/login";
+		}
+	}
+	@RequestMapping(value="/member/delete", method=RequestMethod.POST)
+	public String deleteMember(String password, HttpSession session, Model model) {
+		MemberVo member = new MemberVo();
+		member.setMemberId((String)session.getAttribute("memberId"));
+		String dbpw = memberService.getPassword(password);
+		if (password != null && password.equals(dbpw)) {
+			member.setPassword(password);
+			memberService.deleteMember(member);
+			session.invalidate();
+			return "member/login";
+		}else {
+			System.out.println("ï¿½ê¹‰ï¿½ëˆœ é®ê¾¨ï¿½è¸°ëŠìƒ‡ éºë‰ì”ªç§»ï¿½");
+			return "member/delete";
+		}
+	}
+
+
 }//class end

@@ -5,7 +5,7 @@
 <fmt:setBundle basename="i18n/member"/>
 <!DOCTYPE html>
 <html>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
 <body>
 <form action="<c:url value='/member/insert'/>" method="post">
 

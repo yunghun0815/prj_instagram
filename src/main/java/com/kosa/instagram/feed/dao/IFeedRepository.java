@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.model.FeedVo;
-
+import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.model.MemberVo;
 
@@ -36,5 +36,6 @@ public interface IFeedRepository {
 	List<FeedVo> selectContentListByUser(String memberId);
 	List<MemberVo> selectFollowerByUser(String memberId);
 	List<MemberVo> selectFollowByUser(String memberId);
+	FileVo getFile(int fileNo);
 	
 }

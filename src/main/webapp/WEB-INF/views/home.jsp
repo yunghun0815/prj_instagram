@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -123,12 +123,22 @@
 		<div class="modal-content">
 			<div class="modal-body">
 				<div id="map" style="width: 500px; height: 400px;"></div>
-				<ul style=" width: 500px; margin:0 auto;">
-					<li class="inline-block" style="width: 140px; height: 140px; background-color: gray; margin: 10px 10px"></li>
-					<li class="inline-block" style="width: 140px; height: 140px; background-color: gray; margin: 10px 10px"></li>
-					<li class="inline-block" style="width: 140px; height: 140px; background-color: gray; margin: 10px 10px"></li>
-					<li class="inline-block" style="width: 140px; height: 140px; background-color: gray; margin: 10px 10px"></li>
-					<li class="inline-block" style="width: 140px; height: 140px; background-color: gray; margin: 10px 10px"></li>
+				<ul style=" width:525px; margin:0 auto;">
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks1.jpg" style="width: 160px; height: 160px;">
+					</li>
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks2.jpg" style="width: 160px; height: 160px;">
+					</li>
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks3.jpg" style="width: 160px; height: 160px;">
+					</li>
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks4.jpg" style="width: 160px; height: 160px;">
+					</li>
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks5.jpg" style="width: 160px; height: 160px;">
+					</li>
 				</ul>
 			</div>
 		</div>
