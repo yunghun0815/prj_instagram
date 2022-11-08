@@ -1,4 +1,98 @@
 $(function(){
+	var memberId = $("#memberId").val();
+	
+	$.ajax({
+		url:"/mainfeed/test/"+memberId+"/0",
+		type: "GET", 
+		success: function(result){
+			for(let i=0; i<result.length; i++){
+				let feed = result[i]['feed']['feed'];
+				let member = result[i]['member']['member'];
+				let uploadFiles = result[i]['uploadFiles'];
+				let reply = result[i]['reply'];
+				
+				function hashtagList(){
+					let hashtag = '';
+					
+					if(feed['hashtagList'].length > 0){
+						for(let j=0; j<feed['hashtagList'].length; j++){
+							hashtag += '#' + feed['hashtagList'][j] + ' ';
+						}
+					}
+					
+					return hashtag;
+				}
+				
+				function replyList(){
+					let replyText = '';
+					
+					if(reply.length > 0){
+						for(let k=0; k<reply.length; k++){
+							replyText += `
+								<div>
+									<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+									<p class="inline-block">
+										<span class="bold">`+ reply[k]['nickname'] +`</span>
+										<span>`+ reply[k]['replyContent'] +`</span><!-- 댓글내용  --><br>
+										<span class="upload-date">`+ reply[k]['replyDate'] +`</span>
+									</p>
+								</div>
+							`;
+						}
+					}
+					return replyText;
+				}
+				
+				
+				let view= `
+					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
+					<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
+						<div class="feed-header">
+							<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
+							<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
+								<a href="#"><span>`+ member['nickname'] +`</span></a><br>
+								<a href="#">
+									<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map">`+ `${feed['placeDetail'] == null ? "" : feed['placeDetail']}` +`</span>									<input type="hidden" value="`+ feed['placeDetail'] +`">
+								</a>
+							</p>
+						</div>
+						<img class="feed-img" src="/image/sample.jpg">				
+					</div>
+					<div class="feed-desc-box">
+						<ol>
+							<li><span class="bold">`+ member['nickname'] +`</span>
+							    <span>`+ feed['feedContent'] +`</span><br>
+							    <span class="hashtag"> ${hashtagList()} </span>
+							</li>
+							<li>
+								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
+								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+								<img src="/image/speech.png" onclick="replyFocus(this)">
+								<img src="/image/plane.png">
+							</li>
+							<li>
+								<span class="bold">좋아요<span id="like_count">`+ feed['likeCount'] +`</span>개</span>	
+								<span class="upload-date">`+ feed['uploadDate'] +`</span>	
+							</li>
+							<li class="reply-list">
+								${replyList()}
+							</li>
+						</ol>
+						<div><!-- 댓글달기 -->
+							<form action="/" method="post">
+								<img src="/image/face.png">
+								<input id="replyInput" type="text" placeholder="댓글 달기...">
+								<input type="submit" value="게시" >
+							</form> 
+						</div>
+					</div>
+				</li>
+			`;
+				
+				$(".feed-ul").append(view);
+			}
+		}
+	});
 	
 	// var memberId = $("#member_id").val(); //회원 아이디
 	
@@ -50,53 +144,6 @@ $(function(){
 	});
 	
 	
-	var test = `
-		<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 -->
-		<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 -->
-			<div class="feed-header">
-				<div class="profile-img" style="background-image: url('/image/dog.png')"></div>
-				<span>hyeonu_0407</span>
-			</div>
-			<img class="feed-img" src="/image/sample.jpg">				
-		</div>
-		<div class="feed-desc-box">
-			<ol>
-				<li><span class="bold">hoon1234</span>
-				    <span>게시글내용</span><br>
-				    <span class="hashtag">#골프 #안녕</span>
-				</li>
-				<li>
-					<img id="heart_blank" src="/image/heart.png" onclick="like(this)" >
-					<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
-					<img src="/image/speech.png" onclick="replyFocus(this)">
-					<img src="/image/plane.png">
-				</li>
-				<li>
-					<span class="bold">좋아요<span id="like_count">90</span>개</span>	
-					<span class="upload-date">2022년 11월 1일</span>	
-				</li>
-				<li class="reply-list">
-				<div>
-					<img src="/image/bear.png" class="profile-img reply-profile">
-					<p class="inline-block"><!-- 최대 24개 가능  -->
-						<span class="bold">sdkfo2494</span><!-- 아이디 -->
-						<span>안녕하세요~</span><!-- 댓글내용  --><br>
-						<span class="upload-date">2022-11-02</span>
-					</p>
-				</div>
-				</li>
-			</ol>
-			<hr class="gray-line">
-			<div><!-- 댓글달기 -->
-				<form action="/" method="post">
-					<img src="/image/face.png">
-					<input id="replyInput" type="text" placeholder="댓글 달기...">
-					<input type="submit" value="게시">
-				</form> 
-			</div>
-		</div>
-	</li>
-	`;
 	/* 스크롤 이벤트 html 추가 */
  	var pageNo = 0;
 	$(window).scroll(function(){
@@ -105,9 +152,103 @@ $(function(){
 	    var windowHeight = $(window).height(); //현재 높이
 	    if(scrollTop + windowHeight >= documentHeight){
 	    	pageNo ++;
-	    	$(".feed-ul").append(test);
-	    	console.log(pageNo);
-	    	//ajax 
+	    	$.ajax({
+	    		url:"/mainfeed/test/"+memberId+"/"+pageNo,
+	    		type: "GET", 
+	    		success: function(result){
+	    			if(result.length >0){
+		    			for(let i=0; i<result.length; i++){
+		    				let feed = result[i]['feed']['feed'];
+		    				let member = result[i]['member']['member'];
+		    				let uploadFiles = result[i]['uploadFiles'];
+		    				let reply = result[i]['reply'];
+		    				
+		    				function hashtagList(){
+		    					let hashtag = '';
+		    					
+		    					if(feed['hashtagList'].length > 0){
+		    						for(let j=0; j<feed['hashtagList'].length; j++){
+		    							hashtag += feed['hashtagList'][j];
+		    						}
+		    					}
+		    					
+		    					return hashtag;
+		    				}
+		    				
+		    				function replyList(){
+		    					let replyText = '';
+		    					
+		    					if(reply.length > 0){
+		    						for(let k=0; k<reply.length; k++){
+		    							replyText += `
+		    								<div>
+		    									<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+		    									<p class="inline-block">
+		    										<span class="bold">`+ reply[k]['nickname'] +`</span>
+		    										<span>`+ reply[k]['replyContent'] +`</span><!-- 댓글내용  --><br>
+		    										<span class="upload-date">`+ reply[k]['replyDate'] +`</span>
+		    									</p>
+		    								</div>
+		    							`;
+		    						}
+		    					}
+		    					return replyText;
+		    				}
+		    				
+		    				
+		    				let view= `
+		    					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 -->
+		    					<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 -->
+		    						<div class="feed-header">
+		    							<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
+		    							<p>
+		    								<a href="#"><span>`+ member['nickname'] +`</span></a><br>
+		    								<a href="#">
+		    									<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map">`+ feed['placeDetail'] +`</span>
+		    									<input type="hidden" value="`+ feed['placeDetail'] +`">
+		    								</a>
+		    							</p>
+		    						</div>
+		    						<img class="feed-img" src="/image/sample.jpg">				
+		    					</div>
+		    					<div class="feed-desc-box">
+		    						<ol>
+		    							<li><span class="bold">`+ member['nickname'] +`</span>
+		    							    <span>`+ feed['feedContent'] +`</span><br>
+		    							    <span class="hashtag"> ${hashtagList()} </span>
+		    							</li>
+		    							<li>
+		    								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
+		    								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+		    								<img src="/image/speech.png" onclick="replyFocus(this)">
+		    								<img src="/image/plane.png">
+		    							</li>
+		    							<li>
+		    								<span class="bold">좋아요<span id="like_count">`+ feed['likeCount'] +`</span>개</span>	
+		    								<span class="upload-date">`+ feed['uploadDate'] +`</span>	
+		    							</li>
+		    							<li class="reply-list">
+		    								${replyList()}
+		    							</li>
+		    						</ol>
+		    						<div><!-- 댓글달기 -->
+		    							<form action="/" method="post">
+		    								<img src="/image/face.png">
+		    								<input id="replyInput" type="text" placeholder="댓글 달기...">
+		    								<input type="submit" value="게시" >
+		    							</form> 
+		    						</div>
+		    					</div>
+		    				</li>
+		    			`;
+		    				
+		    				$(".feed-ul").append(view);
+		    			}
+	    			}else{
+	    				pageNo--;
+	    			}
+	    		}
+	    	});
 	    }
 	}); 
 	  
