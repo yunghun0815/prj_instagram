@@ -2,14 +2,30 @@ package com.kosa.instagram.feed.model;
 
 import java.util.Arrays;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class FileVo {
 	private int fileNo;
 	private int feedNo;
 	private byte[] fileData;
 	private String fileName;
-	private int fileSize;
+	private long fileSize;
 	private String fileType;
+	private MultipartFile file;
+	private String memberId;
 	
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 	public int getFileNo() {
 		return fileNo;
 	}
@@ -34,10 +50,10 @@ public class FileVo {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public int getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
-	public void setFileSize(int fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 	public String getFileType() {

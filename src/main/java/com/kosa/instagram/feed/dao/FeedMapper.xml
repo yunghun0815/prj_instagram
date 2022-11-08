@@ -170,4 +170,16 @@
 			where hashtag like #{hashtag}
 		 ]]>		 
 	</select>
+	
+	<select id="getFile" parameterType="int" resultType="com.kosa.instagram.feed.model.FileVo">
+		select file_no as fileNo,
+			   feed_no as feedNo,
+			   file_data as fileData,
+			   file_name as fileName,
+			   file_size as fileSize,
+			   file_type as fileType,
+			   member_id as memberId
+		from upload_file
+		where file_no = #{fileNo}
+	</select>
 </mapper>

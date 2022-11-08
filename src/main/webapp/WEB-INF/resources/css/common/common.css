@@ -49,6 +49,9 @@ header{
 	padding-top: 10px;
     padding-right: 70px;
 }
+.menu-img{
+	padding-top: 7px;
+}
 .header-inner .menu-img .profile-img{
 	top: 3px;
 }
@@ -84,4 +87,7 @@ header{
     position: relative;
    	margin-right: 3px;
    	z-index: 0;
+}
+#myProfileImg{
+	border-radius: 10px;
 }
