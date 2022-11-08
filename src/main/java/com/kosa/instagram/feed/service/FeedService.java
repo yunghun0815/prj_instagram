@@ -23,33 +23,36 @@ public class FeedService implements IFeedService {
 	@Autowired
 	IFeedRepository feedRepository;
 	
+	@Autowired
+	IMemberRepository memberRepository;
+	
 	@Override  
 	public List<MemberVo> searchListByKeyword(String keyword) {
 		
-		// Áö±İ DB°¡ ¾øÀ¸´Ï±î ÀÏ´Ü DB¸¦ ´ëÃ¼ÇÒ °Å ¸¸µé±â
+		// ì§€ê¸ˆ DBê°€ ì—†ìœ¼ë‹ˆê¹Œ ì¼ë‹¨ DBë¥¼ ëŒ€ì²´í•  ê±° ë§Œë“¤ê¸°
 		List<MemberVo> memberList = new ArrayList<MemberVo>(); 
 		
-		// µ¥ÀÌÅÍ1 »ı¼ºÈÄ ¸®½ºÆ®¿¡ Áı¾î³Ö±â
+		// ë°ì´í„°1 ìƒì„±í›„ ë¦¬ìŠ¤íŠ¸ì— ì§‘ì–´ë„£ê¸°
 		MemberVo data1 = new MemberVo();
 		data1.setMemberId("jjojjo_0101");
-		data1.setNickname("ÂÉÂÉ");
-		data1.setName("ÂÉºí¸®");
+		data1.setNickname("ìª¼ìª¼");
+		data1.setName("ìª¼ë¸”ë¦¬");
 		
 		memberList.add(data1);
 		
 
 		MemberVo data2 = new MemberVo();
 		data2.setMemberId("chocho5");
-		data2.setNickname("°­¾ÆÁö´Ô");
-		data2.setName("±Í¿©¿îÂÉ");
+		data2.setNickname("ê°•ì•„ì§€ë‹˜");
+		data2.setName("ê·€ì—¬ìš´ìª¼");
 		
 		memberList.add(data2);
 				
 		
 		MemberVo data3 = new MemberVo();
 		data3.setMemberId("sns_zzozzo");
-		data3.setNickname("ÂÉÂÉÀÇsns");
-		data3.setName("zzozzoÂÉ");
+		data3.setNickname("ìª¼ìª¼ì˜sns");
+		data3.setName("zzozzoìª¼");
 		data3.setPhoneNumber("010-1111-1111"); 
 		
 		memberList.add(data3);
@@ -57,15 +60,15 @@ public class FeedService implements IFeedService {
 		
 		MemberVo data4 = new MemberVo();
 		data4.setMemberId("chocho6");
-		data4.setNickname("°­¾ÆÁö");
-		data4.setName("¿ÀÂÉÂÉ");
+		data4.setNickname("ê°•ì•„ì§€");
+		data4.setName("ì˜¤ìª¼ìª¼");
 		
 		memberList.add(data4);		
 				
 		
-		// Äõ¸® ´ëÃ¼ À§ÇØ¼­
-		List<MemberVo> resultList = new ArrayList<MemberVo>(); // ¸®ÅÏÇÒ °Íµé (Á¶È¸ÇÏ´Â °³³ä)
-		// DB¿¡¼­ Ã£´Â ´À³¦À¸·Î (ÀüÃ¼°Ë»ö)
+		// ì¿¼ë¦¬ ëŒ€ì²´ ìœ„í•´ì„œ
+		List<MemberVo> resultList = new ArrayList<MemberVo>(); // ë¦¬í„´í•  ê²ƒë“¤ (ì¡°íšŒí•˜ëŠ” ê°œë…)
+		// DBì—ì„œ ì°¾ëŠ” ëŠë‚Œìœ¼ë¡œ (ì „ì²´ê²€ìƒ‰)
 		for (int i = 0; i < memberList.size(); i++) {
 	
 			MemberVo tempMember = memberList.get(i);
@@ -80,7 +83,7 @@ public class FeedService implements IFeedService {
 		}	
 	
 		return resultList;
-		// ¿ø·¡ ³»¿ë: ¹Ø¿¡Ã³·³ °Ë»ö
+		// ì›ë˜ ë‚´ìš©: ë°‘ì—ì²˜ëŸ¼ ê²€ìƒ‰
 		// return memberRepository.searchListByKeyword("%"+ keyword+"%");
 		
 	}
@@ -88,13 +91,6 @@ public class FeedService implements IFeedService {
 	public List<FeedVo> searchListByHashtag(String hashtag) {
 		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
 	}
-	
-	
-	
-	
-	
-	@Autowired
-	IMemberRepository memberRepository;
 	
 	@Override
 	public void writeReply(int feedNo, String memberId, String replyContent) {
@@ -137,20 +133,29 @@ public class FeedService implements IFeedService {
 	}
 
 	@Override
+	public List<FeedVo> getTenFeeds(String memberId, int start, int end) {
+		return feedRepository.getTenFeeds(memberId, start, end);
+	}
+	
+	@Override
 	@Transactional
-	public JsonVo makeJsonVo(FeedVo feed, MemberVo member, List<byte[]> uploadFiles, List<ReplyVo> reply) {
+	public JsonVo makeJsonVo(FeedVo feed) {
 		JsonVo json = new JsonVo();
 		Map<String, FeedVo> feedMap = new HashMap<String, FeedVo>();
 		feed.setHashtagList(feedRepository.getHashtagList(feed.getFeedNo()));
 		feedMap.put("feed", feed);
 		json.setFeed(feedMap);
+		MemberVo member = memberRepository.selectMember(feed.getMemberId());
 		Map<String, MemberVo> memberMap = new HashMap<String, MemberVo>();
 		memberMap.put("member", member);
 		json.setMember(memberMap);
-		json.setUploadFiles(uploadFiles);
-		json.setReply(reply);
+		List<byte[]> fileList = feedRepository.getUploadFiles(feed.getFeedNo());
+		json.setUploadFiles(fileList);
+		List<ReplyVo> replyList = feedRepository.getReply(feed.getFeedNo());
+		json.setReply(replyList);
 		return json;
 	}
+	
 	@Override
 	public int countContent(String memberId) {
 		// TODO Auto-generated method stub

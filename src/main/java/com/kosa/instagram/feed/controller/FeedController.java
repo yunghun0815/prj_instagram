@@ -1,7 +1,7 @@
 package com.kosa.instagram.feed.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.service.IFeedService;
 import com.kosa.instagram.member.model.MemberVo;
@@ -35,13 +39,25 @@ public class FeedController {
 		return "feed/userfeed";
 	}
 	
+	@RequestMapping("/mainfeed/test")
+	public @ResponseBody List<JsonVo> getTenFeeds(@PathVariable String memberId, @PathVariable int page) {
+		List<JsonVo> jsonList = new ArrayList<JsonVo>();
+		int start = page*10+1;
+		int end = start+9;
+		List<FeedVo> feedList = feedService.getTenFeeds(memberId, start, end);
+		for(FeedVo feed : feedList) {
+			jsonList.add(feedService.makeJsonVo(feed));
+		}
+		return jsonList;
+	}
+}
 
 	//@RequestMapping("/memberlist")
 	@RequestMapping(value="memberlist", method=RequestMethod.POST)
 	//public String getMemberList(String keyword, Model model ) {
 	public String getMemberList(String keyword, HttpSession session, Model model) {
 		
-		// ¡ˆ±› DB∞° æ¯¿∏¥œ±Ó ¿œ¥‹ ¿”Ω√∑Œ µ•¿Ã≈Õ
+		// ÏßÄÍ∏à DBÍ∞Ä ÏóÜÏúºÎãàÍπå ÏùºÎã® ÏûÑÏãúÎ°ú Îç∞Ïù¥ÌÑ∞
 		List<MemberVo> memberList = feedService.searchListByKeyword(keyword);  
 		model.addAttribute("memberList", memberList); 
 		  
@@ -51,6 +67,4 @@ public class FeedController {
 	}
 }
 	
-	
-	
-	
+

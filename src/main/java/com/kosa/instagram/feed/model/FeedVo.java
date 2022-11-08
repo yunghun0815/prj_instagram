@@ -13,7 +13,8 @@ public class FeedVo {
 	private int fileNo;
 	private String feedContent;
 	private Date uploadDate;
-	private String place;
+	private String place; //키워드
+	//쪼인해서 상세주소로 넣어줘야함 detail어쩌구.
 	private int likeCount;
 	private List<String> hashtagList;
 	private List<MultipartFile> file;
