@@ -46,4 +46,13 @@
 		</beans:property>
 	</beans:bean>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/member/**"/>
+			<exclude-mapping path="/WEB-INF/resources/**"/>
+			<beans:bean class="com.kosa.instagram.filter.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
 </beans:beans>

@@ -1,12 +1,27 @@
 package com.kosa.instagram.feed.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.feed.model.FeedVo;
+import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.service.IFeedService;
 import com.kosa.instagram.member.model.MemberVo;
 
@@ -28,5 +43,55 @@ public class FeedController {
 		model.addAttribute("contentCount",contentCount);
 		
 		return "feed/userfeed";
+	}
+	
+	@GetMapping("/file/{fileNo}")
+	public ResponseEntity<byte[]> getFile(@PathVariable int fileNo){
+		try {
+			if(fileNo != 0) {
+				FileVo file = feedService.getFile(fileNo);
+				
+				HttpHeaders headers = new HttpHeaders();
+				String[] mtypes = file.getFileType().split("/");
+				headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+				headers.setContentLength(file.getFileSize());
+				
+			
+				String fileName = new String(file.getFileName().getBytes("UTF-8"), "ISO-8859-1");
+				headers.setContentDispositionFormData("attachment", fileName);
+				return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
+			}else {
+				return null;
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			
+			return null; 
+		}
+	}
+	@RequestMapping("/mainfeed/test")
+	public @ResponseBody List<JsonVo> getTenFeeds(@PathVariable String memberId, @PathVariable int page) {
+		List<JsonVo> jsonList = new ArrayList<JsonVo>();
+		int start = page*10+1;
+		int end = start+9;
+		List<FeedVo> feedList = feedService.getTenFeeds(memberId, start, end);
+		for(FeedVo feed : feedList) {
+			jsonList.add(feedService.makeJsonVo(feed));
+		}
+		return jsonList;
+	}
+
+	//@RequestMapping("/memberlist")
+	@RequestMapping(value="memberlist", method=RequestMethod.POST)
+	//public String getMemberList(String keyword, Model model ) {
+	public String getMemberList(String keyword, HttpSession session, Model model) {
+		
+		// 지금 DB가 없으니까 일단 임시로 데이터
+		List<MemberVo> memberList = feedService.searchListByKeyword(keyword);  
+		model.addAttribute("memberList", memberList); 
+		  
+		model.addAttribute("attribute1", "Hello world");
+		
+		return "feed/search"; 
 	}
 }

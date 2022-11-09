@@ -61,5 +61,15 @@ public class MemberService implements IMemberService{
 		return memberRepository.getPassword(password);
 	}
 
+	@Override
+	public MemberVo findMmeberId(String email) {
+		return memberRepository.findMemberId(email);
+	}
 
+	@Override
+	public MemberVo findPassword(String memberId, String email) {
+		return memberRepository.findPassword(memberId, email);
+	}
+	
+	
 }

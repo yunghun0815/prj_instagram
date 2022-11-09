@@ -1,9 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="/css/main.css">
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f15e87f34a476fe8fa135f049ed1d36b&libraries=services"></script>
 <meta charset="UTF-8">
 <html>
 <head>
@@ -18,7 +21,13 @@
 					<div class="feed-header">
 						<!-- <div class="profile-img" style="background-image: url('/image/dog.png')"></div> -->
 						<img class="profile-img " src="/image/dog.png">
-						<span>hyeonu_0407</span>
+						<p>
+							<a href="#"><span>hyeonu_0407</span></a><br>
+							<a href="#">
+								<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map">스타벅스 명동점</span>
+								<input type="hidden" value="서울특별시 종로구 창경궁로 254">
+							</a>
+						</p>
 					</div>
 					<img class="feed-img" src="/image/sample.jpg">				
 				</div>
@@ -40,7 +49,7 @@
 						</li>
 						<li class="reply-list">
 							<div>
-								<img src="/image/bear.png" class="profile-img reply-profile">
+								<img src="/image/bear.png" class="reply-profile">
 								<p class="inline-block"><!-- 최대 24개 가능  -->
 									<span class="bold">sdkfo2494</span><!-- 아이디 -->
 									<span>안녕하세요~</span><!-- 댓글내용  --><br>
@@ -49,7 +58,7 @@
 							</div>
 						</li>
 					</ol>
-					<hr class="gray-line">
+					<!-- <hr class="gray-line"> -->
 					<div><!-- 댓글달기 -->
 						<form action="/" method="post">
 							<img src="/image/face.png">
@@ -86,7 +95,7 @@
 						</li>
 						<li class="reply-list">
 							<div>
-								<img src="/image/bear.png" class="profile-img reply-profile">
+								<img src="/image/bear.png" class="reply-profile">
 								<p class="inline-block"><!-- 최대 24개 가능  -->
 									<span class="bold">sdkfo2494</span><!-- 아이디 -->
 									<span>안녕하세요~</span><!-- 댓글내용  --><br>
@@ -95,7 +104,7 @@
 							</div>
 						</li>
 					</ol>
-					<hr class="gray-line">
+					<!-- <hr class="gray-line"> -->
 					<div><!-- 댓글달기 -->
 						<form action="/" method="post">
 							<img src="/image/face.png">
@@ -108,4 +117,31 @@
 		</ul>
 	</section>
 </body>
+<!-- kakao map modal -->
+<div class="modal fade" id="modal-map" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div id="map" style="width: 500px; height: 400px;"></div>
+				<ul style=" width:525px; margin:0 auto;">
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks1.jpg" style="width: 160px; height: 160px;">
+					</li>
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks2.jpg" style="width: 160px; height: 160px;">
+					</li>
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks3.jpg" style="width: 160px; height: 160px;">
+					</li>
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks4.jpg" style="width: 160px; height: 160px;">
+					</li>
+					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
+						<img src="/image/sample/starbucks5.jpg" style="width: 160px; height: 160px;">
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
 </html>
