@@ -28,66 +28,70 @@ public class FeedService implements IFeedService {
 	IMemberRepository memberRepository;
 	
 	@Override  
-	public List<MemberVo> searchListByKeyword(String keyword) {
-		
-		// 占쏙옙占쏙옙 DB占쏙옙 占쏙옙占쏙옙占싹깍옙 占싹댐옙 DB占쏙옙 占쏙옙체占쏙옙 占쏙옙 占쏙옙占쏙옙占�
-		List<MemberVo> memberList = new ArrayList<MemberVo>(); 
-		
-		// 占쏙옙占쏙옙占쏙옙1 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙트占쏙옙 占쏙옙占쏙옙殮占�
-		MemberVo data1 = new MemberVo();
-		data1.setMemberId("jjojjo_0101");
-		data1.setNickname("占쏙옙占쏙옙");
-		data1.setName("占심븝옙");
-		
-		memberList.add(data1);
-		
 
-		MemberVo data2 = new MemberVo();
-		data2.setMemberId("chocho5");
-		data2.setNickname("占쏙옙占쏙옙占쏙옙占쏙옙");
-		data2.setName("占싶울옙占쏙옙占쏙옙");
-		
-		memberList.add(data2);
-				
-		
-		MemberVo data3 = new MemberVo();
-		data3.setMemberId("sns_zzozzo");
-		data3.setNickname("占쏙옙占쏙옙占쏙옙sns");
-		data3.setName("zzozzo占쏙옙");
-		data3.setPhoneNumber("010-1111-1111"); 
-		
-		memberList.add(data3);
-		
-		
-		MemberVo data4 = new MemberVo();
-		data4.setMemberId("chocho6");
-		data4.setNickname("占쏙옙占쏙옙占쏙옙");
-		data4.setName("占쏙옙占쏙옙占쏙옙");
-		
-		memberList.add(data4);		
-				
-		
-		// 占쏙옙占쏙옙 占쏙옙체 占쏙옙占쌔쇽옙
-		List<MemberVo> resultList = new ArrayList<MemberVo>(); // 占쏙옙占쏙옙占쏙옙 占싶듸옙 (占쏙옙회占싹댐옙 占쏙옙占쏙옙)
-		// DB占쏙옙占쏙옙 찾占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 (占쏙옙체占싯삼옙)
-		for (int i = 0; i < memberList.size(); i++) {
-	
-			MemberVo tempMember = memberList.get(i);
+	   public List<MemberVo> searchListByKeyword(String keyword) {
+	      
+	      // 지금 DB가 없으니까 일단 DB를 대체할 거 만들기
+	      List<MemberVo> memberList = new ArrayList<MemberVo>(); 
+	      
+	      // 데이터1 생성후 리스트에 집어넣기
+	      MemberVo data1 = new MemberVo();
+	      data1.setMemberId("jjojjo_0101");
+	      data1.setNickname("쪼쪼");
+	      data1.setName("쪼블리");
+	      
+	      memberList.add(data1);
+	      
 
-			String id = tempMember.getMemberId();
-			String name = tempMember.getMemberId();
-			
+	      MemberVo data2 = new MemberVo();
+	      data2.setMemberId("chocho5");
+	      data2.setNickname("강아지님");
+	      data2.setName("귀여운쪼");
+	      
+	      memberList.add(data2);
+	            
+	      
+	      MemberVo data3 = new MemberVo();
+	      data3.setMemberId("sns_zzozzo");
+	      data3.setNickname("쪼쪼의sns");
+	      data3.setName("zzozzo쪼");
+	      data3.setPhoneNumber("010-1111-1111"); 
+	      
+	      memberList.add(data3);
+	      
+	      
+	      MemberVo data4 = new MemberVo();
+	      data4.setMemberId("chocho6");
+	      data4.setNickname("강아지");
+	      data4.setName("오쪼쪼");
+	      
+	      memberList.add(data4);      
+	            
+	      
+	      // 쿼리 대체 위해서
+	      List<MemberVo> resultList = new ArrayList<MemberVo>(); // 리턴할 것들 (조회하는 개념)
+	      // DB에서 찾는 느낌으로 (전체검색)
+	      for (int i = 0; i < memberList.size(); i++) {
+	   
+	         MemberVo tempMember = memberList.get(i);
 
-			if (id.contains(keyword) || name.contains(keyword)) {
-				resultList.add(tempMember);
-			}
-		}	
-	
-		return resultList;
-		// 占쏙옙占쏙옙 占쏙옙占쏙옙: 占쌔울옙처占쏙옙 占싯삼옙
-		// return memberRepository.searchListByKeyword("%"+ keyword+"%");
-		
-	}
+
+	         String id = tempMember.getMemberId();
+	         String name = tempMember.getMemberId();
+	         
+
+
+	         if (id.contains(keyword) || name.contains(keyword)) {
+	            resultList.add(tempMember);
+	         }
+	      }   
+	   
+	      return resultList;
+	      // 원래 내용: 밑에처럼 검색
+	      // return memberRepository.searchListByKeyword("%"+ keyword+"%");
+	      
+	   }
+
 	@Override
 	public List<FeedVo> searchListByHashtag(String hashtag) {
 		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");

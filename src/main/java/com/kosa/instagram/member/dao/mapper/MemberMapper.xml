@@ -39,27 +39,48 @@ VALUES
 	WHERE MEMBER_ID = #{memberId}
 </update>
 
+
 <update id="updateMember" parameterType="com.kosa.instagram.member.model.MemberVo">
 	UPDATE MEMBER
 	SET PASSWORD=#{password}, NICKNAME=#{nickname}, PHONE_NUMBER=#{phoneNumber}
 	WHERE MEMBER_ID=#{memberId} 
 </update>
 
+<!-- 회원아이디 중 게시글 정보가 없는 파일 조회=>프로필 사진 찾기 위한 sql문 -->
 <select id="selectFileNo" parameterType="String" resultType="integer">
 	select file_no as "fileNo"
 	from upload_file 
 	where member_id =#{memberId} and feed_no is null
 </select>
 
+<!-- 회원아이디&비밀번호 입력 맴버정보 조회 -->
 <delete id="deleteMember" parameterType="com.kosa.instagram.member.model.MemberVo">
 	DELETE FROM MEMBER
 	WHERE MEMBER_ID = #{memberId} AND PASSWORD = #{password} 
 </delete>
 
+<!-- 회원아이디 입력 패쓰워드 조회 -->
 <select id="getPassword" parameterType="String" resultType="String">
-	SELECT PASSWORD
+	SELECT PASSWORD AS "password"
 	FROM MEMBER
 	WHERE MEMBER_ID = #{memberId}
+</select>
+
+
+
+<!-- 이메일 입력 회원아이디 조회 -->
+<select id="findMemberId" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
+	SELECT  EMAIL 	  AS "email",
+		 	MEMBER_ID AS "memberId" 
+	FROM MEMBER
+	WHERE EMAIL = #{email}
+</select>
+
+<select id="findPassword" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
+	SELECT 	MEMBER_ID 	AS "memberId",
+			PASSWORD	AS "password"
+	FROM	MEMBER
+	WHERE MEMBER_ID=#{memberId} AND EMAIL=#{email}
 </select>
 
 </mapper>

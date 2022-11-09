@@ -1,3 +1,4 @@
+
 package com.kosa.instagram.member.controller;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kosa.instagram.feed.model.FileVo;
@@ -24,13 +26,13 @@ public class MemberController {
 	@Autowired
 	IMemberService memberService;
 
-	//�쉶�썝媛��엯
+	//회원가입
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
 	public String joinForm() {
 		return "member/form";
 	};
 
-	//�쉶�썝媛��엯
+	//회원가입
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
 	public String memberInsert(MemberVo member, HttpSession session) {
 		System.out.println("CONTROLLER");
@@ -40,33 +42,32 @@ public class MemberController {
 		return "home";
 	}
 
-	//濡쒓렇�씤
+	//로그인
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public String login() {
 		return "member/login";
 	}
 
-	//濡쒓렇�씤
+	//로그인
 	@RequestMapping(value="member/login", method=RequestMethod.POST)
 	public String login(String memberId, String password, HttpSession session, Model model) {
 		MemberVo member = memberService.selectMember(memberId);
 		if (member != null) {
-			System.out.println("�븘�씠�뵒 �엳�쓬");
+			System.out.println("아이디 o");
 			String dbPassword = member.getPassword();
 			if (dbPassword==null) {
-				System.out.println("鍮꾨�踰덊샇 ��由�");
+				System.out.println("비밀번호 입력 x");
 				model.addAttribute("message", "NOT_VALID_MEMBER");
 			}else {
-				System.out.println("媛숈쓬");
+				System.out.println("비밀번호 입력 o");
 				if (dbPassword.equals(password)) {
-					//占쏙옙橘占싫� 占쏙옙치
+					//비밀번호 같음
 					session.setAttribute("memberId", memberId);
 					session.setAttribute("name", member.getName());
 					session.setAttribute("nickname", member.getNickname());
 					session.setAttribute("fileNo", member.getFileNo());
-					return "member/login";
+					return "home";
 				}else {
-					//占쏙옙橘占싫� 占쏙옙占쏙옙치
 					model.addAttribute("message", "WRONG_PASSOWRD");
 				}
 			}
@@ -76,43 +77,43 @@ public class MemberController {
 		session.invalidate();
 		return "member/login";
 	}
-	//濡쒓렇�븘�썐
+	//로그아웃
 	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
-		return "home";
+		return "member/login";
 	}
-		//�닔�젙 �럹�씠吏� 鍮꾨�踰덊샇濡� �젙蹂� �솗�씤
-	   @GetMapping("/member/check")
-	   public String check() {
-	      return "member/check";
-	   }
-	   @PostMapping("/member/check")
-	   public String checkPassword(String password, HttpSession session, Model model) {
-	      //濡쒓렇�씤
-	      String memberId = (String)session.getAttribute("memberId");
-	      MemberVo member = memberService.selectMember(memberId);
-	      if(password.equals(member.getPassword())) {
-	         return "redirect:/member/update";
-	      }else {
-	         model.addAttribute("message", "鍮꾨�踰덊샇媛� ���졇�뒿�땲�떎");
-	         return "redirect:/member/check";
-	      }
-	   }
-	
-	//�쉶�썝�젙蹂� �닔�젙
+	//수정 페이지 비밀번호로 정보 확인
+	@GetMapping("/member/check")
+	public String check() {
+		return "member/check";
+	}
+	@PostMapping("/member/check")
+	public String checkPassword(String password, HttpSession session, Model model) {
+		//로그인
+		String memberId = (String)session.getAttribute("memberId");
+		MemberVo member = memberService.selectMember(memberId);
+		if(password.equals(member.getPassword())) {
+			return "redirect:/member/update";
+		}else {
+			model.addAttribute("message", "비밀번호가 틀렸습니다");
+			return "redirect:/member/check";
+		}
+	}
+
+	//회원정보 수정
 	@RequestMapping(value="/member/update", method=RequestMethod.GET)
 	public String updateMember(HttpSession session, Model model) {
 		String memberId = (String)session.getAttribute("memberId");
 		if (memberId != null && !memberId.equals("")) {
 			MemberVo member = memberService.selectMember(memberId);
-			
+
 			model.addAttribute("member", member);
 			model.addAttribute("message", "UPDATE_USER_INFO");
-			//fileNo 議고쉶
+			//fileNo 조회
 			model.addAttribute("fileNo", memberService.selectFileNo(memberId));
 		}else {
-			//memberId媛� �꽭�뀡�뿉 �뾾�쓣 �뻹 (濡쒓렇�씤 �븯吏� �븡�븯�쓣 �븣)
+			//memberId가 세션에 없을 떄 (로그인 하지 않았을 때)
 			model.addAttribute("message", "NOT_LOGIN_USER");
 			return "member/login";
 		}
@@ -120,27 +121,27 @@ public class MemberController {
 	}
 	@RequestMapping(value="/member/update", method=RequestMethod.POST)
 	public String updateMember(MemberVo member, FileVo file ,HttpSession session, Model model) {
-	try {
-		MultipartFile mfile = file.getFile();
-		logger.info("�뙆�씪 : "+mfile);
-		if (mfile != null && !mfile.isEmpty()) {
-			file.setFileName(mfile.getOriginalFilename());
-			file.setFileSize(mfile.getSize());
-			file.setFileType(mfile.getContentType());
-			file.setFileData(mfile.getBytes());
-			logger.info("/board/write : " + file.toString());
-			
-			memberService.updateMember(member, file);
-		}else {
-			logger.info("�뙆�씪 �븞�뱾�뼱�샂");
-			memberService.updateMember(member);
+		try {
+			MultipartFile mfile = file.getFile();
+			logger.info("파일 : "+mfile);
+			if (mfile != null && !mfile.isEmpty()) {
+				file.setFileName(mfile.getOriginalFilename());
+				file.setFileSize(mfile.getSize());
+				file.setFileType(mfile.getContentType());
+				file.setFileData(mfile.getBytes());
+				logger.info("/board/write : " + file.toString());
+
+				memberService.updateMember(member, file);
+			}else {
+				logger.info("파일 안들어옴");
+				memberService.updateMember(member);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
-	}catch (Exception e) {
-		e.printStackTrace();
+		return "member/login";
 	}
-	return "member/login";
-	}
-	
+
 	@RequestMapping(value="/member/delete", method=RequestMethod.GET)
 	public String deleteMember(HttpSession session, Model model) {
 		String memberId = (String)session.getAttribute("memberId");
@@ -149,7 +150,7 @@ public class MemberController {
 			model.addAttribute("member", member);
 			return "member/delete";
 		}else {
-			System.out.println("delete �븘�씠�뵒 �뾾�쓬");
+			System.out.println("delete 아이디 없음");
 			return "member/login";
 		}
 	}
@@ -164,10 +165,60 @@ public class MemberController {
 			session.invalidate();
 			return "member/login";
 		}else {
-			System.out.println("�깉�눜 鍮꾨�踰덊샇 遺덉씪移�");
+			System.out.println("탈퇴 비밀번호 불일치");
 			return "member/delete";
 		}
 	}
+	@RequestMapping(value="/member/findMemberId", method=RequestMethod.GET)
+	public String findMemberId() {
+		return "member/findMemberId";
+	}
+	@RequestMapping(value="/member/findMemberId", method=RequestMethod.POST)
+	public String findMemberId(String email, HttpSession session, Model model) {
+		if (email != null && !email.equals("")) {
+			MemberVo member = memberService.findMmeberId(email);
+			if (member!=null) {
+				model.addAttribute("member", member);
+				//session.setAttribute("member", member);
+				System.out.println("이메일 일치");
+				//session.invalidate();
+				return "/member/findMemberId";
+			}else {
+				System.out.println("가입된 회원정보가 없습니다.");
+				return "/member/findMemberId";
+			}
+		}
+		return "redirect:/member/login";
+	}
+	@RequestMapping(value="/member/findPassword", method=RequestMethod.GET)
+	public String findPassword() {
+		return "member/findPassword";
+	}
+
+	@RequestMapping(value="/member/findPassword", method=RequestMethod.POST)
+	public String findPassword(String memberId, String email, Model model ) {
+		if (memberId !=null && !memberId.equals("")) {
+			if (email != null && !email.equals("")) {
+				MemberVo member = new MemberVo();
+				member = memberService.findPassword(memberId, email);
+				System.out.println("뭔가 입력되긴 함");
+				//member가 null이 아니라는 건 email과 memberid가 맞게 들어갔다는 소리
+				if (member != null) {
+					model.addAttribute("memberId", member.getMemberId());
+					model.addAttribute("password", member.getPassword());
+					System.out.println("아이디 이메일 일치" + member.getPassword() + member.getMemberId());
+					return "member/findPassword";
+				}else {
+					System.out.println("아이디와 이메일 일치 x");
+					return "member/findPassword";
+				}
+			}
+		}
+		System.out.println("null 입력");
+		return "redirect:/member/login";
+	}
+
 
 
 }//class end
+
