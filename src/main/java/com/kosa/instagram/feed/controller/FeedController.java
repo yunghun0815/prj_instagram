@@ -74,8 +74,10 @@ public class FeedController {
 		}
 	}
 
-	@RequestMapping("/mainfeed/{memberId}/{page}")
-	public @ResponseBody List<JsonVo> getTenFeeds(@PathVariable String memberId, @PathVariable int page) {
+	@RequestMapping("/mainfeed/{page}")
+	public @ResponseBody List<JsonVo> getTenFeeds(@PathVariable int page, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
 		List<JsonVo> jsonList = new ArrayList<JsonVo>();
 		int start = page*10+1;
 		int end = start+9;
@@ -86,9 +88,10 @@ public class FeedController {
 		return jsonList;
 	}
 
-	@RequestMapping(value="/writeReply/{feedNo}/{memberId}", method=RequestMethod.POST)
-	public List<ReplyVo> writeReply(@PathVariable int feedNo, @PathVariable String memberId, @RequestParam String replyInput) {
-//		System.out.println("replyInput: "+replyInput);
+	@RequestMapping(value="/writeReply/{feedNo}", method=RequestMethod.POST)
+	public List<ReplyVo> writeReply(@PathVariable int feedNo, @RequestParam String replyInput, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
 		feedService.writeReply(feedNo, memberId, replyInput);
 		return feedService.getReply(feedNo);
 	}
@@ -114,6 +117,7 @@ public class FeedController {
 		feedService.decreaseLike(feedNo, memberId, request.getRequestURI());
 		return feedService.feedLikeCount(feedNo);
 	}
+	
 	//@RequestMapping("/memberlist")
 	@RequestMapping(value="memberlist", method=RequestMethod.POST)
 	//public String getMemberList(String keyword, Model model ) {
