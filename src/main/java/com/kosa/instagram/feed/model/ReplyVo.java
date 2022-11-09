@@ -9,7 +9,7 @@ public class ReplyVo {
 	private String nickname;
 	private String replyContent;
 	private Date replyDate;
-	private byte[] fileData;
+	private int fileNo;
 	
 	public int getReplyNo() {
 		return replyNo;
@@ -23,17 +23,18 @@ public class ReplyVo {
 	public void setFeedNo(int feedNo) {
 		this.feedNo = feedNo;
 	}
+	
+	public int getFileNo() {
+		return fileNo;
+	}
+	public void setFileNo(int fileNo) {
+		this.fileNo = fileNo;
+	}
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
-	}
-	public byte[] getFileData() {
-		return fileData;
-	}
-	public void setFileData(byte[] fileData) {
-		this.fileData = fileData;
 	}
 	public String getReplyContent() {
 		return replyContent;
@@ -50,6 +51,8 @@ public class ReplyVo {
 	@Override
 	public String toString() {
 		return "ReplyVo [replyNo=" + replyNo + ", feedNo=" + feedNo + ", nickname=" + nickname + ", replyContent="
-				+ replyContent + ", replyDate=" + replyDate + ", fileData=" + Arrays.toString(fileData) + "]";
+				+ replyContent + ", replyDate=" + replyDate + ", fileNo=" + fileNo + "]";
 	}
+	
+	
 }

@@ -25,7 +25,10 @@ import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.service.IFeedService;
 import com.kosa.instagram.member.model.MemberVo;
 
+import jdk.internal.org.jline.utils.Log;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class FeedController {
 
@@ -33,7 +36,7 @@ public class FeedController {
 	IFeedService feedService;
 	
 	@RequestMapping("/userfeed/{memberId}")
-	public String getUserFeed(@PathVariable String memberId,Model model ) {
+	public String getUserFeed(@PathVariable String memberId,Model model ){
 		int contentCount=feedService.countContent(memberId);
 		int followerCount=feedService.countFollowerByUser(memberId);
 		int followCount=feedService.countFollowByUser(memberId);
@@ -69,8 +72,9 @@ public class FeedController {
 			return null; 
 		}
 	}
-	@RequestMapping("/mainfeed/test")
+	@RequestMapping("/mainfeed/test/{memberId}/{page}")
 	public @ResponseBody List<JsonVo> getTenFeeds(@PathVariable String memberId, @PathVariable int page) {
+		log.info("test");
 		List<JsonVo> jsonList = new ArrayList<JsonVo>();
 		int start = page*10+1;
 		int end = start+9;

@@ -76,10 +76,5 @@ public class MemberVo {
 	public void setFileNo(int fileNo) {
 		this.fileNo = fileNo;
 	}
-	@Override
-	public String toString() {
-		return "MemberVo [memberId=" + memberId + ", password=" + password + ", nickname=" + nickname + ", name=" + name
-				+ ", gender=" + gender + ", email=" + email + ", birth=" + birth + ", phoneNumber=" + phoneNumber
-				+ ", followerCount=" + followerCount + "]";
-	}
+
 }
