@@ -167,6 +167,11 @@ public class FeedService implements IFeedService {
 	}
 	
 	@Override
+	public int feedLikeCount(int feedNo) {
+		return feedRepository.feedLikeCount(feedNo);
+	}
+	
+	@Override
 	public int countContent(String memberId) {
 		// TODO Auto-generated method stub
 		return 0;

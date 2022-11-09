@@ -24,7 +24,7 @@ public interface IFeedRepository {
 
 	List<Integer> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
-
+	int feedLikeCount(int feedNo);
 
 
 

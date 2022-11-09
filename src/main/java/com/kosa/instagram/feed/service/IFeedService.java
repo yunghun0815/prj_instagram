@@ -29,4 +29,5 @@ public interface IFeedService {
 	JsonVo makeJsonVo(FeedVo feed);
 	List<FeedVo> getTenFeeds(String memberId, int start, int end);
 	List<ReplyVo> getReply(int feedNo);
+	int feedLikeCount(int feedNo);
 }
