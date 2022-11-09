@@ -46,6 +46,7 @@
 		</beans:property>
 	</beans:bean>
 	
+
 	<interceptors>
 		<interceptor>
 			<mapping path="/**"/>
@@ -55,4 +56,10 @@
 		</interceptor>
 	</interceptors>
 	
+	<annotation-driven>
+		<message-converters>
+			<beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+		</message-converters>
+	</annotation-driven>
+
 </beans:beans>

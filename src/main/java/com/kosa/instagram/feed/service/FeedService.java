@@ -28,6 +28,7 @@ public class FeedService implements IFeedService {
 	IMemberRepository memberRepository;
 	
 	@Override  
+
 	   public List<MemberVo> searchListByKeyword(String keyword) {
 	      
 	      // 지금 DB가 없으니까 일단 DB를 대체할 거 만들기
@@ -74,9 +75,11 @@ public class FeedService implements IFeedService {
 	   
 	         MemberVo tempMember = memberList.get(i);
 
+
 	         String id = tempMember.getMemberId();
 	         String name = tempMember.getMemberId();
 	         
+
 
 	         if (id.contains(keyword) || name.contains(keyword)) {
 	            resultList.add(tempMember);
@@ -88,6 +91,7 @@ public class FeedService implements IFeedService {
 	      // return memberRepository.searchListByKeyword("%"+ keyword+"%");
 	      
 	   }
+
 	@Override
 	public List<FeedVo> searchListByHashtag(String hashtag) {
 		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
@@ -100,6 +104,8 @@ public class FeedService implements IFeedService {
 		reply.setFeedNo(feedNo);
 		reply.setNickname(member.getNickname());
 		reply.setReplyContent(replyContent);
+		reply.setFileNo(member.getFileNo());
+//		System.out.println(reply.toString());
 	//	reply.setFileData(member.getFileData());
 		feedRepository.writeReply(reply);
 	}
@@ -110,27 +116,25 @@ public class FeedService implements IFeedService {
 	}
 
 	@Override
-	@Transactional
 	public void increaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.increaseLike(feedNo, memberId);
-		LogVo log = new LogVo();
-		log.setLogURI(logURI);
-		log.setMemberId(memberId);
-		log.setFeedNo(feedNo);
-		log.setLogLikeCheck(1);
-		feedRepository.makeLog(log);
+//		LogVo log = new LogVo();
+//		log.setLogURI(logURI);
+//		log.setMemberId(memberId);
+//		log.setFeedNo(feedNo);
+//		log.setLogLikeCheck(1);
+//		feedRepository.makeLog(log);
 	}
 	
 	@Override
-	@Transactional
 	public void decreaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.decreaseLike(feedNo, memberId);
-		LogVo log = new LogVo();
-		log.setLogURI(logURI);
-		log.setMemberId(memberId);
-		log.setFeedNo(feedNo);
-		log.setLogLikeCheck(0);
-		feedRepository.makeLog(log);
+//		LogVo log = new LogVo();
+//		log.setLogURI(logURI);
+//		log.setMemberId(memberId);
+//		log.setFeedNo(feedNo);
+//		log.setLogLikeCheck(0);
+//		feedRepository.makeLog(log);
 	}
 
 	@Override
@@ -155,6 +159,11 @@ public class FeedService implements IFeedService {
 		List<ReplyVo> replyList = feedRepository.getReply(feed.getFeedNo());
 		json.setReply(replyList);
 		return json;
+	}
+	
+	@Override
+	public List<ReplyVo> getReply(int feedNo) {
+		return feedRepository.getReply(feedNo);
 	}
 	
 	@Override
