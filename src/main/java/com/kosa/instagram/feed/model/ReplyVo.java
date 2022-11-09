@@ -23,18 +23,17 @@ public class ReplyVo {
 	public void setFeedNo(int feedNo) {
 		this.feedNo = feedNo;
 	}
-	
-	public int getFileNo() {
-		return fileNo;
-	}
-	public void setFileNo(int fileNo) {
-		this.fileNo = fileNo;
-	}
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public int getFileNo() {
+		return fileNo;
+	}
+	public void setFileNo(int fileNo) {
+		this.fileNo = fileNo;
 	}
 	public String getReplyContent() {
 		return replyContent;
@@ -48,11 +47,10 @@ public class ReplyVo {
 	public void setReplyDate(Date replyDate) {
 		this.replyDate = replyDate;
 	}
+	
 	@Override
 	public String toString() {
 		return "ReplyVo [replyNo=" + replyNo + ", feedNo=" + feedNo + ", nickname=" + nickname + ", replyContent="
 				+ replyContent + ", replyDate=" + replyDate + ", fileNo=" + fileNo + "]";
 	}
-	
-	
 }

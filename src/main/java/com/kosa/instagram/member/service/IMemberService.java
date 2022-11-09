@@ -18,5 +18,8 @@ public interface IMemberService {
 	public void deleteMember(MemberVo member);
 	
 	public String getPassword(String password);
-
+	
+	public MemberVo findMmeberId(String email);
+	
+	public MemberVo findPassword(String memberId, String email);
 }

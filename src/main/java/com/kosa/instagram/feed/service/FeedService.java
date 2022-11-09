@@ -28,66 +28,70 @@ public class FeedService implements IFeedService {
 	IMemberRepository memberRepository;
 	
 	@Override  
-	public List<MemberVo> searchListByKeyword(String keyword) {
-		
-		// ���� DB�� �����ϱ� �ϴ� DB�� ��ü�� �� �����
-		List<MemberVo> memberList = new ArrayList<MemberVo>(); 
-		
-		// ������1 ������ ����Ʈ�� ����ֱ�
-		MemberVo data1 = new MemberVo();
-		data1.setMemberId("jjojjo_0101");
-		data1.setNickname("����");
-		data1.setName("�ɺ�");
-		
-		memberList.add(data1);
-		
 
-		MemberVo data2 = new MemberVo();
-		data2.setMemberId("chocho5");
-		data2.setNickname("��������");
-		data2.setName("�Ϳ�����");
-		
-		memberList.add(data2);
-				
-		
-		MemberVo data3 = new MemberVo();
-		data3.setMemberId("sns_zzozzo");
-		data3.setNickname("������sns");
-		data3.setName("zzozzo��");
-		data3.setPhoneNumber("010-1111-1111"); 
-		
-		memberList.add(data3);
-		
-		
-		MemberVo data4 = new MemberVo();
-		data4.setMemberId("chocho6");
-		data4.setNickname("������");
-		data4.setName("������");
-		
-		memberList.add(data4);		
-				
-		
-		// ���� ��ü ���ؼ�
-		List<MemberVo> resultList = new ArrayList<MemberVo>(); // ������ �͵� (��ȸ�ϴ� ����)
-		// DB���� ã�� �������� (��ü�˻�)
-		for (int i = 0; i < memberList.size(); i++) {
-	
-			MemberVo tempMember = memberList.get(i);
+	   public List<MemberVo> searchListByKeyword(String keyword) {
+	      
+	      // 지금 DB가 없으니까 일단 DB를 대체할 거 만들기
+	      List<MemberVo> memberList = new ArrayList<MemberVo>(); 
+	      
+	      // 데이터1 생성후 리스트에 집어넣기
+	      MemberVo data1 = new MemberVo();
+	      data1.setMemberId("jjojjo_0101");
+	      data1.setNickname("쪼쪼");
+	      data1.setName("쪼블리");
+	      
+	      memberList.add(data1);
+	      
 
-			String id = tempMember.getMemberId();
-			String name = tempMember.getMemberId();
-			
+	      MemberVo data2 = new MemberVo();
+	      data2.setMemberId("chocho5");
+	      data2.setNickname("강아지님");
+	      data2.setName("귀여운쪼");
+	      
+	      memberList.add(data2);
+	            
+	      
+	      MemberVo data3 = new MemberVo();
+	      data3.setMemberId("sns_zzozzo");
+	      data3.setNickname("쪼쪼의sns");
+	      data3.setName("zzozzo쪼");
+	      data3.setPhoneNumber("010-1111-1111"); 
+	      
+	      memberList.add(data3);
+	      
+	      
+	      MemberVo data4 = new MemberVo();
+	      data4.setMemberId("chocho6");
+	      data4.setNickname("강아지");
+	      data4.setName("오쪼쪼");
+	      
+	      memberList.add(data4);      
+	            
+	      
+	      // 쿼리 대체 위해서
+	      List<MemberVo> resultList = new ArrayList<MemberVo>(); // 리턴할 것들 (조회하는 개념)
+	      // DB에서 찾는 느낌으로 (전체검색)
+	      for (int i = 0; i < memberList.size(); i++) {
+	   
+	         MemberVo tempMember = memberList.get(i);
 
-			if (id.contains(keyword) || name.contains(keyword)) {
-				resultList.add(tempMember);
-			}
-		}	
-	
-		return resultList;
-		// ���� ����: �ؿ�ó�� �˻�
-		// return memberRepository.searchListByKeyword("%"+ keyword+"%");
-		
-	}
+
+	         String id = tempMember.getMemberId();
+	         String name = tempMember.getMemberId();
+	         
+
+
+	         if (id.contains(keyword) || name.contains(keyword)) {
+	            resultList.add(tempMember);
+	         }
+	      }   
+	   
+	      return resultList;
+	      // 원래 내용: 밑에처럼 검색
+	      // return memberRepository.searchListByKeyword("%"+ keyword+"%");
+	      
+	   }
+
 	@Override
 	public List<FeedVo> searchListByHashtag(String hashtag) {
 		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
@@ -100,6 +104,8 @@ public class FeedService implements IFeedService {
 		reply.setFeedNo(feedNo);
 		reply.setNickname(member.getNickname());
 		reply.setReplyContent(replyContent);
+		reply.setFileNo(member.getFileNo());
+//		System.out.println(reply.toString());
 	//	reply.setFileData(member.getFileData());
 		feedRepository.writeReply(reply);
 	}
@@ -110,27 +116,25 @@ public class FeedService implements IFeedService {
 	}
 
 	@Override
-	@Transactional
 	public void increaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.increaseLike(feedNo, memberId);
-		LogVo log = new LogVo();
-		log.setLogURI(logURI);
-		log.setMemberId(memberId);
-		log.setFeedNo(feedNo);
-		log.setLogLikeCheck(1);
-		feedRepository.makeLog(log);
+//		LogVo log = new LogVo();
+//		log.setLogURI(logURI);
+//		log.setMemberId(memberId);
+//		log.setFeedNo(feedNo);
+//		log.setLogLikeCheck(1);
+//		feedRepository.makeLog(log);
 	}
 	
 	@Override
-	@Transactional
 	public void decreaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.decreaseLike(feedNo, memberId);
-		LogVo log = new LogVo();
-		log.setLogURI(logURI);
-		log.setMemberId(memberId);
-		log.setFeedNo(feedNo);
-		log.setLogLikeCheck(0);
-		feedRepository.makeLog(log);
+//		LogVo log = new LogVo();
+//		log.setLogURI(logURI);
+//		log.setMemberId(memberId);
+//		log.setFeedNo(feedNo);
+//		log.setLogLikeCheck(0);
+//		feedRepository.makeLog(log);
 	}
 
 	@Override
@@ -155,6 +159,11 @@ public class FeedService implements IFeedService {
 		List<ReplyVo> replyList = feedRepository.getReply(feed.getFeedNo());
 		json.setReply(replyList);
 		return json;
+	}
+	
+	@Override
+	public List<ReplyVo> getReply(int feedNo) {
+		return feedRepository.getReply(feedNo);
 	}
 	
 	@Override

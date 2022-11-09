@@ -6,7 +6,7 @@
 <insert id="writeReply" parameterType="com.kosa.instagram.feed.model.ReplyVo">
 <![CDATA[	
 	INSERT INTO reply(reply_no, feed_no, member_id, reply_content, reply_date)
-	VALUES (REPLY_NO_SEQ.NEXTVAL, #{feedNo}, #{memberId}, #{replyContent}, SYSDATE)
+	VALUES (REPLY_NO_SEQ.NEXTVAL, #{feedNo}, (SELECT member_id FROM member WHERE nickname=#{nickname}), #{replyContent}, SYSDATE)
 ]]>
 </insert>
 
@@ -36,7 +36,7 @@
 ]]>
 </insert>
 
-<select id="getTenFeeds" parameterType="map" resultType="com.kosa.instagram.feed.model.FeedVo">
+<select id="getTenFeeds" resultType="com.kosa.instagram.feed.model.FeedVo">
 <![CDATA[
 	select *
 		from (select 
@@ -44,10 +44,11 @@
 	        f.member_id as "memberId", 
     	    f.feed_content as "feedContent", 
         	f.upload_date as "uploadDate", 
-        	f.place_detail as "placeDetail", 
+        	f.place_detail as "placeDetail",
+        	p.place_title AS "placeTitle", 
         	(select count(*) from like_table where feed_no = f.feed_no) as "likeCount",
         	row_number() over(order by f.upload_date desc) as num
-        		from feed f 
+        		from feed f LEFT OUTER JOIN place p ON f.place_detail=p.place_detail
         		where member_id in (select to_id from follow where from_id = #{memberId})
     		) 
 		where num between #{start} and #{end}
@@ -80,16 +81,16 @@
 </select>
 <select id="getReply" parameterType="int" resultType="com.kosa.instagram.feed.model.ReplyVo">
 <![CDATA[
-    select 
-       r.reply_no as "replyNo", 
-       m.nickname as "nickname", 
-       r.reply_content as "replyContent", 
-       r.reply_date as "replyDate", 
-       f.file_no as "fileNo" 
-   from reply r 
-      join member m on r.member_id = m.member_id 
-      join upload_file f on f.member_id = r.member_id 
-   where r.feed_no = #{feedNo} and f.feed_no is null
+	select 
+	    r.reply_no as "replyNo", 
+    	m.nickname as "nickname", 
+    	r.reply_content as "replyContent", 
+    	r.reply_date as "replyDate", 
+    	f.file_no AS "fileNo"
+	from reply r 
+		join member m on r.member_id = m.member_id 
+		join upload_file f on f.member_id=r.member_id
+	where r.feed_no = #{feedNo} AND f.feed_no IS NULL;
 ]]>
 </select>
 

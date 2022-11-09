@@ -155,7 +155,8 @@
 			<div class="inline-block line"></div>
 			<span class="or">또는</span>
 			<div class="inline-block line"></div><br>
-			<a class="findPassword" href="#">비밀번호를 잊으셨나요?</a>
+			<a class="findPassword" href="/member/findMemberId">아이디 /</a>
+			<a class="findPassword" href="/member/findPassword">비밀번호를 잊으셨나요?</a>
 		</div>
 		<div class="signupBox">
 			<span>계정을 없으신가요?</span>
