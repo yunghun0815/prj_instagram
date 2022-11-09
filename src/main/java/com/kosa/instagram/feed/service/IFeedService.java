@@ -24,4 +24,9 @@ public interface IFeedService {
 	void increaseLike(int feedNo, String memberId, String logURI);
 	void decreaseLike(int feedNo, String memberId, String logURI);
 	JsonVo makeJsonVo(FeedVo feed, MemberVo member, List<byte[]> uploadFiles, List<ReplyVo> reply);
+	void insertFeedContent(FeedVo feed);
+	void insertFeedData(FileVo file);
+	void insertFeedPlace(FeedVo feed);
+	int checkPlace(String placeDetail);
+	int selectSeqNum();
 }

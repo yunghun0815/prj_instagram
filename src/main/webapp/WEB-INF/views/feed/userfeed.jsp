@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>개인피드</h1>
-멤버아이디 ${memberId }<br>
+멤버아이디 ${memberId}<br>
 게시글 수${contentCount }<br>
 팔로워 수${followerCount}<br>
 팔로우 수 ${followCount }<br>
@@ -29,12 +29,6 @@
 	</tr>
 </c:forEach>
 </table>
-<table>
-	<c:forEach var="contentList" itmes="${contentList }">
-		<tr>
-			<td>${contentList }</td>
-		</tr>
-	</c:forEach>
-</table>
+<a href='<c:url value="/writefeed/${memberId}"/>'>새글쓰기</a><br>
 </body>
 </html>

@@ -114,4 +114,31 @@ public List<FeedVo> searchListByHashtag(String hashtag) {
 	// TODO Auto-generated method stub
 	return null;
 }
+
+@Transactional
+public void insertFeedContent(FeedVo feed) {
+	feedRepository.insertFeedContent(feed);
+	}
+
+@Transactional
+public void insertFeedData(FileVo file) {
+	feedRepository.insertFeedData(file);
+}
+
+@Override
+public int selectSeqNum() {
+	
+	return feedRepository.selectSeqNum();
+}
+
+@Transactional
+public void insertFeedPlace(FeedVo feed) {
+	feedRepository.insertFeedPlace(feed);
+	
+}
+
+@Override
+public int checkPlace(String placeDetail) {
+	return feedRepository.checkPlace(placeDetail);
+}
 }

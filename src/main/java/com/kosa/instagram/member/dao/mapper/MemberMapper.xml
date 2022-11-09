@@ -31,7 +31,7 @@
 			from member
 			where member_id=(select from_id 
 				   from follow 
-				   where to_id=#{memberId});
+				   where to_id=#{memberId})
 	]]>
 </select>
 
@@ -41,7 +41,7 @@
 			from member
 			where member_id=(select to_id
 							from follow
-							where from_id=#{memebrId});
+							where from_id=#{memberId})
 	]]>
 </select>
 </mapper>

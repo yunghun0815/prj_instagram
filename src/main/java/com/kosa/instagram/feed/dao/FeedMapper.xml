@@ -126,7 +126,7 @@
 			from upload_file
 			where feed_no in (select feed_no
 							  from feed
-							  where member_id=${memberId});
+							  where member_id= #{memberId} )
 			
 		]]>
 	</select>
@@ -152,4 +152,45 @@
 			where hashtag like #{hashtag}
 		 ]]>		 
 	</select>
+	
+	<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
+		<![CDATA[
+			insert into feed(feed_no,member_id,feed_content,upload_date,place_detail)
+			values(feed_no_seq.nextval,#{memberId}, #{feedContent}, SYSDATE, #{placeDetail})
+		]]>
+	</insert>
+	
+	<insert id="insertFeedData" parameterType="com.kosa.instagram.feed.model.FileVo">
+		<![CDATA[
+			insert into upload_file (file_no,feed_no,file_data,file_name,file_size,file_type,member_id)
+			values(file_no_seq.nextval, #{feedNo}, #{fileData},#{fileName}, #{fileSize}, #{fileType},#{memberId}) 
+		]]>
+	</insert>
+	
+	<insert id="insertFeedPlace" parameterType="com.kosa.instagram.feed.model.FeedVo">
+		<![CDATA[
+			insert into place (place_detail, place_title) 
+			values(#{placeDetail}, #{placeTitle})
+		]]>
+	</insert>
+	
+	<select id="selectSeqNum" resultType="int" >
+	<![CDATA[
+		SELECT last_number
+  		FROM all_sequences
+ 		WHERE sequence_name = 'FEED_NO_SEQ'
+	]]>
+	</select>
+	
+	<select id="checkPlace" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*)
+			from place
+			where place_detail = #{placeDetail}
+		]]>
+	</select>
+
+	
+	
+	
 </mapper>

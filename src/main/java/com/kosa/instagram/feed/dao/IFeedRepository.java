@@ -32,8 +32,13 @@ public interface IFeedRepository {
 	int countContent(String memberId);
 	int countFollower(String memberId);
 	int countFollow(String memberId);
+	int selectSeqNum();
 
 	List<FileVo> selectContentListByUser(String memberId);
+	void insertFeedContent(FeedVo feed);
+	void insertFeedData(FileVo file);
+	void insertFeedPlace(FeedVo feed);
+	int checkPlace(String placeDetail);
 	
 	
 	
