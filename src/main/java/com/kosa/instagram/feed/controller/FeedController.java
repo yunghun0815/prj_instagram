@@ -99,12 +99,21 @@ public class FeedController {
 		return feedService.getReply(feedNo);
 	}
 	
-	@RequestMapping("/increaseLike/{feedNo}/{memberId}")
-	public void increaseLike(@PathVariable int feedNo, @PathVariable String memberId, HttpServletRequest request) {
+	@RequestMapping("/increaseLike/{feedNo}")
+	public @ResponseBody int increaseLike(@PathVariable int feedNo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
 		feedService.increaseLike(feedNo, memberId, request.getRequestURI());
-//		return 0; //누른 후 좋아요 갯수
+		return feedService.feedLikeCount(feedNo); //누른 후 좋아요 갯수
 	}
 	
+	@RequestMapping("/decreaseLike/{feedNo}")
+	public @ResponseBody int decreaseLike(@PathVariable int feedNo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
+		feedService.decreaseLike(feedNo, memberId, request.getRequestURI());
+		return feedService.feedLikeCount(feedNo);
+	}
 	//@RequestMapping("/memberlist")
 	@RequestMapping(value="memberlist", method=RequestMethod.POST)
 	//public String getMemberList(String keyword, Model model ) {
