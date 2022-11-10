@@ -36,7 +36,7 @@ public class FeedController {
 	@Autowired
 	IFeedService feedService;
 	
-	@RequestMapping("/userfeed/{memberId}")
+	@RequestMapping("/userfeed/{memberId}")// ㅛㅜ정
 	public String getUserFeed(@PathVariable String memberId,Model model ) {
 		int contentCount=feedService.countContent(memberId);
 		int followerCount=feedService.countFollowerByUser(memberId);
