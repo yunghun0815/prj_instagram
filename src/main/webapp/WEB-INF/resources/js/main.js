@@ -46,6 +46,22 @@ $(function(){
 					return replyText;
 				}
 				
+				function likeImage(){
+					let heart = '';
+					
+					if(feed['likeCheck'] == 0){
+						console.log(feed['likeCheck']);
+						heart = `<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
+						<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+						`;
+					}else{
+						//1 = 좋아요 있음
+						heart = `
+						<img id="heart_blank" src="/image/heart.png"  style="display: none" onclick="like(this)">
+						<img id="heart_color" src="/image/heart_color.png" onclick="likeCancel(this)">`;
+					}
+					return heart;
+				}
 				
 				let view= `
 					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
@@ -69,8 +85,7 @@ $(function(){
 							</li>
 							<li>
 							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
-								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
-								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+								${likeImage()}
 								<img src="/image/speech.png" onclick="replyFocus(this)">
 								<img src="/image/plane.png">
 							</li>
@@ -203,6 +218,22 @@ $(function(){
 		    					return replyText;
 		    				}
 		    				
+		    				function likeImage(){
+		    					let heart = '';
+		    					
+		    					if(feed['likeCheck'] == 0){
+		    						console.log(feed['likeCheck']);
+		    						heart = `<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
+		    						<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+		    						`;
+		    					}else{
+		    						//1 = 좋아요 있음
+		    						heart = `
+		    						<img id="heart_blank" src="/image/heart.png"  style="display: none" onclick="like(this)">
+		    						<img id="heart_color" src="/image/heart_color.png" onclick="likeCancel(this)">`;
+		    					}
+		    					return heart;
+		    				}
 		    				
 		    				let view= `
 		    					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 -->
@@ -227,8 +258,7 @@ $(function(){
 		    							</li>
 		    							<li>
 		    							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
-		    								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
-		    								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+		    							    ${likeImage()}
 		    								<img src="/image/speech.png" onclick="replyFocus(this)">
 		    								<img src="/image/plane.png">
 		    							</li>
@@ -241,12 +271,13 @@ $(function(){
 		    							</li>
 		    						</ol>
 		    						<div><!-- 댓글달기 -->
-		    							<form action="/" method="post">
-		    								<img src="/image/face.png">
-		    								<input id="replyInput" type="text" placeholder="댓글 달기...">
-		    								<input type="submit" value="게시" >
-		    							</form> 
-		    						</div>
+										<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
+											<img src="/image/face.png">
+											<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
+											<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
+											<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
+										</form> 
+									</div>
 		    					</div>
 		    				</li>
 		    			`;
@@ -339,6 +370,7 @@ $(function(){
 			url: "/increaseLike/" + likeFeedNo,
 			type: "GET",
 			success: function(result){
+				console.log('test');
 				likeCountHtml.html(result);
 			}
 		});

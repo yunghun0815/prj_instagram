@@ -83,7 +83,7 @@ public class FeedController {
 		int end = start+9;
 		List<FeedVo> feedList = feedService.getTenFeeds(memberId, start, end);
 		for(FeedVo feed : feedList) {
-			jsonList.add(feedService.makeJsonVo(feed));
+			jsonList.add(feedService.makeJsonVo(feed, memberId));
 		}
 		return jsonList;
 	}
@@ -104,6 +104,7 @@ public class FeedController {
 	
 	@RequestMapping("/increaseLike/{feedNo}")
 	public @ResponseBody int increaseLike(@PathVariable int feedNo, HttpServletRequest request) {
+		System.out.println("좋아요 요청");
 		HttpSession session = request.getSession();
 		String memberId = (String)session.getAttribute("memberId");
 		feedService.increaseLike(feedNo, memberId, request.getRequestURI());

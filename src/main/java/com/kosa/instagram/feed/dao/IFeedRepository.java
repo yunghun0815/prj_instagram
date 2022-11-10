@@ -37,5 +37,6 @@ public interface IFeedRepository {
 	List<MemberVo> selectFollowerByUser(String memberId);
 	List<MemberVo> selectFollowByUser(String memberId);
 	FileVo getFile(int fileNo);
+	int likeCheck(@Param("memberId") String memberId, @Param("feedNo") int feedNo);
 	
 }

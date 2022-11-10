@@ -189,4 +189,10 @@
 		from upload_file
 		where file_no = #{fileNo}
 	</select>
+	
+	<select id="likeCheck" parameterType="map" resultType="int">
+		select count(*) 
+		from like_table 
+		where feed_no = #{feedNo} and member_id = #{memberId}
+	</select>
 </mapper>
