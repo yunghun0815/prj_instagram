@@ -235,7 +235,7 @@
 		where file_no = #{fileNo}
 	</select>
 	
-<<<<<<< HEAD
+
 	<insert id="insertFeedHash"  >
 		<![CDATA[
 			insert into hashtag (tag_no ,feed_no, hashtag)
@@ -244,11 +244,10 @@
 	</insert>
 
 
-=======
 	<select id="likeCheck" parameterType="map" resultType="int">
 		select count(*) 
 		from like_table 
 		where feed_no = #{feedNo} and member_id = #{memberId}
 	</select>
->>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
+
 </mapper>
