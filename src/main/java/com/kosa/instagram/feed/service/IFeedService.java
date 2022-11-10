@@ -23,6 +23,8 @@ public interface IFeedService {
 	void deleteReply(int replyNo);
 	void increaseLike(int feedNo, String memberId, String logURI);
 	void decreaseLike(int feedNo, String memberId, String logURI);
+	
+	
 	JsonVo makeJsonVo(FeedVo feed, MemberVo member, List<byte[]> uploadFiles, List<ReplyVo> reply);
 	void insertFeedContent(FeedVo feed);
 	void insertFeedData(FileVo file);

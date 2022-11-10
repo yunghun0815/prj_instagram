@@ -1,5 +1,6 @@
 package com.kosa.instagram.feed.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,8 +75,12 @@ public class FeedController {
 		feed.setPlaceDetail(placeDetail);
 		feed.setMemberId(memberId);
 		
-		String[] list=req.getParameterValues("hashtag[]");
-		System.out.println(list);
+		System.out.println("0");
+		String [] list= req.getParameterValues("hashtag[]");
+		System.out.println("1");
+		System.out.println(Arrays.toString(list));
+		System.out.println("2");
+		
 		
 	
 		

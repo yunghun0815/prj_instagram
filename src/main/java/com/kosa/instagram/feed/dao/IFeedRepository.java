@@ -40,6 +40,11 @@ public interface IFeedRepository {
 	void insertFeedPlace(FeedVo feed);
 	int checkPlace(String placeDetail);
 	
+	List<MemberVo> selectFollowerByUser(String memberId);
+	List<MemberVo> selectFollowByUser(String memberId);
+	FileVo getFile(int fileNo);
+
+	
 	
 	
 }
