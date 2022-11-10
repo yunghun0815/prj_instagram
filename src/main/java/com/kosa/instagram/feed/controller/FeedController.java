@@ -87,14 +87,14 @@ public class FeedController {
 	}
 
 	@RequestMapping(value="/writeReply/{feedNo}/{memberId}", method=RequestMethod.POST)
-	public List<ReplyVo> writeReply(@PathVariable int feedNo, @PathVariable String memberId, @RequestParam String replyInput) {
+	public @ResponseBody List<ReplyVo> writeReply(@PathVariable int feedNo, @PathVariable String memberId, @RequestParam String replyInput) {
 //		System.out.println("replyInput: "+replyInput);
 		feedService.writeReply(feedNo, memberId, replyInput);
 		return feedService.getReply(feedNo);
 	}
 	
 	@RequestMapping("/deleteReply/{feedNo}/{replyNo}")
-	public List<ReplyVo> deleteReply(@PathVariable int feedNo, @PathVariable int replyNo) {
+	public @ResponseBody List<ReplyVo> deleteReply(@PathVariable int feedNo, @PathVariable int replyNo) {
 		feedService.deleteReply(replyNo);
 		return feedService.getReply(feedNo);
 	}

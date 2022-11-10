@@ -3,11 +3,14 @@ package com.kosa.instagram.feed.model;
 import java.sql.Date;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ReplyVo {
 	private int replyNo;
 	private int feedNo;
 	private String nickname;
 	private String replyContent;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date replyDate;
 	private int fileNo;
 	

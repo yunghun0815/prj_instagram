@@ -81,16 +81,17 @@
 </select>
 <select id="getReply" parameterType="int" resultType="com.kosa.instagram.feed.model.ReplyVo">
 <![CDATA[
-	select 
+    select 
 	    r.reply_no as "replyNo", 
     	m.nickname as "nickname", 
+    	r.feed_no as "feedNo",
     	r.reply_content as "replyContent", 
     	r.reply_date as "replyDate", 
     	f.file_no AS "fileNo"
 	from reply r 
 		join member m on r.member_id = m.member_id 
-		join upload_file f on f.member_id=r.member_id
-	where r.feed_no = #{feedNo} AND f.feed_no IS NULL;
+		left join upload_file f on f.member_id=r.member_id and f.feed_no is null
+	where r.feed_no = #{feedNo}
 ]]>
 </select>
 

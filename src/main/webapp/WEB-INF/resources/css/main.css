@@ -88,7 +88,7 @@ body{
     padding-left: 10px;
     font-size: 14px;
 }
-.feed-desc-box form input[type="submit"]{
+.feed-desc-box form .replySubmit{
 	color: #0095F6;
 	background: none;
 	border: none;
@@ -102,6 +102,14 @@ body{
 .reply-list{
 	height: 460px;
     overflow: auto;
+}
+#replyDelete{
+    font-size: 10px;
+    position: relative;
+    font-weight: bold;
+    left: 207px;
+    cursor: pointer;
+    bottom: 21px;
 }
 .reply-list p{
 	margin-bottom: 0;
