@@ -2,13 +2,16 @@
 package com.kosa.instagram.member.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,13 +31,17 @@ public class MemberController {
 
 	//회원가입
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
-	public String joinForm() {
+	public String joinForm(Model model) {
+		model.addAttribute("member", new MemberVo());
 		return "member/form";
 	};
 
 	//회원가입
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
-	public String memberInsert(MemberVo member, HttpSession session) {
+	public String memberInsert(@ModelAttribute("member") @Valid MemberVo member, BindingResult result, HttpSession session) {
+		if (result.hasErrors()) {
+		return "member/form";
+		}
 		System.out.println("CONTROLLER");
 		System.out.println(member.toString());
 		memberService.insertMember(member);
@@ -66,7 +73,7 @@ public class MemberController {
 					session.setAttribute("name", member.getName());
 					session.setAttribute("nickname", member.getNickname());
 					session.setAttribute("fileNo", member.getFileNo());
-					return "home";
+					return "redirect:/";
 				}else {
 					model.addAttribute("message", "WRONG_PASSOWRD");
 				}
@@ -104,6 +111,7 @@ public class MemberController {
 	//회원정보 수정
 	@RequestMapping(value="/member/update", method=RequestMethod.GET)
 	public String updateMember(HttpSession session, Model model) {
+		model.addAttribute("memberUpdate",new MemberVo());
 		String memberId = (String)session.getAttribute("memberId");
 		if (memberId != null && !memberId.equals("")) {
 			MemberVo member = memberService.selectMember(memberId);
@@ -120,7 +128,12 @@ public class MemberController {
 		return "member/update";
 	}
 	@RequestMapping(value="/member/update", method=RequestMethod.POST)
-	public String updateMember(MemberVo member, FileVo file ,HttpSession session, Model model) {
+	public String updateMember(@ModelAttribute("memberUpdate") @Valid MemberVo member, BindingResult result, FileVo file ,HttpSession session, Model model) {
+		if (result.hasErrors()) {
+			System.out.println("여기에 잇어?");
+			return "member/update";
+		}else {
+			System.out.println("여기에 잇어?!");
 		try {
 			MultipartFile mfile = file.getFile();
 			logger.info("파일 : "+mfile);
@@ -139,7 +152,10 @@ public class MemberController {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "member/login";
+		System.out.println("수정 완료 전");
+		session.invalidate();
+		return "redirect:/member/login";
+	}
 	}
 
 	@RequestMapping(value="/member/delete", method=RequestMethod.GET)

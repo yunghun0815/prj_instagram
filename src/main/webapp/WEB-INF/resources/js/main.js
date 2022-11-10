@@ -2,7 +2,7 @@ $(function(){
 	var memberId = $("#memberId").val();
 	
 	$.ajax({
-		url:"/mainfeed/test/"+memberId+"/0",
+		url:"/mainfeed/"+memberId+"/0",
 		type: "GET", 
 		success: function(result){
 			for(let i=0; i<result.length; i++){
