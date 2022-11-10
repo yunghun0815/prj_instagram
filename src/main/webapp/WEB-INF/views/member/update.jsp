@@ -14,7 +14,7 @@
 <body>
 <form:form action="/member/update" enctype="multipart/form-data" method="post" modelAttribute="memberUpdate"> 
 
-	아아디 : <input type="text" path="memberId" value="${sessionScope.memberId }" 
+	아아디 : <input type="text" name="memberId" value="${sessionScope.memberId }" 
 	${empty sessionScope.memberId ? "" : "readonly"} required="required" />
 	
 	비밀번호<form:input type="password" path="password" value="${member.password }"

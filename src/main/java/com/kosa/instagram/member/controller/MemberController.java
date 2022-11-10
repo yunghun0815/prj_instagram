@@ -22,6 +22,8 @@ import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
+import lombok.val;
+
 @Controller
 public class MemberController {
 	static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -40,13 +42,13 @@ public class MemberController {
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
 	public String memberInsert(@ModelAttribute("member") @Valid MemberVo member, BindingResult result, HttpSession session) {
 		if (result.hasErrors()) {
-		return "member/form";
+			return "member/form";
 		}
 		System.out.println("CONTROLLER");
 		System.out.println(member.toString());
 		memberService.insertMember(member);
-
-		return "home";
+		session.invalidate();
+		return "redirect:/	";
 	}
 
 	//로그인
@@ -130,32 +132,29 @@ public class MemberController {
 	@RequestMapping(value="/member/update", method=RequestMethod.POST)
 	public String updateMember(@ModelAttribute("memberUpdate") @Valid MemberVo member, BindingResult result, FileVo file ,HttpSession session, Model model) {
 		if (result.hasErrors()) {
-			System.out.println("여기에 잇어?");
 			return "member/update";
 		}else {
-			System.out.println("여기에 잇어?!");
-		try {
-			MultipartFile mfile = file.getFile();
-			logger.info("파일 : "+mfile);
-			if (mfile != null && !mfile.isEmpty()) {
-				file.setFileName(mfile.getOriginalFilename());
-				file.setFileSize(mfile.getSize());
-				file.setFileType(mfile.getContentType());
-				file.setFileData(mfile.getBytes());
-				logger.info("/board/write : " + file.toString());
+			try {
+				MultipartFile mfile = file.getFile();
+				logger.info("파일 : "+mfile);
+				if (mfile != null && !mfile.isEmpty()) {
+					file.setFileName(mfile.getOriginalFilename());
+					file.setFileSize(mfile.getSize());
+					file.setFileType(mfile.getContentType());
+					file.setFileData(mfile.getBytes());
+					logger.info("/board/write : " + file.toString());
 
-				memberService.updateMember(member, file);
-			}else {
-				logger.info("파일 안들어옴");
-				memberService.updateMember(member);
+					memberService.updateMember(member, file);
+				}else {
+					logger.info("파일 안들어옴");
+					memberService.updateMember(member);
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
+			session.invalidate();
+			return "redirect:/member/login";
 		}
-		System.out.println("수정 완료 전");
-		session.invalidate();
-		return "redirect:/member/login";
-	}
 	}
 
 	@RequestMapping(value="/member/delete", method=RequestMethod.GET)
@@ -186,25 +185,30 @@ public class MemberController {
 		}
 	}
 	@RequestMapping(value="/member/findMemberId", method=RequestMethod.GET)
-	public String findMemberId() {
+	public String findMemberId(Model model) {
+		model.addAttribute("findMemberId", new MemberVo());
 		return "member/findMemberId";
 	}
 	@RequestMapping(value="/member/findMemberId", method=RequestMethod.POST)
-	public String findMemberId(String email, HttpSession session, Model model) {
-		if (email != null && !email.equals("")) {
-			MemberVo member = memberService.findMmeberId(email);
-			if (member!=null) {
-				model.addAttribute("member", member);
-				//session.setAttribute("member", member);
-				System.out.println("이메일 일치");
-				//session.invalidate();
-				return "/member/findMemberId";
-			}else {
-				System.out.println("가입된 회원정보가 없습니다.");
-				return "/member/findMemberId";
+	public String findMemberId(@ModelAttribute("findMemberId") @Valid String email, BindingResult result, HttpSession session, Model model) {
+		if (result.hasErrors()) {
+			return "member/findMemberId";
+		}else {
+			if (email != null && !email.equals("")) {
+				MemberVo member = memberService.findMmeberId(email);
+				if (member!=null) {
+					model.addAttribute("member", member);
+					//session.setAttribute("member", member);
+					System.out.println("이메일 일치");
+					//session.invalidate();
+					return "/member/findMemberId";
+				}else {
+					System.out.println("가입된 회원정보가 없습니다.");
+					return "/member/findMemberId";
+				}
 			}
+			return "redirect:/member/login";
 		}
-		return "redirect:/member/login";
 	}
 	@RequestMapping(value="/member/findPassword", method=RequestMethod.GET)
 	public String findPassword() {

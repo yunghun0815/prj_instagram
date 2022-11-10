@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Email;
 
 public class MemberVo {
-	@Pattern(regexp="^[a-zA-Z]{5,15}", message="아이디는 영문 대/소문자, 숫자를 이용해 5~10로 설정해 주세요.")
+	@Pattern(regexp="^[a-zA-Z0-9]{5,15}", message="아이디는 영문 대/소문자, 숫자를 이용해 5~10로 설정해 주세요.")
 	private String memberId;
 	
 	@Pattern(regexp="(?=.*[0-9])(?=.[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
