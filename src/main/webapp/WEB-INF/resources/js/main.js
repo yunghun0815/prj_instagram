@@ -68,6 +68,7 @@ $(function(){
 							    <span class="hashtag"> ${hashtagList()} </span>
 							</li>
 							<li>
+							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
 								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
 								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
 								<img src="/image/speech.png" onclick="replyFocus(this)">
@@ -225,6 +226,7 @@ $(function(){
 		    							    <span class="hashtag"> ${hashtagList()} </span>
 		    							</li>
 		    							<li>
+		    							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
 		    								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
 		    								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
 		    								<img src="/image/speech.png" onclick="replyFocus(this)">
@@ -330,8 +332,16 @@ $(function(){
 		var likeCountHtml = object.parent().next().find($("span #like_count"));
 		//현재 피드 좋아요 수
 		var likeCount = parseInt(object.parent().next().find($("span #like_count")).html());
-		//좋아요 클릭 시 +1 
-		likeCountHtml.html(likeCount+1);
+		//feedNo
+		var likeFeedNo = object.prev().val();
+		console.log(likeFeedNo);
+		$.ajax({
+			url: "/increaseLike/" + likeFeedNo,
+			type: "GET",
+			success: function(result){
+				likeCountHtml.html(result);
+			}
+		});
 	}
 	
 	function likeCancel(param){
@@ -341,17 +351,14 @@ $(function(){
 		//현재 피드 좋아요 객체
 		var likeCountHtml = object.parent().next().find($("span #like_count"));
 		//현재 피드 좋아요 수
-		var likeCount = parseInt(object.parent().next().find($("span #like_count")).html());
-		//좋아요 클릭 시 -1 
-		likeCountHtml.html(likeCount-1);
-		//비동기로 좋아요 테이블 해당 아이디 삭제
-		/* $.ajax({
-			url:,
-			type: "POST",
+		var likeFeedNo = object.prev().prev().val();
+		$.ajax({
+			url: "/decreaseLike/" + likeFeedNo,
+			type: "GET",
 			success: function(result){
-				
+				likeCountHtml.html(result);
 			}
-		});*/
+		});
 	}
 	
 	function replyFocus(param){

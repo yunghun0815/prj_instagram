@@ -97,7 +97,6 @@
 <select id="feedLikeCount" parameterType="int" resultType="int">
 <![CDATA[
 	SELECT COUNT(*) FROM like_table WHERE feed_no=#{feedNo}
->>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
 ]]>
 </select>
 
