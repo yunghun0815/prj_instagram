@@ -1,5 +1,7 @@
 package com.kosa.instagram.member.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +71,22 @@ public class MemberService implements IMemberService{
 	@Override
 	public MemberVo findPassword(String memberId, String email) {
 		return memberRepository.findPassword(memberId, email);
+	}
+
+	@Override
+	public MemberVo selectFeedMemberInfo(String memberId) {
+		return memberRepository.selectFeedMemberInfo(memberId);
+		
+	}
+
+	@Override
+	public List<MemberVo> selectFollowerByUser(String memberId) {
+		return memberRepository.selectFollowerByUser(memberId);
+	}
+
+	@Override
+	public List<MemberVo> selectFollowByUser(String memberId) {
+		return memberRepository.selectFollowByUser(memberId);
 	}
 	
 	
