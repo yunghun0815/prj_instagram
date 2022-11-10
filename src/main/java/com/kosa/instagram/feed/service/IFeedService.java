@@ -26,7 +26,7 @@ public interface IFeedService {
 	void increaseLike(int feedNo, String memberId, String logURI);
 	void decreaseLike(int feedNo, String memberId, String logURI);
 	FileVo getFile(int fileNo);
-	JsonVo makeJsonVo(FeedVo feed);
+	JsonVo makeJsonVo(FeedVo feed, String memberId);
 	List<FeedVo> getTenFeeds(String memberId, int start, int end);
 	List<ReplyVo> getReply(int feedNo);
 	int feedLikeCount(int feedNo);
