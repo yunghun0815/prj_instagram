@@ -93,9 +93,15 @@ public class FeedService implements IFeedService {
 	   }
 
 	@Override
-	public List<FeedVo> searchListByHashtag(String hashtag) {
+	public List<String> searchListByHashtag(String hashtag) {
 		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
 	}
+	
+	@Override
+	public int countHashtag(String hashtag) {
+		return feedRepository.countHashtag(hashtag);
+	}
+	
 	
 	@Override
 	public void writeReply(int feedNo, String memberId, String replyContent) {
