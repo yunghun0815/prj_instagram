@@ -2,7 +2,7 @@ $(function(){
 	var memberId = $("#memberId").val();
 	var nickname = $("#nickname").val();
 	$.ajax({
-		url:"/mainfeed/"+memberId+"/0",
+		url:"/mainfeed/0",
 		type: "GET", 
 		success: function(result){
 			for(let i=0; i<result.length; i++){
@@ -82,11 +82,11 @@ $(function(){
 							</li>
 						</ol>
 						<div><!-- 댓글달기 -->
-							<form id="replyForm" action="/writeReply/`+feed['feedNo']+`/`+ memberId +`" method="post" onsubmit="return false">
+							<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
 								<img src="/image/face.png">
 								<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
 								<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
-								<input type="hidden" value="/writeReply/`+feed['feedNo']+`/`+ memberId +`" id="replyWriteUrl">
+								<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
 							</form> 
 						</div>
 					</div>
@@ -160,7 +160,7 @@ $(function(){
 	    	console.log(pageNo);
 	    	pageNo ++;
 	    	$.ajax({
-	    		url:"/mainfeed/"+memberId+"/"+pageNo,
+	    		url:"/mainfeed/"+pageNo,
 	    		type: "GET", 
 	    		success: function(result){
 	    			if(result.length >0){
