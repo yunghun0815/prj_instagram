@@ -21,7 +21,14 @@ public class FeedVo {
 	private int likeCount;
 	private List<String> hashtagList;
 	private List<MultipartFile> file;
+	private int likeCheck; //좋아요 확인 
 	
+	public int getLikeCheck() {
+		return likeCheck;
+	}
+	public void setLikeCheck(int likeCheck) {
+		this.likeCheck = likeCheck;
+	}
 	public int getFeedNo() {
 		return feedNo;
 	}

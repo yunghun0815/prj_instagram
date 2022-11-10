@@ -46,6 +46,22 @@ $(function(){
 					return replyText;
 				}
 				
+				function likeImage(){
+					let heart = '';
+					
+					if(feed['likeCheck'] == 0){
+						console.log(feed['likeCheck']);
+						heart = `<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
+						<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+						`;
+					}else{
+						//1 = 좋아요 있음
+						heart = `
+						<img id="heart_blank" src="/image/heart.png"  style="display: none" onclick="like(this)">
+						<img id="heart_color" src="/image/heart_color.png" onclick="likeCancel(this)">`;
+					}
+					return heart;
+				}
 				
 				let view= `
 					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
@@ -68,8 +84,8 @@ $(function(){
 							    <span class="hashtag"> ${hashtagList()} </span>
 							</li>
 							<li>
-								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
-								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
+								${likeImage()}
 								<img src="/image/speech.png" onclick="replyFocus(this)">
 								<img src="/image/plane.png">
 							</li>
@@ -202,6 +218,22 @@ $(function(){
 		    					return replyText;
 		    				}
 		    				
+		    				function likeImage(){
+		    					let heart = '';
+		    					
+		    					if(feed['likeCheck'] == 0){
+		    						console.log(feed['likeCheck']);
+		    						heart = `<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
+		    						<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+		    						`;
+		    					}else{
+		    						//1 = 좋아요 있음
+		    						heart = `
+		    						<img id="heart_blank" src="/image/heart.png"  style="display: none" onclick="like(this)">
+		    						<img id="heart_color" src="/image/heart_color.png" onclick="likeCancel(this)">`;
+		    					}
+		    					return heart;
+		    				}
 		    				
 		    				let view= `
 		    					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 -->
@@ -225,8 +257,8 @@ $(function(){
 		    							    <span class="hashtag"> ${hashtagList()} </span>
 		    							</li>
 		    							<li>
-		    								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
-		    								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+		    							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
+		    							    ${likeImage()}
 		    								<img src="/image/speech.png" onclick="replyFocus(this)">
 		    								<img src="/image/plane.png">
 		    							</li>
@@ -239,12 +271,13 @@ $(function(){
 		    							</li>
 		    						</ol>
 		    						<div><!-- 댓글달기 -->
-		    							<form action="/" method="post">
-		    								<img src="/image/face.png">
-		    								<input id="replyInput" type="text" placeholder="댓글 달기...">
-		    								<input type="submit" value="게시" >
-		    							</form> 
-		    						</div>
+										<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
+											<img src="/image/face.png">
+											<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
+											<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
+											<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
+										</form> 
+									</div>
 		    					</div>
 		    				</li>
 		    			`;
@@ -330,8 +363,17 @@ $(function(){
 		var likeCountHtml = object.parent().next().find($("span #like_count"));
 		//현재 피드 좋아요 수
 		var likeCount = parseInt(object.parent().next().find($("span #like_count")).html());
-		//좋아요 클릭 시 +1 
-		likeCountHtml.html(likeCount+1);
+		//feedNo
+		var likeFeedNo = object.prev().val();
+		console.log(likeFeedNo);
+		$.ajax({
+			url: "/increaseLike/" + likeFeedNo,
+			type: "GET",
+			success: function(result){
+				console.log('test');
+				likeCountHtml.html(result);
+			}
+		});
 	}
 	
 	function likeCancel(param){
@@ -341,17 +383,14 @@ $(function(){
 		//현재 피드 좋아요 객체
 		var likeCountHtml = object.parent().next().find($("span #like_count"));
 		//현재 피드 좋아요 수
-		var likeCount = parseInt(object.parent().next().find($("span #like_count")).html());
-		//좋아요 클릭 시 -1 
-		likeCountHtml.html(likeCount-1);
-		//비동기로 좋아요 테이블 해당 아이디 삭제
-		/* $.ajax({
-			url:,
-			type: "POST",
+		var likeFeedNo = object.prev().prev().val();
+		$.ajax({
+			url: "/decreaseLike/" + likeFeedNo,
+			type: "GET",
 			success: function(result){
-				
+				likeCountHtml.html(result);
 			}
-		});*/
+		});
 	}
 	
 	function replyFocus(param){

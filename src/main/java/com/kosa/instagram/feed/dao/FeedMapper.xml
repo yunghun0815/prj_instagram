@@ -97,7 +97,6 @@
 <select id="feedLikeCount" parameterType="int" resultType="int">
 <![CDATA[
 	SELECT COUNT(*) FROM like_table WHERE feed_no=#{feedNo}
->>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
 ]]>
 </select>
 
@@ -189,5 +188,11 @@
 			   member_id as memberId
 		from upload_file
 		where file_no = #{fileNo}
+	</select>
+	
+	<select id="likeCheck" parameterType="map" resultType="int">
+		select count(*) 
+		from like_table 
+		where feed_no = #{feedNo} and member_id = #{memberId}
 	</select>
 </mapper>
