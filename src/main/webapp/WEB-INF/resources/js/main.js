@@ -2,7 +2,11 @@ $(function(){
 	var memberId = $("#memberId").val();
 	var nickname = $("#nickname").val();
 	$.ajax({
+<<<<<<< HEAD
+		url:"/mainfeed/"+memberId+"/0",
+=======
 		url:"/mainfeed/0",
+>>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
 		type: "GET", 
 		success: function(result){
 			for(let i=0; i<result.length; i++){

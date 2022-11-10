@@ -2,13 +2,16 @@
 package com.kosa.instagram.member.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +22,8 @@ import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
+import lombok.val;
+
 @Controller
 public class MemberController {
 	static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -28,18 +33,22 @@ public class MemberController {
 
 	//회원가입
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
-	public String joinForm() {
+	public String joinForm(Model model) {
+		model.addAttribute("member", new MemberVo());
 		return "member/form";
 	};
 
 	//회원가입
 	@RequestMapping(value="/member/insert", method=RequestMethod.POST)
-	public String memberInsert(MemberVo member, HttpSession session) {
+	public String memberInsert(@ModelAttribute("member") @Valid MemberVo member, BindingResult result, HttpSession session) {
+		if (result.hasErrors()) {
+			return "member/form";
+		}
 		System.out.println("CONTROLLER");
 		System.out.println(member.toString());
 		memberService.insertMember(member);
-
-		return "home";
+		session.invalidate();
+		return "redirect:/	";
 	}
 
 	//로그인
@@ -66,9 +75,7 @@ public class MemberController {
 					session.setAttribute("name", member.getName());
 					session.setAttribute("nickname", member.getNickname());
 					session.setAttribute("fileNo", member.getFileNo());
-
 					return "redirect:/";
-
 				}else {
 					model.addAttribute("message", "WRONG_PASSOWRD");
 				}
@@ -106,6 +113,7 @@ public class MemberController {
 	//회원정보 수정
 	@RequestMapping(value="/member/update", method=RequestMethod.GET)
 	public String updateMember(HttpSession session, Model model) {
+		model.addAttribute("memberUpdate",new MemberVo());
 		String memberId = (String)session.getAttribute("memberId");
 		if (memberId != null && !memberId.equals("")) {
 			MemberVo member = memberService.selectMember(memberId);
@@ -122,26 +130,31 @@ public class MemberController {
 		return "member/update";
 	}
 	@RequestMapping(value="/member/update", method=RequestMethod.POST)
-	public String updateMember(MemberVo member, FileVo file ,HttpSession session, Model model) {
-		try {
-			MultipartFile mfile = file.getFile();
-			logger.info("파일 : "+mfile);
-			if (mfile != null && !mfile.isEmpty()) {
-				file.setFileName(mfile.getOriginalFilename());
-				file.setFileSize(mfile.getSize());
-				file.setFileType(mfile.getContentType());
-				file.setFileData(mfile.getBytes());
-				logger.info("/board/write : " + file.toString());
+	public String updateMember(@ModelAttribute("memberUpdate") @Valid MemberVo member, BindingResult result, FileVo file ,HttpSession session, Model model) {
+		if (result.hasErrors()) {
+			return "member/update";
+		}else {
+			try {
+				MultipartFile mfile = file.getFile();
+				logger.info("파일 : "+mfile);
+				if (mfile != null && !mfile.isEmpty()) {
+					file.setFileName(mfile.getOriginalFilename());
+					file.setFileSize(mfile.getSize());
+					file.setFileType(mfile.getContentType());
+					file.setFileData(mfile.getBytes());
+					logger.info("/board/write : " + file.toString());
 
-				memberService.updateMember(member, file);
-			}else {
-				logger.info("파일 안들어옴");
-				memberService.updateMember(member);
+					memberService.updateMember(member, file);
+				}else {
+					logger.info("파일 안들어옴");
+					memberService.updateMember(member);
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
+			session.invalidate();
+			return "redirect:/member/login";
 		}
-		return "member/login";
 	}
 
 	@RequestMapping(value="/member/delete", method=RequestMethod.GET)
@@ -172,25 +185,30 @@ public class MemberController {
 		}
 	}
 	@RequestMapping(value="/member/findMemberId", method=RequestMethod.GET)
-	public String findMemberId() {
+	public String findMemberId(Model model) {
+		model.addAttribute("findMemberId", new MemberVo());
 		return "member/findMemberId";
 	}
 	@RequestMapping(value="/member/findMemberId", method=RequestMethod.POST)
-	public String findMemberId(String email, HttpSession session, Model model) {
-		if (email != null && !email.equals("")) {
-			MemberVo member = memberService.findMmeberId(email);
-			if (member!=null) {
-				model.addAttribute("member", member);
-				//session.setAttribute("member", member);
-				System.out.println("이메일 일치");
-				//session.invalidate();
-				return "/member/findMemberId";
-			}else {
-				System.out.println("가입된 회원정보가 없습니다.");
-				return "/member/findMemberId";
+	public String findMemberId(@ModelAttribute("findMemberId") @Valid String email, BindingResult result, HttpSession session, Model model) {
+		if (result.hasErrors()) {
+			return "member/findMemberId";
+		}else {
+			if (email != null && !email.equals("")) {
+				MemberVo member = memberService.findMmeberId(email);
+				if (member!=null) {
+					model.addAttribute("member", member);
+					//session.setAttribute("member", member);
+					System.out.println("이메일 일치");
+					//session.invalidate();
+					return "/member/findMemberId";
+				}else {
+					System.out.println("가입된 회원정보가 없습니다.");
+					return "/member/findMemberId";
+				}
 			}
+			return "redirect:/member/login";
 		}
-		return "redirect:/member/login";
 	}
 	@RequestMapping(value="/member/findPassword", method=RequestMethod.GET)
 	public String findPassword() {
@@ -223,4 +241,6 @@ public class MemberController {
 
 
 }//class end
+
+
 
