@@ -64,7 +64,7 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
-	
+
 	<annotation-driven>
 		<message-converters>
 			<beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>

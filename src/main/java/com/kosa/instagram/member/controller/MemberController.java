@@ -66,7 +66,7 @@ public class MemberController {
 					session.setAttribute("name", member.getName());
 					session.setAttribute("nickname", member.getNickname());
 					session.setAttribute("fileNo", member.getFileNo());
-					return "home";
+					return "redirect:/";
 				}else {
 					model.addAttribute("message", "WRONG_PASSOWRD");
 				}

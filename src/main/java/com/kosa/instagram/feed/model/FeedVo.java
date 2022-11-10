@@ -6,14 +6,17 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 public class FeedVo {
 	private int feedNo;
 	private String memberId;
 	private int fileNo;
 	private String feedContent;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date uploadDate;
-	private String placeTitle; //Å°¿öµå
+	private String placeTitle; //Ã…Â°Â¿Ã¶ÂµÃ¥
 	private String placeDetail;
 	private int likeCount;
 	private List<String> hashtagList;
