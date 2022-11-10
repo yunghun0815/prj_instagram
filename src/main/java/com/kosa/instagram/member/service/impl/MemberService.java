@@ -10,26 +10,12 @@ import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
 @Service
-public class MemberService implements IMemberService{
+public class MemberService{
 	
 	@Autowired
 	IMemberRepository memberRepository;
 
-	@Override
-	public MemberVo selectFeedMemberInfo(String memberId) {
-		
-		return memberRepository.selectFeedMemberInfo(memberId);
-	}
 
-	@Override
-	public List<MemberVo> selectFollowerByUser(String memberId) {
-		return memberRepository.selectFollowerByUser(memberId);
-	}
-
-	@Override
-	public List<MemberVo> selectFollowByUser(String memberId) {
-		return memberRepository.selectFollowByUser(memberId);
-	}
 	
 	
 }

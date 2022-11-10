@@ -13,22 +13,21 @@ public class FeedVo {
 	private int fileNo;
 	private String feedContent;
 	private Date uploadDate;
+
+
+	private String placeTitle; //Ű����
 	private String placeDetail;
-	private String placeTitle;
+
 	private int likeCount;
 	private List<String> hashtagList;
 	private List<MultipartFile> file;
+	
+	
 	public int getFeedNo() {
 		return feedNo;
 	}
 	public void setFeedNo(int feedNo) {
 		this.feedNo = feedNo;
-	}
-	public String getPlaceTitle() {
-		return placeTitle;
-	}
-	public void setPlaceTitle(String placeTitle) {
-		this.placeTitle = placeTitle;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -53,6 +52,12 @@ public class FeedVo {
 	}
 	public void setUploadDate(Date uploadDate) {
 		this.uploadDate = uploadDate;
+	}
+	public String getPlaceTitle() {
+		return placeTitle;
+	}
+	public void setPlaceTitle(String placeTitle) {
+		this.placeTitle = placeTitle;
 	}
 	public String getPlaceDetail() {
 		return placeDetail;
@@ -81,9 +86,11 @@ public class FeedVo {
 	@Override
 	public String toString() {
 		return "FeedVo [feedNo=" + feedNo + ", memberId=" + memberId + ", fileNo=" + fileNo + ", feedContent="
-				+ feedContent + ", uploadDate=" + uploadDate + ", placeDetail=" + placeDetail + ", likeCount="
-				+ likeCount + ", hashtagList=" + hashtagList + ", file=" + file + "]";
+				+ feedContent + ", uploadDate=" + uploadDate + ", placeTitle=" + placeTitle + ", placeDetail="
+				+ placeDetail + ", likeCount=" + likeCount + ", hashtagList=" + hashtagList + ", file=" + file + "]";
 	}
+	
+	
 	
 	
 }

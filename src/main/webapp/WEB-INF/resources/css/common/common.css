@@ -10,6 +10,7 @@
 }
 ul, li, ol{
 	list-style: none;
+	padding: 0;
 }
 a{
 	text-decoration: none;
@@ -48,6 +49,9 @@ header{
 	padding-top: 10px;
     padding-right: 70px;
 }
+.menu-img{
+	padding-top: 7px;
+}
 .header-inner .menu-img .profile-img{
 	top: 3px;
 }
@@ -81,7 +85,9 @@ header{
     border-radius: 15px;
     display: inline-block;
     position: relative;
-   	top: 11px;	
    	margin-right: 3px;
    	z-index: 0;
+}
+#myProfileImg{
+	border-radius: 10px;
 }

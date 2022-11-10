@@ -53,4 +53,14 @@ public class HomeController {
 	public String logPage() {
 		return "log/log";
 	}
+	@GetMapping("/sample")
+	public String sample() { //게시글 작성 페이지
+		
+		return "sample";
+	}
+	
+	@GetMapping("/sample2")
+	public String sample2() { //아이디 비밀번호 찾기 페이지
+		return "sample2";
+	}
 }

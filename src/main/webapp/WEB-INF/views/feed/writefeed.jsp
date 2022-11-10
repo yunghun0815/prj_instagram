@@ -238,8 +238,9 @@ function removeAllChildNods(el) {
 }
  
  function addHashtag(){
-	$("#hashtag").after('<input type="text" id="hashtag" name="hashtag[]" placeholder="hashtag">'	);
+	$("#hashtag").after('<input type="text" id="hashtag" name="hashtag" placeholder="hashtag">'	);
  }
+ 
  function inputPlace(param){
 	 let object = $(param);
 	 let placeTitle = object.find("#placeTitle").html();
@@ -247,19 +248,25 @@ function removeAllChildNods(el) {
 	 $("#placeTitleInput").val(placeTitle);
 	 $("#placeDetailInput").val(placeDetail);
  }
-</script>
+ </script>
+
 <div>
 	<h1>게시글 작성 예시</h1>
-<form id="upload" action="<c:url value='/writefeed/{memberId}'/>" method="post" enctype="multipart/form-data">
+<form id="upload" action="/writefeed" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="memberId" value="${memberId}">
 		<input type="text" name="feedContent" placeholder="내용입력"><br>
-		<input type="text" id="placeDetailInput" name="placeDetail" placeholder="placeDetail" readonly><br>
-		<input type="text" id="placeTitleInput" name="placeTitle" placeholder="placeTitle" readonly><br>
-		<input type="text" id="hashtag" name="hashtag[]" placeholder="hashtag"><button type="button" onclick="addHashtag();">해시태그 추가</button><br>
-		<input multiple="multiple" type="file"  name="fileList">
-		<input type="submit" value="글 작성">
+		<input type="text" id="placeDetailInput" name="placeDetail"  >detail<br>
+		<input type="text" id="placeTitleInput" name="placeTitle"  >title<br>
+		<input type="text" id="hashtag" name="hashtag" placeholder="hashtag"><button type="button" onclick="addHashtag();">해시태그 추가</button><br>
+		<input multiple="multiple" type="file"  name="fileList" >
+		<input type="submit" id="submit" value="글 작성" >
 	</form>
 </div>
+
 <a href="sample2">아이디/비밀번호 찾기</a>
+
+
+
+
 </body>
 </html>

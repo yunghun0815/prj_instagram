@@ -22,9 +22,9 @@ public interface IFeedRepository {
 	List<String> getHashtagList(int feedNo);
 	MemberVo getWriter(int feedNo);
 
-	List<byte[]> getUploadFiles(int feedNo);
+	List<Integer> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
-	List<FeedVo> searchListByKeyword(@Param("keyword") String keyword);
+	int feedLikeCount(int feedNo);
 
 
 
@@ -43,8 +43,12 @@ public interface IFeedRepository {
 	List<MemberVo> selectFollowerByUser(String memberId);
 	List<MemberVo> selectFollowByUser(String memberId);
 	FileVo getFile(int fileNo);
+	
+	void insertFeedHash(@Param("feedNo")int feedNo,@Param("hashTag") String hashTag);
+
 
 	
 	
+
 	
 }

@@ -10,7 +10,7 @@ import com.kosa.instagram.member.model.MemberVo;
 public class JsonVo {
 	private Map<String,FeedVo> feed;
 	private Map<String,MemberVo> member;
-	private List<byte[]> uploadFiles;
+	private List<Integer> uploadFiles;
 	private List<ReplyVo> reply;
 	
 	public Map<String, FeedVo> getFeed() {
@@ -25,10 +25,10 @@ public class JsonVo {
 	public void setMember(Map<String, MemberVo> member) {
 		this.member = member;
 	}
-	public List<byte[]> getUploadFiles() {
+	public List<Integer> getUploadFiles() {
 		return uploadFiles;
 	}
-	public void setUploadFiles(List<byte[]> uploadFiles) {
+	public void setUploadFiles(List<Integer> uploadFiles) {
 		this.uploadFiles = uploadFiles;
 	}
 	public List<ReplyVo> getReply() {

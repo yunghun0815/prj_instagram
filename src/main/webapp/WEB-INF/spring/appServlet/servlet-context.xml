@@ -37,4 +37,40 @@
 	<resources location="/WEB-INF/resources/image/" mapping="/image/**" />
 	
 	
+	<!-- Interceptor -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/increaseLike/**"/>
+			<mapping path="/decreaseLike/**"/>
+			<mapping path="/search/**"/>
+			<beans:bean class="com.kosa.instagram.filter.LogInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+<!-- 	i18n 설정? -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="basenames">
+			<beans:list>
+				<beans:value>classpath:i18n/member</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	
+
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/member/**"/>
+			<exclude-mapping path="/WEB-INF/resources/**"/>
+			<beans:bean class="com.kosa.instagram.filter.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	<annotation-driven>
+		<message-converters>
+			<beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+		</message-converters>
+	</annotation-driven>
+
 </beans:beans>
