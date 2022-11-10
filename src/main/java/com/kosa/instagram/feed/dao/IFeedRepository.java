@@ -27,12 +27,20 @@ public interface IFeedRepository {
 	int feedLikeCount(int feedNo);
 
 
+<<<<<<< HEAD
 
 	List<FeedVo> searchListByHashtag(@Param("hashtaglist") String hashtagist);
 	int countContent(String memberId);
 	int countFollower(String memberId);
 	int countFollow(String memberId);
 	int selectSeqNum();
+=======
+	List<MemberVo> searchListByKeyword(@Param("keyword") String keyword);
+	List<String> searchListByHashtag(@Param("hashtag") String hashtag);
+	void countContent(String memberId);
+	void countFollower(String memberId);
+	void countFollow(String memberId);
+>>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
 
 	List<FileVo> selectContentListByUser(String memberId);
 	void insertFeedContent(FeedVo feed);
@@ -43,6 +51,7 @@ public interface IFeedRepository {
 	List<MemberVo> selectFollowerByUser(String memberId);
 	List<MemberVo> selectFollowByUser(String memberId);
 	FileVo getFile(int fileNo);
+	int likeCheck(@Param("memberId") String memberId, @Param("feedNo") int feedNo);
 	
 	void insertFeedHash(@Param("feedNo")int feedNo,@Param("hashTag") String hashTag);
 

@@ -40,6 +40,14 @@
 	<!-- Interceptor -->
 	<interceptors>
 		<interceptor>
+         	<mapping path="/**"/>
+         	<exclude-mapping path="/member/**"/>
+         	<exclude-mapping path="/css/**"/>
+         	<exclude-mapping path="/js/**"/>
+         	<exclude-mapping path="/image/**/*.*"/>
+         	<beans:bean class="com.kosa.instagram.filter.LoginInterceptor"/>
+      	</interceptor>
+		<interceptor>
 			<mapping path="/increaseLike/**"/>
 			<mapping path="/decreaseLike/**"/>
 			<mapping path="/search/**"/>
@@ -56,17 +64,7 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
-	
 
-	<interceptors>
-		<interceptor>
-			<mapping path="/**"/>
-			<exclude-mapping path="/member/**"/>
-			<exclude-mapping path="/WEB-INF/resources/**"/>
-			<beans:bean class="com.kosa.instagram.filter.LoginInterceptor"/>
-		</interceptor>
-	</interceptors>
-	
 	<annotation-driven>
 		<message-converters>
 			<beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>

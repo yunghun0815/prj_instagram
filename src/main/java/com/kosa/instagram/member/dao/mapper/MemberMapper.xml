@@ -23,7 +23,7 @@ VALUES
         F.FILE_NO 	AS "fileNo"
 	FROM MEMBER M LEFT JOIN UPLOAD_FILE F
     ON M.MEMBER_ID = F.MEMBER_ID and F.FEED_NO IS NULL
-	WHERE M.MEMBER_ID = #{memberId}
+	WHERE M.MEMBER_ID = #{memberId} 
 </select>
 
 

@@ -6,23 +6,36 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 public class FeedVo {
 	private int feedNo;
 	private String memberId;
 	private int fileNo;
 	private String feedContent;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date uploadDate;
 
 
+
 	private String placeTitle; //Ű����
+
 	private String placeDetail;
 
 	private int likeCount;
 	private List<String> hashtagList;
 	private List<MultipartFile> file;
+	private int likeCheck; //좋아요 확인 
 	
-	
+
+	public int getLikeCheck() {
+		return likeCheck;
+	}
+	public void setLikeCheck(int likeCheck) {
+		this.likeCheck = likeCheck;
+	}
+
 	public int getFeedNo() {
 		return feedNo;
 	}
@@ -89,8 +102,5 @@ public class FeedVo {
 				+ feedContent + ", uploadDate=" + uploadDate + ", placeTitle=" + placeTitle + ", placeDetail="
 				+ placeDetail + ", likeCount=" + likeCount + ", hashtagList=" + hashtagList + ", file=" + file + "]";
 	}
-	
-	
-	
-	
+
 }

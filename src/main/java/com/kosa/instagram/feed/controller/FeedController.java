@@ -205,13 +205,13 @@ public class FeedController {
 		int end = start+9;
 		List<FeedVo> feedList = feedService.getTenFeeds(memberId, start, end);
 		for(FeedVo feed : feedList) {
-			jsonList.add(feedService.makeJsonVo(feed));
+			jsonList.add(feedService.makeJsonVo(feed, memberId));
 		}
 		return jsonList;
 	}
 
 	@RequestMapping(value="/writeReply/{feedNo}", method=RequestMethod.POST)
-	public List<ReplyVo> writeReply(@PathVariable int feedNo, @RequestParam String replyInput, HttpServletRequest request) {
+	public @ResponseBody List<ReplyVo> writeReply(@PathVariable int feedNo, @RequestParam String replyInput, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String memberId = (String)session.getAttribute("memberId");
 		feedService.writeReply(feedNo, memberId, replyInput);
@@ -219,13 +219,14 @@ public class FeedController {
 	}
 	
 	@RequestMapping("/deleteReply/{feedNo}/{replyNo}")
-	public List<ReplyVo> deleteReply(@PathVariable int feedNo, @PathVariable int replyNo) {
+	public @ResponseBody List<ReplyVo> deleteReply(@PathVariable int feedNo, @PathVariable int replyNo) {
 		feedService.deleteReply(replyNo);
 		return feedService.getReply(feedNo);
 	}
 	
 	@RequestMapping("/increaseLike/{feedNo}")
 	public @ResponseBody int increaseLike(@PathVariable int feedNo, HttpServletRequest request) {
+		System.out.println("좋아요 요청");
 		HttpSession session = request.getSession();
 		String memberId = (String)session.getAttribute("memberId");
 		feedService.increaseLike(feedNo, memberId, request.getRequestURI());
@@ -253,5 +254,8 @@ public class FeedController {
 		
 		return "feed/search"; 
 	}
+
 }
+
+
 

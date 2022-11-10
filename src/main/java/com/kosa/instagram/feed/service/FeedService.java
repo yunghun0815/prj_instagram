@@ -97,7 +97,7 @@ public class FeedService implements IFeedService {
 	   }
 
 	@Override
-	public List<FeedVo> searchListByHashtag(String hashtag) {
+	public List<String> searchListByHashtag(String hashtag) {
 		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
 	}
 	
@@ -170,10 +170,11 @@ public List<FileVo> selectContentListByUser(String memberId) {
 	
 	@Override
 	@Transactional
-	public JsonVo makeJsonVo(FeedVo feed) {
+	public JsonVo makeJsonVo(FeedVo feed, String memberId) {
 		JsonVo json = new JsonVo();
 		Map<String, FeedVo> feedMap = new HashMap<String, FeedVo>();
 		feed.setHashtagList(feedRepository.getHashtagList(feed.getFeedNo()));
+		feed.setLikeCheck(feedRepository.likeCheck(memberId, feed.getFeedNo()));
 		feedMap.put("feed", feed);
 		json.setFeed(feedMap);
 		MemberVo member = memberRepository.selectMember(feed.getMemberId());
