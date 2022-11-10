@@ -27,8 +27,8 @@ public interface IFeedRepository {
 	int feedLikeCount(int feedNo);
 
 
-
-	List<FeedVo> searchListByHashtag(@Param("hashtaglist") String hashtagist);
+	List<MemberVo> searchListByKeyword(@Param("keyword") String keyword);
+	List<String> searchListByHashtag(@Param("hashtag") String hashtag);
 	void countContent(String memberId);
 	void countFollower(String memberId);
 	void countFollow(String memberId);

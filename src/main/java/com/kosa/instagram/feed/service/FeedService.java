@@ -93,7 +93,7 @@ public class FeedService implements IFeedService {
 	   }
 
 	@Override
-	public List<FeedVo> searchListByHashtag(String hashtag) {
+	public List<String> searchListByHashtag(String hashtag) {
 		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
 	}
 	
