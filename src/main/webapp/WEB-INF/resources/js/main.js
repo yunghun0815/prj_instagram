@@ -1,8 +1,12 @@
 $(function(){
 	var memberId = $("#memberId").val();
-	
+	var nickname = $("#nickname").val();
 	$.ajax({
+<<<<<<< HEAD
 		url:"/mainfeed/"+memberId+"/0",
+=======
+		url:"/mainfeed/0",
+>>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
 		type: "GET", 
 		success: function(result){
 			for(let i=0; i<result.length; i++){
@@ -10,10 +14,8 @@ $(function(){
 				let member = result[i]['member']['member'];
 				let uploadFiles = result[i]['uploadFiles'];
 				let reply = result[i]['reply'];
-				
 				function hashtagList(){
 					let hashtag = '';
-					
 					if(feed['hashtagList'].length > 0){
 						for(let j=0; j<feed['hashtagList'].length; j++){
 							hashtag += '#' + feed['hashtagList'][j] + ' ';
@@ -28,6 +30,8 @@ $(function(){
 					
 					if(reply.length > 0){
 						for(let k=0; k<reply.length; k++){
+							let deleteSpan = `<span id="replyDelete" onclick="replyDelete(this);">삭제</span>`;
+							
 							replyText += `
 								<div>
 									<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
@@ -35,6 +39,9 @@ $(function(){
 										<span class="bold">`+ reply[k]['nickname'] +`</span>
 										<span>`+ reply[k]['replyContent'] +`</span><!-- 댓글내용  --><br>
 										<span class="upload-date">`+ reply[k]['replyDate'] +`</span>
+										${reply[k]['nickname'] == nickname ? deleteSpan : ""}
+										<input type="hidden" id="deleteReplyNo" value="`+ reply[k]['replyNo'] +`">
+										<input type="hidden" id="deleteFeedNo" value="`+ reply[k]['feedNo'] +`">
 									</p>
 								</div>
 							`;
@@ -43,6 +50,22 @@ $(function(){
 					return replyText;
 				}
 				
+				function likeImage(){
+					let heart = '';
+					
+					if(feed['likeCheck'] == 0){
+						console.log(feed['likeCheck']);
+						heart = `<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
+						<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+						`;
+					}else{
+						//1 = 좋아요 있음
+						heart = `
+						<img id="heart_blank" src="/image/heart.png"  style="display: none" onclick="like(this)">
+						<img id="heart_color" src="/image/heart_color.png" onclick="likeCancel(this)">`;
+					}
+					return heart;
+				}
 				
 				let view= `
 					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
@@ -65,8 +88,8 @@ $(function(){
 							    <span class="hashtag"> ${hashtagList()} </span>
 							</li>
 							<li>
-								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
-								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
+								${likeImage()}
 								<img src="/image/speech.png" onclick="replyFocus(this)">
 								<img src="/image/plane.png">
 							</li>
@@ -79,10 +102,11 @@ $(function(){
 							</li>
 						</ol>
 						<div><!-- 댓글달기 -->
-							<form action="/" method="post">
+							<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
 								<img src="/image/face.png">
-								<input id="replyInput" type="text" placeholder="댓글 달기...">
-								<input type="submit" value="게시" >
+								<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
+								<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
+								<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
 							</form> 
 						</div>
 					</div>
@@ -93,6 +117,8 @@ $(function(){
 			}
 		}
 	});
+	
+	
 	
 	// var memberId = $("#member_id").val(); //회원 아이디
 	
@@ -151,9 +177,10 @@ $(function(){
 	    var documentHeight = $(document).height(); //전체 높이
 	    var windowHeight = $(window).height(); //현재 높이
 	    if(scrollTop + windowHeight >= documentHeight){
+	    	console.log(pageNo);
 	    	pageNo ++;
 	    	$.ajax({
-	    		url:"/mainfeed/test/"+memberId+"/"+pageNo,
+	    		url:"/mainfeed/"+pageNo,
 	    		type: "GET", 
 	    		success: function(result){
 	    			if(result.length >0){
@@ -195,6 +222,22 @@ $(function(){
 		    					return replyText;
 		    				}
 		    				
+		    				function likeImage(){
+		    					let heart = '';
+		    					
+		    					if(feed['likeCheck'] == 0){
+		    						console.log(feed['likeCheck']);
+		    						heart = `<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
+		    						<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+		    						`;
+		    					}else{
+		    						//1 = 좋아요 있음
+		    						heart = `
+		    						<img id="heart_blank" src="/image/heart.png"  style="display: none" onclick="like(this)">
+		    						<img id="heart_color" src="/image/heart_color.png" onclick="likeCancel(this)">`;
+		    					}
+		    					return heart;
+		    				}
 		    				
 		    				let view= `
 		    					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 -->
@@ -218,8 +261,8 @@ $(function(){
 		    							    <span class="hashtag"> ${hashtagList()} </span>
 		    							</li>
 		    							<li>
-		    								<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
-		    								<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
+		    							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
+		    							    ${likeImage()}
 		    								<img src="/image/speech.png" onclick="replyFocus(this)">
 		    								<img src="/image/plane.png">
 		    							</li>
@@ -232,12 +275,13 @@ $(function(){
 		    							</li>
 		    						</ol>
 		    						<div><!-- 댓글달기 -->
-		    							<form action="/" method="post">
-		    								<img src="/image/face.png">
-		    								<input id="replyInput" type="text" placeholder="댓글 달기...">
-		    								<input type="submit" value="게시" >
-		    							</form> 
-		    						</div>
+										<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
+											<img src="/image/face.png">
+											<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
+											<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
+											<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
+										</form> 
+									</div>
 		    					</div>
 		    				</li>
 		    			`;
@@ -251,8 +295,69 @@ $(function(){
 	    	});
 	    }
 	}); 
+
+	/*$("#replyForm").ajaxSubmit({
+		success: function(data) {
+			console.log(data);
+		}	
+	});*/
 	  
-});
+});//ready function 종료
+
+	//댓글 작성
+	function replySubmit(param){
+		var object = $(param);
+		var content = object.prev().val();
+		var formUrl = object.next().val();
+		
+		$.ajax({
+			url: formUrl,
+			type: "POST",
+			data: {
+				replyInput: content
+			},
+			success: function(result){
+				object.parent().parent().parent().find($(".reply-list")).html(replyAddList(result));
+			}
+		});
+	}
+	function replyDelete(param){
+		var object = $(param);
+		var replyNo = object.next().val();
+		var feedNo = object.next().next().val();
+		$.ajax({
+			url: "/deleteReply/" + feedNo + "/" + replyNo,
+			type: "GET",
+			success: function(result){
+				object.parent().parent().parent().html(replyAddList(result));
+			}
+		});
+	}
+	//댓글 추가 폼
+	function replyAddList(reply){
+		let replyText = '';
+		let nickname = $("#nickname").val();
+		if(reply.length > 0){
+			for(let k=0; k<reply.length; k++){
+				let deleteSpan = `<span id="replyDelete" onclick="replyDelete(this);">삭제</span>`;
+				
+				replyText += `
+					<div>
+						<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+						<p class="inline-block">
+							<span class="bold">`+ reply[k]['nickname'] +`</span>
+							<span>`+ reply[k]['replyContent'] +`</span><!-- 댓글내용  --><br>
+							<span class="upload-date">`+ reply[k]['replyDate'] +`</span>
+							${reply[k]['nickname'] == nickname ? deleteSpan : ""}
+							<input type="hidden" id="deleteReplyNo" value="`+ reply[k]['replyNo'] +`">
+							<input type="hidden" id="deleteFeedNo" value="`+ reply[k]['feedNo'] +`">
+						</p>
+					</div>
+				`;
+			}
+		}
+		return replyText;
+	}
 
 	function like(param){
 		var object = $(param);
@@ -262,8 +367,17 @@ $(function(){
 		var likeCountHtml = object.parent().next().find($("span #like_count"));
 		//현재 피드 좋아요 수
 		var likeCount = parseInt(object.parent().next().find($("span #like_count")).html());
-		//좋아요 클릭 시 +1 
-		likeCountHtml.html(likeCount+1);
+		//feedNo
+		var likeFeedNo = object.prev().val();
+		console.log(likeFeedNo);
+		$.ajax({
+			url: "/increaseLike/" + likeFeedNo,
+			type: "GET",
+			success: function(result){
+				console.log('test');
+				likeCountHtml.html(result);
+			}
+		});
 	}
 	
 	function likeCancel(param){
@@ -273,17 +387,14 @@ $(function(){
 		//현재 피드 좋아요 객체
 		var likeCountHtml = object.parent().next().find($("span #like_count"));
 		//현재 피드 좋아요 수
-		var likeCount = parseInt(object.parent().next().find($("span #like_count")).html());
-		//좋아요 클릭 시 -1 
-		likeCountHtml.html(likeCount-1);
-		//비동기로 좋아요 테이블 해당 아이디 삭제
-		/* $.ajax({
-			url:,
-			type: "POST",
+		var likeFeedNo = object.prev().prev().val();
+		$.ajax({
+			url: "/decreaseLike/" + likeFeedNo,
+			type: "GET",
 			success: function(result){
-				
+				likeCountHtml.html(result);
 			}
-		});*/
+		});
 	}
 	
 	function replyFocus(param){

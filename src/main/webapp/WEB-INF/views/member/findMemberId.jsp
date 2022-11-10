@@ -22,7 +22,4 @@
 <h4>이메일에 대한 아이디는</h4>
 <h1>${member.memberId}</h1>
 </c:if>
-
-
 </body>
-</html>

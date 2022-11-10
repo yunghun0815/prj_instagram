@@ -48,7 +48,7 @@ public class HomeController {
 		
 		return "home";
 	}
-	//로그 테스트 
+	//로그 테스트 asd
 	@GetMapping("/log")
 	public String logPage() {
 		return "log/log";

@@ -1,5 +1,5 @@
-package com.kosa.instagram.filter;
 
+package com.kosa.instagram.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,14 +11,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.dao.IFeedRepository;
+import com.kosa.instagram.feed.service.IFeedService;
 
 public class LogInterceptor implements HandlerInterceptor {
 
 	LogVo log;
-	
+
 	@Autowired
 	IFeedRepository feedRepository;
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -41,8 +42,8 @@ public class LogInterceptor implements HandlerInterceptor {
 		log.setMemberId((String)session.getAttribute("memberId"));
 		uri = uri.substring(1);	//remove first slash
 		String[] splitUri = uri.split("/");
-		
-		if(splitUri[0].equals("increaseLike") || splitUri[0].equals("decreaseLike")) {	// [0]Á¾·ù [1]feedno
+
+		if(splitUri[0].equals("increaseLike") || splitUri[0].equals("decreaseLike")) {	// [0]���� [1]feedno
 
 			log.setFeedNo(Integer.parseInt(splitUri[1]));
 			if(splitUri[0].equals("increaseLike")) {
@@ -55,6 +56,7 @@ public class LogInterceptor implements HandlerInterceptor {
 		}
 		System.out.println(log.toString());
 		feedRepository.makeLog(log);
-	}
 
+	}
 }
+

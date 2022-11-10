@@ -22,8 +22,38 @@ VALUES
 		M.PHONE_NUMBER 	AS "phoneNumber",
         F.FILE_NO 	AS "fileNo"
 	FROM MEMBER M LEFT JOIN UPLOAD_FILE F
-    ON M.MEMBER_ID = F.MEMBER_ID
-	WHERE M.MEMBER_ID = #{memberId} and F.FEED_NO IS NULL
+    ON M.MEMBER_ID = F.MEMBER_ID and F.FEED_NO IS NULL
+	WHERE M.MEMBER_ID = #{memberId} 
+</select>
+
+
+<select id="selectFeedMemberInfo" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
+	<![CDATA[
+		select nickname AS "nickname",
+				name As "name"
+				from member
+				where member_id=#{memberId}
+	]]>
+</select>
+
+<select id="selectFollowerByUser" parameterType="String" resultType="String">
+	<![CDATA[
+		select nickname
+			from member
+			where member_id=(select from_id 
+				   from follow 
+				   where to_id=#{memberId})
+	]]>
+</select>
+
+<select id="selectFollowByUser" parameterType="String" resultType="String">
+	<![CDATA[
+		select nickname
+			from member
+			where member_id=(select to_id
+							from follow
+							where from_id=#{memberId})
+	]]>
 </select>
 
 <insert id="insertFile" parameterType="com.kosa.instagram.feed.model.FileVo">
@@ -82,5 +112,6 @@ VALUES
 	FROM	MEMBER
 	WHERE MEMBER_ID=#{memberId} AND EMAIL=#{email}
 </select>
+
 
 </mapper>

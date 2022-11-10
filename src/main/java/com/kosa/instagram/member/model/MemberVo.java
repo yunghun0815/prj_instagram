@@ -1,11 +1,13 @@
 package com.kosa.instagram.member.model;
 
 import java.sql.Date;
-
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 public class MemberVo {
 	@Pattern(regexp="^[a-zA-Z0-9]{5,15}", message="아이디는 영문 대/소문자, 숫자를 이용해 5~10로 설정해 주세요.")
@@ -28,6 +30,7 @@ public class MemberVo {
 	private String email;
 	
 	@Past(message="생년월일을 확인해 주세요.")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date birth;
 	
 	@Pattern(regexp="^[0-9]{11}", message="핸드폰 번호는'-'를 제외한 숫자만 입력해주세요")
@@ -98,7 +101,6 @@ public class MemberVo {
 	public void setFileNo(int fileNo) {
 		this.fileNo = fileNo;
 	}
-	
 	@Override
 	public String toString() {
 		return "MemberVo [memberId=" + memberId + ", password=" + password + ", nickname=" + nickname + ", name=" + name
