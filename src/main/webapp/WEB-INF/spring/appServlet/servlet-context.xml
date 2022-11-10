@@ -58,14 +58,24 @@
 	</beans:bean>
 	
 
-	<interceptors>
-		<interceptor>
-			<mapping path="/**"/>
-			<exclude-mapping path="/member/**"/>
-			<exclude-mapping path="/WEB-INF/resources/**"/>
-			<beans:bean class="com.kosa.instagram.filter.LoginInterceptor"/>
-		</interceptor>
-	</interceptors>
+   <interceptors>
+      <interceptor>
+         <mapping path="/**" />
+         <exclude-mapping path="/member/**" />
+         <exclude-mapping path="/css/**" />
+         <exclude-mapping path="/js/**" />
+         <exclude-mapping path="/image/**/*.*" />
+         <beans:bean
+            class="com.kosa.instagram.filter.LoginInterceptor" />
+      </interceptor>
+      <interceptor>
+         <mapping path="/increaseLike/**" />
+         <mapping path="/decreaseLike/**" />
+         <mapping path="/search/**" />
+         <beans:bean
+            class="com.kosa.instagram.filter.LogInterceptor" />
+      </interceptor>
+   </interceptors>
 	
 	<annotation-driven>
 		<message-converters>

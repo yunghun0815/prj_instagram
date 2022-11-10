@@ -1,8 +1,8 @@
 $(function(){
 	var memberId = $("#memberId").val();
-	
+	var nickname = $("#nickname").val();
 	$.ajax({
-		url:"/mainfeed/test/"+memberId+"/0",
+		url:"/mainfeed/0",
 		type: "GET", 
 		success: function(result){
 			for(let i=0; i<result.length; i++){
@@ -10,10 +10,8 @@ $(function(){
 				let member = result[i]['member']['member'];
 				let uploadFiles = result[i]['uploadFiles'];
 				let reply = result[i]['reply'];
-				
 				function hashtagList(){
 					let hashtag = '';
-					
 					if(feed['hashtagList'].length > 0){
 						for(let j=0; j<feed['hashtagList'].length; j++){
 							hashtag += '#' + feed['hashtagList'][j] + ' ';
@@ -28,6 +26,8 @@ $(function(){
 					
 					if(reply.length > 0){
 						for(let k=0; k<reply.length; k++){
+							let deleteSpan = `<span id="replyDelete" onclick="replyDelete(this);">삭제</span>`;
+							
 							replyText += `
 								<div>
 									<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
@@ -35,6 +35,9 @@ $(function(){
 										<span class="bold">`+ reply[k]['nickname'] +`</span>
 										<span>`+ reply[k]['replyContent'] +`</span><!-- 댓글내용  --><br>
 										<span class="upload-date">`+ reply[k]['replyDate'] +`</span>
+										${reply[k]['nickname'] == nickname ? deleteSpan : ""}
+										<input type="hidden" id="deleteReplyNo" value="`+ reply[k]['replyNo'] +`">
+										<input type="hidden" id="deleteFeedNo" value="`+ reply[k]['feedNo'] +`">
 									</p>
 								</div>
 							`;
@@ -79,10 +82,11 @@ $(function(){
 							</li>
 						</ol>
 						<div><!-- 댓글달기 -->
-							<form action="/" method="post">
+							<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
 								<img src="/image/face.png">
-								<input id="replyInput" type="text" placeholder="댓글 달기...">
-								<input type="submit" value="게시" >
+								<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
+								<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
+								<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
 							</form> 
 						</div>
 					</div>
@@ -93,6 +97,8 @@ $(function(){
 			}
 		}
 	});
+	
+	
 	
 	// var memberId = $("#member_id").val(); //회원 아이디
 	
@@ -151,9 +157,10 @@ $(function(){
 	    var documentHeight = $(document).height(); //전체 높이
 	    var windowHeight = $(window).height(); //현재 높이
 	    if(scrollTop + windowHeight >= documentHeight){
+	    	console.log(pageNo);
 	    	pageNo ++;
 	    	$.ajax({
-	    		url:"/mainfeed/test/"+memberId+"/"+pageNo,
+	    		url:"/mainfeed/"+pageNo,
 	    		type: "GET", 
 	    		success: function(result){
 	    			if(result.length >0){
@@ -251,8 +258,69 @@ $(function(){
 	    	});
 	    }
 	}); 
+
+	/*$("#replyForm").ajaxSubmit({
+		success: function(data) {
+			console.log(data);
+		}	
+	});*/
 	  
-});
+});//ready function 종료
+
+	//댓글 작성
+	function replySubmit(param){
+		var object = $(param);
+		var content = object.prev().val();
+		var formUrl = object.next().val();
+		
+		$.ajax({
+			url: formUrl,
+			type: "POST",
+			data: {
+				replyInput: content
+			},
+			success: function(result){
+				object.parent().parent().parent().find($(".reply-list")).html(replyAddList(result));
+			}
+		});
+	}
+	function replyDelete(param){
+		var object = $(param);
+		var replyNo = object.next().val();
+		var feedNo = object.next().next().val();
+		$.ajax({
+			url: "/deleteReply/" + feedNo + "/" + replyNo,
+			type: "GET",
+			success: function(result){
+				object.parent().parent().parent().html(replyAddList(result));
+			}
+		});
+	}
+	//댓글 추가 폼
+	function replyAddList(reply){
+		let replyText = '';
+		let nickname = $("#nickname").val();
+		if(reply.length > 0){
+			for(let k=0; k<reply.length; k++){
+				let deleteSpan = `<span id="replyDelete" onclick="replyDelete(this);">삭제</span>`;
+				
+				replyText += `
+					<div>
+						<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+						<p class="inline-block">
+							<span class="bold">`+ reply[k]['nickname'] +`</span>
+							<span>`+ reply[k]['replyContent'] +`</span><!-- 댓글내용  --><br>
+							<span class="upload-date">`+ reply[k]['replyDate'] +`</span>
+							${reply[k]['nickname'] == nickname ? deleteSpan : ""}
+							<input type="hidden" id="deleteReplyNo" value="`+ reply[k]['replyNo'] +`">
+							<input type="hidden" id="deleteFeedNo" value="`+ reply[k]['feedNo'] +`">
+						</p>
+					</div>
+				`;
+			}
+		}
+		return replyText;
+	}
 
 	function like(param){
 		var object = $(param);

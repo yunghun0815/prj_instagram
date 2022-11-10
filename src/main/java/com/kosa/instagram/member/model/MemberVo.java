@@ -2,6 +2,9 @@ package com.kosa.instagram.member.model;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 public class MemberVo {
 	private String memberId;
 	private String password;
@@ -9,6 +12,7 @@ public class MemberVo {
 	private String name;
 	private String gender;
 	private String email;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date birth;
 	private String phoneNumber;
 	private int followerCount;
@@ -75,7 +79,6 @@ public class MemberVo {
 	public void setFileNo(int fileNo) {
 		this.fileNo = fileNo;
 	}
-	
 	@Override
 	public String toString() {
 		return "MemberVo [memberId=" + memberId + ", password=" + password + ", nickname=" + nickname + ", name=" + name
