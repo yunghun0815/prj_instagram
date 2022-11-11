@@ -1,6 +1,7 @@
 
 package com.kosa.instagram.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -238,6 +240,12 @@ public class MemberController {
 		return "redirect:/member/login";
 	}
 
+	@RequestMapping("/follow/{toId}")
+	public void followMember(@PathVariable String toId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String fromId = (String)session.getAttribute("memberId");
+		memberService.followMember(fromId, toId);
+	}
 
 
 }//class end

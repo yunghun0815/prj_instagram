@@ -70,10 +70,10 @@ public class FeedController {
 
 //		model.addAttribute("contentList",contentList);
 		
-		List<MemberVo> followerList=memberService.selectFollowerByUser(memberId);
+		List<String> followerList=memberService.selectFollowerByUser(memberId);
 		model.addAttribute("followerList",followerList);
 		
-		List<MemberVo> followList=memberService.selectFollowByUser(memberId);
+		List<String> followList=memberService.selectFollowByUser(memberId);
 		model.addAttribute("followList",followList);
 		
 		return "/feed/userfeed";

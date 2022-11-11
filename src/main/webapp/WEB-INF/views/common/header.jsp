@@ -30,7 +30,7 @@
 					</a>				
 				</c:if>
 				<c:if test="${not empty sessionScope.fileNo && sessionScope.fileNo != 0}">
-					<a href='<c:url value="/userfeed/${memberId}"/>'>
+					<a href='<c:url value="/userfeed/${sessionScope.memberId}"/>'>
 						<img id="myProfileImg" src="/file/${sessionScope.fileNo}">
 					</a>
 				</c:if>

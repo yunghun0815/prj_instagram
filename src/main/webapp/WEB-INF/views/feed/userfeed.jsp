@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="../common/header.jsp"/>
+<div style="margin-top: 60px;">
 <h1>개인피드</h1>
 멤버아이디 ${memberId}<br>
 게시글 수${contentCount }<br>
@@ -29,6 +31,28 @@
 	</tr>
 </c:forEach>
 </table>
-<a href='<c:url value="/writefeed/${memberId}"/>'>새글쓰기</a><br>
+
+
+<c:if test="${sessionScope.memberId eq memberId}">
+	<a href='<c:url value="/writefeed/${memberId}"/>'>새글쓰기</a><br>
+	<a href='<c:url value="/member/update"/>'>정보수정</a>
+</c:if>
+<c:if test="${sessionScope.memberId ne memberId}">
+	<button id="btn" onclick="changetest()">팔로우</button>
+</c:if>
+</div>
 </body>
+<script type="text/javascript">
+var isFollow = true;
+function changetest(){
+	const btn = document.getElementById('btn');
+	if(isFollow == true){
+		btn.innerText = '언팔로우';
+		isFollow = false;
+	} else {
+		btn.innerText = '팔로우';
+		isFollow = true;
+	}
+}
+</script>
 </html>
