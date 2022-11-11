@@ -18,10 +18,20 @@ public class FeedVo {
 	private Date uploadDate;
 	private String placeTitle; //키워드
 	private String placeDetail;
+
 	private int likeCount;
 	private List<String> hashtagList;
 	private List<MultipartFile> file;
+	private int likeCheck; //좋아요 확인 
 	
+
+	public int getLikeCheck() {
+		return likeCheck;
+	}
+	public void setLikeCheck(int likeCheck) {
+		this.likeCheck = likeCheck;
+	}
+
 	public int getFeedNo() {
 		return feedNo;
 	}
@@ -82,11 +92,11 @@ public class FeedVo {
 	public void setFile(List<MultipartFile> file) {
 		this.file = file;
 	}
-	
 	@Override
 	public String toString() {
 		return "FeedVo [feedNo=" + feedNo + ", memberId=" + memberId + ", fileNo=" + fileNo + ", feedContent="
 				+ feedContent + ", uploadDate=" + uploadDate + ", placeTitle=" + placeTitle + ", placeDetail="
 				+ placeDetail + ", likeCount=" + likeCount + ", hashtagList=" + hashtagList + ", file=" + file + "]";
 	}
+
 }

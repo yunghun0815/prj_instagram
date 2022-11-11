@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.web.multipart.MultipartFile;
 
+
 public class FileVo {
 	private int fileNo;
 	private int feedNo;
@@ -13,19 +14,6 @@ public class FileVo {
 	private String fileType;
 	private MultipartFile file;
 	private String memberId;
-	
-	public String getMemberId() {
-		return memberId;
-	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
-	public MultipartFile getFile() {
-		return file;
-	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
 	public int getFileNo() {
 		return fileNo;
 	}
@@ -62,9 +50,19 @@ public class FileVo {
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
-
-	@Override
-	public String toString() {
-		return "FileVo [fileNo=" + fileNo + ", feedNo=" + feedNo +  ", fileName=" + fileName + ", fileSize=" + fileSize + ", fileType=" + fileType + "]";
+	public MultipartFile getFile() {
+		return file;
 	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	
+  
 }

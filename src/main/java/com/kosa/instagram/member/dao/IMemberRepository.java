@@ -1,14 +1,25 @@
 package com.kosa.instagram.member.dao;
 
+
+import java.util.List;
+
+
 import com.kosa.instagram.feed.model.FileVo;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.kosa.instagram.feed.model.FeedVo;
+
 import com.kosa.instagram.member.model.MemberVo;
 
 public interface IMemberRepository {
+
+
+	MemberVo selectFeedMemberInfo(String memberId);
+	List<MemberVo> selectFollowerByUser(String memberId);
+	List<MemberVo> selectFollowByUser(String memberId);
+
 	//회원가입(사진 x)
 	public void insertMember(MemberVo member);
 	
@@ -33,4 +44,5 @@ public interface IMemberRepository {
 	
 	//멤버아이디랑 패스워드 보여줘야 하고 아이디와 이메일 이용
 	public MemberVo findPassword(@Param("memberId") String memberId, @Param("email")String email);
+
 }
