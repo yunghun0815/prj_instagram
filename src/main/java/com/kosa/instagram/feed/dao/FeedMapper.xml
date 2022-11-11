@@ -178,12 +178,21 @@
 		 ]]>
 	</select>
 
-	<select id="searchListByHashtag" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
+	<select id="searchListByHashtag" parameterType="String" resultType="String">
 		<![CDATA[  
-			select count(hashtag), hashtag as "hashtagList"
+			select hashtag as "hashtag"
 			from hashtag
 			where hashtag like #{hashtag}
 		 ]]>		 
+	</select>
+	
+
+	<select id="countHashtag" parameterType="String" resultType="int">
+		<![CDATA[ 
+			select count(hashtag)
+			from hashtag
+			where hashtag like #{hashtag}		
+		 ]]>
 	</select>
 	
 		<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
@@ -222,6 +231,7 @@
 			where place_detail = #{placeDetail}
 		]]>
 	</select>
+
 
 	<select id="getFile" parameterType="int" resultType="com.kosa.instagram.feed.model.FileVo">
 		select file_no as fileNo,
