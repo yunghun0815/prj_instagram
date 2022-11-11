@@ -17,7 +17,7 @@ public class MemberService implements IMemberService{
 
 	@Override
 	public void insertMember(MemberVo member) {
-		System.out.println("����");
+		System.out.println("占쏙옙占쏙옙");
 		memberRepository.insertMember(member);
 	}
 
@@ -26,7 +26,7 @@ public class MemberService implements IMemberService{
 		return memberRepository.selectMember(memberId);
 	}
 
-	//멤버아이디를 조회해서 feed_no가 null이면 업데이트, 없으면 인서트
+	//硫ㅻ쾭�븘�씠�뵒瑜� 議고쉶�빐�꽌 feed_no媛� null�씠硫� �뾽�뜲�씠�듃, �뾾�쑝硫� �씤�꽌�듃
 	@Override
 	public void updateMember(MemberVo member, FileVo file) {
 		if (file != null && file.getFileNo()==0) {
@@ -46,13 +46,13 @@ public class MemberService implements IMemberService{
 		memberRepository.updateMember(member);
 	}
 
-	//fileNo 조회
+	//fileNo 議고쉶
 	@Override
 	public Integer selectFileNo(String memberId) {
 		return memberRepository.selectFileNo(memberId);
 	}
 
-	//회원정보 삭제
+	//�쉶�썝�젙蹂� �궘�젣
 	@Override
 	public void deleteMember(MemberVo member) {
 		memberRepository.deleteMember(member);
@@ -80,14 +80,17 @@ public class MemberService implements IMemberService{
 	}
 
 	@Override
-	public List<MemberVo> selectFollowerByUser(String memberId) {
+	public List<String> selectFollowerByUser(String memberId) {
 		return memberRepository.selectFollowerByUser(memberId);
 	}
 
 	@Override
-	public List<MemberVo> selectFollowByUser(String memberId) {
+	public List<String> selectFollowByUser(String memberId) {
 		return memberRepository.selectFollowByUser(memberId);
 	}
 	
-	
+	@Override
+	public void followMember(String fromId, String toId) {
+		memberRepository.followMember(fromId, toId);
+	}
 }
