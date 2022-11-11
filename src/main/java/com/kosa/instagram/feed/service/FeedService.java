@@ -245,4 +245,10 @@ public void insertFeedHash(int feedNo, String hashTag) {
 	feedRepository.insertFeedHash(feedNo, hashTag);
 	
 }
+
+@Override
+public List<FeedVo> placeFileList(String placeDetail) {
+	// TODO Auto-generated method stub
+	return feedRepository.placeFileList(placeDetail);
+}
 }

@@ -1,3 +1,10 @@
+
+function slideImg(){
+	$(".single-item").slick({
+		prevArrow : "<button type='button' class='slick-prev prevBtn'></button>",
+        nextArrow : "<button type='button' class='slick-next nextBtn'></button>"
+	});
+}
 $(function(){
 	var memberId = $("#memberId").val();
 	var nickname = $("#nickname").val();
@@ -67,6 +74,15 @@ $(function(){
 					return heart;
 				}
 				
+				function feedImage(){
+					let image = '';
+					
+					for(let i=0; i<uploadFiles.length; i++){
+						image += `<div><img class="feed-img" src="/file/`+ uploadFiles[i] +`.jpg"></div>`;
+					}
+					return image;
+				}
+				
 				let view= `
 					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
 					<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
@@ -80,7 +96,9 @@ $(function(){
 								</a>
 							</p>
 						</div>
-						<img class="feed-img" src="/image/sample.jpg">				
+					    <div class="single-item">
+						    ${feedImage()}	
+						</div>			
 					</div>
 					<div class="feed-desc-box">
 						<ol>
@@ -116,6 +134,7 @@ $(function(){
 				
 				$(".feed-ul").append(view);
 			}
+			slideImg();
 		}
 	});
 	
@@ -302,12 +321,13 @@ function mapLoading(param){
 		url: "/place/find?placeDetail="+placeDetail,
 		type: "GET",
 		success: function(result){
+			var view = '';
 			for(var i=0; i<result.length; i++){
-				var view = `<li class="inline-block placeFileList" style="width: 160px; height: 160px; margin: 8px 7px" padding: 5px;>
+				view += `<li class="inline-block placeFileList" style="width: 160px; height: 160px; margin: 8px 7px" padding: 5px;>
 								<img class="palceFileImg" src="/file/`+ result[i]['fileNo'] +`" style="width: 150px; height: 150px;">
 							</li>`;
-				$(".modal-body>ul").append(view);
 			}
+			$(".modal-body>ul").html(view);
 		}
 	});
 	
