@@ -237,9 +237,7 @@ public class FeedController {
 		// 지금 DB가 없으니까 일단 임시로 데이터
 		List<MemberVo> memberList = feedService.searchListByKeyword(keyword);  
 		model.addAttribute("memberList", memberList); 
-		  
-		model.addAttribute("attribute1", "Hello world");
-		
+	
 		return "feed/search"; 
 	}
 

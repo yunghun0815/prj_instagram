@@ -163,11 +163,6 @@
 
 						
 
-
-	
-	
-
-
 	<select id="searchListByKeyword" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
 		<![CDATA[ 
 			select member_id as "memberId", nickname as "nickname"

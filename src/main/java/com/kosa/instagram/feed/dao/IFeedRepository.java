@@ -25,10 +25,8 @@ public interface IFeedRepository {
 	List<Integer> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
 	int feedLikeCount(int feedNo);
-	int countHashtag(String hashtag);
-	
 
-//	List<FeedVo> searchListByHashtag(@Param("hashtaglist") String hashtagist);
+
 	int countContent(String memberId);
 	int countFollower(String memberId);
 	int countFollow(String memberId);
@@ -36,7 +34,7 @@ public interface IFeedRepository {
 
 	List<MemberVo> searchListByKeyword(@Param("keyword") String keyword);
 	List<String> searchListByHashtag(@Param("hashtag") String hashtag);
-	
+	int countHashtag(String hashtag);
 
 
 	List<FileVo> selectContentListByUser(String memberId);

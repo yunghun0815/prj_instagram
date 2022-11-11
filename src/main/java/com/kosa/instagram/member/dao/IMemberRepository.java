@@ -37,7 +37,7 @@ public interface IMemberRepository {
 	public void deleteMember(MemberVo member);
 	
 	public String getPassword(String password);
-	List<MemberVo> searchListByKeyword(@Param("keyword") String keyword);
+	
 
 	//이메일을 이용해서 아이디 찾기
 	public MemberVo findMemberId(String email);
