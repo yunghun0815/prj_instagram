@@ -155,3 +155,11 @@ body{
  .modal-content::-webkit-scrollbar {
     width: 0px;
 } 
+
+#noFeed{
+    text-align: center;
+    font-size: 59px;
+    padding-top: 150px;
+    font-weight: bold;
+    background-color: rgb(250, 250, 250);
+}

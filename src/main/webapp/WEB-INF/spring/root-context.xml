@@ -57,6 +57,7 @@
 	
 	<mybatis-spring:scan base-package="com.kosa.instagram.member.dao"/>
 	<mybatis-spring:scan base-package="com.kosa.instagram.feed.dao"/>
+	<mybatis-spring:scan base-package="com.kosa.instagram.log.dao"/>
 	<context:component-scan base-package="com.kosa.instagram" />
 	
 </beans>
