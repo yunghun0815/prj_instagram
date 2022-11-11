@@ -15,20 +15,33 @@ public interface IFeedService {
 	int countFollowerByUser(String memberId);
 	int countFollowByUser(String memberId);
 	
-	List<FeedVo> selectContentListByUser(String memberId);
-	List<MemberVo> selectFollowerListByUser(String memberId);
-	List<MemberVo> selectFollowListByUser(String memberId);
+	List<FileVo> selectContentListByUser(String memberId);
 
 	void writeReply(int feedNo, String memberId, String replyContent);
 	List<MemberVo> searchListByKeyword(String keyword);
-	List<FeedVo> searchListByHashtag(String hashtag); 
+	List<String> searchListByHashtag(String hashtag); 
+	int countHashtag(String hashtag);
 	void deleteReply(int replyNo);
 	void increaseLike(int feedNo, String memberId, String logURI);
 	void decreaseLike(int feedNo, String memberId, String logURI);
+
+	
+	
+	
+	void insertFeedContent(FeedVo feed);
+	void insertFeedData(FileVo file);
+	void insertFeedPlace(FeedVo feed);
+	int checkPlace(String placeDetail);
+	int selectSeqNum();
+	void insertFeedHash(int feedNo, String hashTag);
+
 	FileVo getFile(int fileNo);
+
+	
+
 	JsonVo makeJsonVo(FeedVo feed, String memberId);
+
 	List<FeedVo> getTenFeeds(String memberId, int start, int end);
 	List<ReplyVo> getReply(int feedNo);
 	int feedLikeCount(int feedNo);
-	List<FeedVo> placeFileList(String placeDetail);
 }
