@@ -206,4 +206,9 @@ public class FeedService implements IFeedService {
 	public FileVo getFile(int fileNo) {
 		return feedRepository.getFile(fileNo);
 	}
+
+	@Override
+	public List<FeedVo> placeFileList(String placeDetail) {
+		return feedRepository.placeFileList(placeDetail);
+	}
 }

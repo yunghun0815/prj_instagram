@@ -42,7 +42,7 @@ public class LogInterceptor implements HandlerInterceptor {
 		uri = uri.substring(1);	//remove first slash
 		String[] splitUri = uri.split("/");
 		
-		if(splitUri[0].equals("increaseLike") || splitUri[0].equals("decreaseLike")) {	// [0]Á¾·ù [1]feedno
+		if(splitUri[0].equals("increaseLike") || splitUri[0].equals("decreaseLike")) {	// [0]ï¿½ï¿½ï¿½ï¿½ [1]feedno
 
 			log.setFeedNo(Integer.parseInt(splitUri[1]));
 			if(splitUri[0].equals("increaseLike")) {
@@ -50,6 +50,7 @@ public class LogInterceptor implements HandlerInterceptor {
 			} else {
 				log.setLogLikeCheck(0);
 			}
+			
 		} else if(splitUri[0].equals("search")) {
 			log.setLogKeyword(splitUri[1]);
 		}
