@@ -16,11 +16,7 @@ public class FeedVo {
 	private String feedContent;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date uploadDate;
-
-
-
-	private String placeTitle; //Ű����
-
+	private String placeTitle; //키워드
 	private String placeDetail;
 
 	private int likeCount;

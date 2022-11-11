@@ -102,6 +102,12 @@ public class FeedService implements IFeedService {
 	}
 	
 	@Override
+	public int countHashtag(String hashtag) {
+		return feedRepository.countHashtag(hashtag);
+	}
+	
+	
+	@Override
 	public void writeReply(int feedNo, String memberId, String replyContent) {
 		MemberVo member = memberRepository.selectMember(memberId);
 		ReplyVo reply = new ReplyVo();
