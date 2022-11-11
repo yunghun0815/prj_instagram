@@ -159,18 +159,6 @@ public class FeedController {
 	}
 	
 
-			
-			
-			
-		
-		
-			
-					
-		
-		
-		
-		
-
 	@GetMapping("/file/{fileNo}")
 	public ResponseEntity<byte[]> getFile(@PathVariable int fileNo){
 		try {
@@ -256,6 +244,3 @@ public class FeedController {
 	}
 
 }
-
-
-
