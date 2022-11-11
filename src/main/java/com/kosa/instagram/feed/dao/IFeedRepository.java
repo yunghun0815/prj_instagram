@@ -27,16 +27,35 @@ public interface IFeedRepository {
 	int feedLikeCount(int feedNo);
 
 
+
+
+//	List<FeedVo> searchListByHashtag(@Param("hashtaglist") String hashtagist);
+	int countContent(String memberId);
+	int countFollower(String memberId);
+	int countFollow(String memberId);
+	int selectSeqNum();
+
 	List<MemberVo> searchListByKeyword(@Param("keyword") String keyword);
 	List<String> searchListByHashtag(@Param("hashtag") String hashtag);
-	void countContent(String memberId);
-	void countFollower(String memberId);
-	void countFollow(String memberId);
+	
 
-	List<FeedVo> selectContentListByUser(String memberId);
+
+	List<FileVo> selectContentListByUser(String memberId);
+	void insertFeedContent(FeedVo feed);
+	void insertFeedData(FileVo file);
+	void insertFeedPlace(FeedVo feed);
+	int checkPlace(String placeDetail);
+	
 	List<MemberVo> selectFollowerByUser(String memberId);
 	List<MemberVo> selectFollowByUser(String memberId);
 	FileVo getFile(int fileNo);
 	int likeCheck(@Param("memberId") String memberId, @Param("feedNo") int feedNo);
+	
+	void insertFeedHash(@Param("feedNo")int feedNo,@Param("hashTag") String hashTag);
+
+
+	
+	
+
 	
 }
