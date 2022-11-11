@@ -213,12 +213,6 @@ public List<FileVo> selectContentListByUser(String memberId) {
 	}
 
 
-
-
-
-
-
-
 @Transactional
 public void insertFeedContent(FeedVo feed) {
 	feedRepository.insertFeedContent(feed);

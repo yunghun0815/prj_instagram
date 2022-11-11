@@ -45,4 +45,3 @@ public interface IFeedService {
 	List<ReplyVo> getReply(int feedNo);
 	int feedLikeCount(int feedNo);
 }
-

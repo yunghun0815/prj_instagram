@@ -29,21 +29,7 @@
 			<div class="modal-body">
 				<div id="map" style="width: 500px; height: 400px;"></div>
 				<ul style=" width:525px; margin:0 auto;">
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks1.jpg" style="width: 160px; height: 160px;">
-					</li>
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks2.jpg" style="width: 160px; height: 160px;">
-					</li>
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks3.jpg" style="width: 160px; height: 160px;">
-					</li>
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks4.jpg" style="width: 160px; height: 160px;">
-					</li>
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks5.jpg" style="width: 160px; height: 160px;">
-					</li>
+					<!-- 사진 리스트 -->
 				</ul>
 			</div>
 		</div>
