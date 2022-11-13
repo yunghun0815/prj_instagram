@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.FileVo;
+import com.kosa.instagram.feed.model.HashtagVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.model.MemberVo;
 
@@ -33,9 +34,10 @@ public interface IFeedRepository {
 	int selectSeqNum();
 
 	List<MemberVo> searchListByKeyword(@Param("keyword") String keyword);
-	List<String> searchListByHashtag(@Param("hashtag") String hashtag);
-	int countHashtag(String hashtag);
+//	List<String> searchListByHashtag(@Param("hashtag") String hashtag);
+//	int countHashtag(String hashtag);
 
+	List<HashtagVo> searchListByHashtag(@Param("keyword") String keyword);
 
 	List<FileVo> selectContentListByUser(String memberId);
 	void insertFeedContent(FeedVo feed);

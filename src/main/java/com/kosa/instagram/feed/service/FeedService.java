@@ -18,6 +18,7 @@ import com.kosa.instagram.feed.dao.IFeedRepository;
 
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.FileVo;
+import com.kosa.instagram.feed.model.HashtagVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.dao.IMemberRepository;
 import com.kosa.instagram.member.model.MemberVo;
@@ -36,14 +37,19 @@ public class FeedService implements IFeedService {
 		return feedRepository.searchListByKeyword("%"+ keyword+ "%");	
 	   }
 
-	@Override
-	public List<String> searchListByHashtag(String hashtag) {
-		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
-	}
+//	@Override
+//	public List<String> searchListByHashtag(String hashtag) {
+//		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
+//	}
+//	
+//	@Override
+//	public int countHashtag(String hashtag) {
+//		return feedRepository.countHashtag(hashtag);
+//	}
 	
 	@Override
-	public int countHashtag(String hashtag) {
-		return feedRepository.countHashtag(hashtag);
+	public List<HashtagVo> searchListByHashtag(String keyword) {
+		return feedRepository.searchListByHashtag("%"+ keyword+ "%");
 	}
 
 	@Override

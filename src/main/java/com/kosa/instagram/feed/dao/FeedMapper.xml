@@ -173,6 +173,7 @@
 		 ]]>
 	</select>
 
+<!-- 
 	<select id="searchListByHashtag" parameterType="String" resultType="String">
 		<![CDATA[  
 			select hashtag as "hashtag"
@@ -181,7 +182,6 @@
 		 ]]>		 
 	</select>
 	
-
 	<select id="countHashtag" parameterType="String" resultType="int">
 		<![CDATA[ 
 			select count(hashtag)
@@ -189,8 +189,18 @@
 			where hashtag like #{hashtag}		
 		 ]]>
 	</select>
-	
-		<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
+ -->
+ 
+ 	<select id="searchListByHashtag" parameterType="String" resultType="com.kosa.instagram.feed.model.HashtagVo">
+		<![CDATA[  
+			select hashtag, count(*) as cnt
+			from hashtag
+			where hashtag like #{keyword}
+			group by hashtag
+		 ]]>		 
+	</select>
+ 
+	<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
 		<![CDATA[
 			insert into feed(feed_no,member_id,feed_content,upload_date,place_detail)
 			values(feed_no_seq.nextval,#{memberId}, #{feedContent}, SYSDATE, #{placeDetail})
