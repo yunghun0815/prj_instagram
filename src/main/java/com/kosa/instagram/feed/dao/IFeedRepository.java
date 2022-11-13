@@ -49,6 +49,7 @@ public interface IFeedRepository {
 	List<MemberVo> selectFollowByUser(String memberId);
 	FileVo getFile(int fileNo);
 	int likeCheck(@Param("memberId") String memberId, @Param("feedNo") int feedNo);
+	List<FeedVo> placeFileList(String placeDetail);
 	
 	void insertFeedHash(@Param("feedNo")int feedNo,@Param("hashTag") String hashTag);
 

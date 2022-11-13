@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosa.instagram.log.dao.LogRepository">
+	
+	<select id="likeCount" resultType="map" parameterType="String">
+		select 
+			count(case when gender='male' then 1 end) as male, 
+			count(case when gender='female' then 1 end) as female
+		from feed f 
+		join member m 
+			on f.member_id = m.member_id 
+		join like_table l 
+			on f.feed_no = l.feed_no 
+		where f.member_id = #{memberId}
+	</select>
+	
+	<select id="likeCountDate" resultType="com.kosa.instagram.log.dto.LogDto" parameterType="map">
+        select to_char(log_time, 'yyyy. fmmm. dd.') as logDate, 
+            case when count(case when log_like_check = 1 then 1 end) > count(case when log_like_check = 0 then 1 end) 
+            then count(case when log_like_check = 1 then 1 end) - count(case when log_like_check = 0 then 1 end) 
+            else 0 end as likeCount
+        from log 
+        join feed 
+            on log.feed_no = feed.feed_no
+        join member
+            on feed.member_id = member.member_id
+        where member.member_id = #{memberId} and log_time between #{before} and #{today}
+            group by (to_char(log_time, 'yyyy. fmmm. dd.')) order by to_char(log_time, 'yyyy. fmmm. dd.')		
+	</select>
+</mapper>

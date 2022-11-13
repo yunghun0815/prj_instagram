@@ -132,7 +132,7 @@
 		<![CDATA[
 			select nickname
 			from member
-			where member_id=(select from_id 
+			where member_id in(select from_id 
 				   from follow 
 				   where to_id=#{memberId})
 		]]>
@@ -142,7 +142,7 @@
 		<![CDATA[
 			select nickname
 			from member
-			where member_id=(select to_id
+			where member_id in (select to_id
 							from follow
 							where from_id=#{memebrId})
 		]]>
@@ -264,5 +264,7 @@
 		from like_table 
 		where feed_no = #{feedNo} and member_id = #{memberId}
 	</select>
-
+	<select id="placeFileList" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
+		select feed.feed_no as feedNo, f.file_no as fileNo from feed join upload_file f on feed.feed_no = f.feed_no where feed.place_detail = #{placeDetail}
+	</select>
 </mapper>

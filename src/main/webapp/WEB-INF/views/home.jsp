@@ -8,6 +8,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f15e87f34a476fe8fa135f049ed1d36b&libraries=services"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
 <meta charset="UTF-8">
 <html>
@@ -29,21 +31,7 @@
 			<div class="modal-body">
 				<div id="map" style="width: 500px; height: 400px;"></div>
 				<ul style=" width:525px; margin:0 auto;">
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks1.jpg" style="width: 160px; height: 160px;">
-					</li>
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks2.jpg" style="width: 160px; height: 160px;">
-					</li>
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks3.jpg" style="width: 160px; height: 160px;">
-					</li>
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks4.jpg" style="width: 160px; height: 160px;">
-					</li>
-					<li class="inline-block" style="width: 160px; height: 160px; margin: 8px 5px">
-						<img src="/image/sample/starbucks5.jpg" style="width: 160px; height: 160px;">
-					</li>
+					<!-- 사진 리스트 -->
 				</ul>
 			</div>
 		</div>

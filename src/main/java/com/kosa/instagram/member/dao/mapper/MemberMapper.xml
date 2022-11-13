@@ -40,7 +40,7 @@ VALUES
 	<![CDATA[
 		select nickname
 			from member
-			where member_id=(select from_id 
+			where member_id IN (select from_id 
 				   from follow 
 				   where to_id=#{memberId})
 	]]>
@@ -50,7 +50,7 @@ VALUES
 	<![CDATA[
 		select nickname
 			from member
-			where member_id=(select to_id
+			where member_id IN (select to_id
 							from follow
 							where from_id=#{memberId})
 	]]>
@@ -113,5 +113,10 @@ VALUES
 	WHERE MEMBER_ID=#{memberId} AND EMAIL=#{email}
 </select>
 
+<insert id="followMember">
+<![CDATA[
+	INSERT INTO follow (to_id, from_id) VALUES (#{toId}, #{fromId})
+]]>
+</insert>
 
 </mapper>

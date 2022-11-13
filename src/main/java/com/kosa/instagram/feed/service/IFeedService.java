@@ -47,5 +47,5 @@ public interface IFeedService {
 	List<FeedVo> getTenFeeds(String memberId, int start, int end);
 	List<ReplyVo> getReply(int feedNo);
 	int feedLikeCount(int feedNo);
+	List<FeedVo> placeFileList(String placeDetail);
 }
-

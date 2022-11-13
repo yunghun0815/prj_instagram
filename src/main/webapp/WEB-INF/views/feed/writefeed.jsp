@@ -46,7 +46,8 @@
 </style>
 </head>
 <body>
-<div class="map_wrap">
+<jsp:include page="../common/header.jsp"/>
+<div class="map_wrap" style="margin-top: 60px">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
     <div id="menu_wrap" class="bg_white">
@@ -255,10 +256,10 @@ function removeAllChildNods(el) {
 <form id="upload" action="/writefeed" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="memberId" value="${memberId}">
 		<input type="text" name="feedContent" placeholder="내용입력"><br>
-		<input type="text" id="placeDetailInput" name="placeDetail"  >detail<br>
-		<input type="text" id="placeTitleInput" name="placeTitle"  >title<br>
+		<input type="text" id="placeDetailInput" name="placeDetail" placeholder="place detail" readonly="readonly"><br>
+		<input type="text" id="placeTitleInput" name="placeTitle"  placeholder="place title" readonly="readonly"><br>
 		<input type="text" id="hashtag" name="hashtag" placeholder="hashtag"><button type="button" onclick="addHashtag();">해시태그 추가</button><br>
-		<input multiple="multiple" type="file"  name="fileList" >
+		<input multiple="multiple" type="file"  name="fileList" required >
 		<input type="submit" id="submit" value="글 작성" >
 	</form>
 </div>

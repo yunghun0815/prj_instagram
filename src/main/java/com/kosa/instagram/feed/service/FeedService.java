@@ -158,12 +158,6 @@ public List<FileVo> selectContentListByUser(String memberId) {
 	}
 
 
-
-
-
-
-
-
 @Transactional
 public void insertFeedContent(FeedVo feed) {
 	feedRepository.insertFeedContent(feed);
@@ -195,5 +189,11 @@ public int checkPlace(String placeDetail) {
 public void insertFeedHash(int feedNo, String hashTag) {
 	feedRepository.insertFeedHash(feedNo, hashTag);
 	
+}
+
+@Override
+public List<FeedVo> placeFileList(String placeDetail) {
+	// TODO Auto-generated method stub
+	return feedRepository.placeFileList(placeDetail);
 }
 }
