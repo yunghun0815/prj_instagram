@@ -32,7 +32,9 @@ th, td {
 
 <jsp:include page="../common/header.jsp"></jsp:include>
 <body>
-   <div style="width:45%; float:left";>
+<!--    <div style="width:45%; float:left";> -->
+<div>
+   <div class="inline-block">
       <table>
          <tr>
             <th>계정</th>
@@ -44,7 +46,8 @@ th, td {
          </c:forEach>
       </table>
       </div>
-   <div style="width:45%; float:left";>
+   <!-- <div style="width:45%; float:left";> -->
+   <div class="inline-block">
       <table>
          <tr>
             <th>태그</th>
@@ -59,5 +62,6 @@ th, td {
          </c:forEach>
       </table>
    </div>
+  </div>
 </body>
 </html>
