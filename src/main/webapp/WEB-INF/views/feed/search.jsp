@@ -23,7 +23,6 @@ div {
 	display
 }
 
-
 th, td {
    border: 1px solid #444444;
    padding: 20px;
