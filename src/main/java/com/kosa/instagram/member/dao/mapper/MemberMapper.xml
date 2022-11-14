@@ -119,4 +119,10 @@ VALUES
 ]]>
 </insert>
 
+<delete id="unfollowMember">
+<![CDATA[
+	DELETE FROM follow WHERE from_id=#{fromId} AND to_id=#{toId}
+]]>
+</delete>
+
 </mapper>
