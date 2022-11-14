@@ -93,4 +93,9 @@ public class MemberService implements IMemberService{
 	public void followMember(String fromId, String toId) {
 		memberRepository.followMember(fromId, toId);
 	}
+	
+	@Override
+	public void unfollowMember(String fromId, String toId) {
+		memberRepository.unfollowMember(fromId, toId);
+	}
 }
