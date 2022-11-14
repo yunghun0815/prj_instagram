@@ -229,9 +229,8 @@ public class FeedController {
 		return feedService.feedLikeCount(feedNo);
 	}
 	
-	//@RequestMapping("/memberlist")
-	@RequestMapping(value="memberlist", method=RequestMethod.POST)
-	//public String getMemberList(String keyword, Model model ) {
+
+	@RequestMapping("/getmemberlist/{keyword}")
 	public String getMemberList(String keyword, HttpSession session, Model model) {
 		
 		// 1. 계정 리스트를 키워드로 검색
@@ -244,6 +243,7 @@ public class FeedController {
 				
 		return "feed/search"; 
 	}
+	
 	@GetMapping("/place/find")
 	public @ResponseBody List<FeedVo> placeFileList(@RequestParam String placeDetail){
 		List<FeedVo> list = feedService.placeFileList(placeDetail);
