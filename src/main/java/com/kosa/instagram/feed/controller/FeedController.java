@@ -244,6 +244,7 @@ public class FeedController {
 		return "feed/search"; 
 	}
 	
+	
 	@GetMapping("/place/find")
 	public @ResponseBody List<FeedVo> placeFileList(@RequestParam String placeDetail){
 		List<FeedVo> list = feedService.placeFileList(placeDetail);

@@ -173,24 +173,6 @@
 		 ]]>
 	</select>
 
-<!-- 
-	<select id="searchListByHashtag" parameterType="String" resultType="String">
-		<![CDATA[  
-			select hashtag as "hashtag"
-			from hashtag
-			where hashtag like #{hashtag}
-		 ]]>		 
-	</select>
-	
-	<select id="countHashtag" parameterType="String" resultType="int">
-		<![CDATA[ 
-			select count(hashtag)
-			from hashtag
-			where hashtag like #{hashtag}		
-		 ]]>
-	</select>
- -->
- 
  	<select id="searchListByHashtag" parameterType="String" resultType="com.kosa.instagram.feed.model.HashtagVo">
 		<![CDATA[  
 			select hashtag, count(*) as cnt
