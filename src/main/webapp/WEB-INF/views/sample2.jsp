@@ -4,6 +4,8 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -35,7 +37,7 @@
 			$("#idBox").hide();
 			$("#pwBox").show();
 		});	
-		
+		$(".slick").slick();
 	});
 </script>
 
@@ -60,6 +62,11 @@
 				<input type="submit" value="찾기">
 			</form>	
 		</div>
+	</div>
+	<div class="slick">
+		<div>이미지3</div>
+	    <div>이미지3</div>
+	    <div>이미지3</div>
 	</div>
 </body>
 </html>

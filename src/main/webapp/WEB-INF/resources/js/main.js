@@ -1,3 +1,10 @@
+
+function slideImg(){
+	$(".single-item").slick({
+		prevArrow : "<button type='button' class='slick-prev prevBtn'></button>",
+        nextArrow : "<button type='button' class='slick-next nextBtn'></button>"
+	});
+}
 $(function(){
 	var memberId = $("#memberId").val();
 	var nickname = $("#nickname").val();
@@ -5,6 +12,10 @@ $(function(){
 		url:"/mainfeed/0",
 		type: "GET", 
 		success: function(result){
+			if(result.length ==0){
+				let noFeed = `<li id="noFeed">등록된 게시물이 없습니다.</li>`;
+				$(".feed-ul").append(noFeed);
+			}
 			for(let i=0; i<result.length; i++){
 				let feed = result[i]['feed']['feed'];
 				let member = result[i]['member']['member'];
@@ -63,6 +74,15 @@ $(function(){
 					return heart;
 				}
 				
+				function feedImage(){
+					let image = '';
+					
+					for(let i=0; i<uploadFiles.length; i++){
+						image += `<div><img class="feed-img" src="/file/`+ uploadFiles[i] +`.jpg"></div>`;
+					}
+					return image;
+				}
+				
 				let view= `
 					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
 					<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
@@ -71,11 +91,14 @@ $(function(){
 							<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
 								<a href="#"><span>`+ member['nickname'] +`</span></a><br>
 								<a href="#">
-									<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map">`+ `${feed['placeDetail'] == null ? "" : feed['placeDetail']}` +`</span>									<input type="hidden" value="`+ feed['placeDetail'] +`">
+									<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map" onclick="mapLoading(this)">`+ `${feed['placeTitle'] == null ? "" : feed['placeTitle']}` +`</span>									
+									<input type="hidden" value="`+ feed['placeDetail'] +`">
 								</a>
 							</p>
 						</div>
-						<img class="feed-img" src="/image/sample.jpg">				
+					    <div class="single-item">
+						    ${feedImage()}	
+						</div>			
 					</div>
 					<div class="feed-desc-box">
 						<ol>
@@ -111,59 +134,13 @@ $(function(){
 				
 				$(".feed-ul").append(view);
 			}
+			slideImg();
 		}
 	});
 	
 	
 	
-	// var memberId = $("#member_id").val(); //회원 아이디
 	
-	$("#placeTitle").click(function(){
-		var placeTitle = $(this).html(); //보이는 Title 값 
-		var placeDetail = $(this).next().val(); //DB 저장된 주소
-		
-		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-		var options = { //지도를 생성할 때 필요한 기본 옵션
-			center: new kakao.maps.LatLng(33.450701, 126.570667), //최초 지도 객체 생성 중심좌표
-			level: 3 //지도의 레벨(확대, 축소 정도)
-		};
-
-		var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-		 
-		// 0.3초 딜레이 줌 ---> modal 생성 이후 kakao map 생성
-		setTimeout(function() {
-			
-			// 주소-좌표 변환 객체를 생성
-			var geocoder = new kakao.maps.services.Geocoder();
-
-			// 주소로 좌표를 검색
-			geocoder.addressSearch(placeDetail, function(result, status) {
-					
-			    // 정상적으로 검색이 완료됐으면 
-			     if (status === kakao.maps.services.Status.OK) {
-
-			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-			        // 결과값으로 받은 위치를 마커로 표시합니다
-			        var marker = new kakao.maps.Marker({
-			            map: map,
-			            position: coords
-			        });
-
-			        // 인포윈도우로 장소에 대한 설명을 표시합니다
-			        var infowindow = new kakao.maps.InfoWindow({
-			            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ placeTitle +'</div>'
-			        });
-			        infowindow.open(map, marker);
-
-			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			        map.setCenter(coords);
-			    } 
-			}); 
-			
-			map.relayout();
-		}, 300);
-	});
 	
 	
 	/* 스크롤 이벤트 html 추가 */
@@ -236,51 +213,51 @@ $(function(){
 		    				}
 		    				
 		    				let view= `
-		    					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 -->
-		    					<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 -->
-		    						<div class="feed-header">
-		    							<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
-		    							<p>
-		    								<a href="#"><span>`+ member['nickname'] +`</span></a><br>
-		    								<a href="#">
-		    									<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map">`+ feed['placeDetail'] +`</span>
-		    									<input type="hidden" value="`+ feed['placeDetail'] +`">
-		    								</a>
-		    							</p>
-		    						</div>
-		    						<img class="feed-img" src="/image/sample.jpg">				
-		    					</div>
-		    					<div class="feed-desc-box">
-		    						<ol>
-		    							<li><span class="bold">`+ member['nickname'] +`</span>
-		    							    <span>`+ feed['feedContent'] +`</span><br>
-		    							    <span class="hashtag"> ${hashtagList()} </span>
-		    							</li>
-		    							<li>
-		    							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
-		    							    ${likeImage()}
-		    								<img src="/image/speech.png" onclick="replyFocus(this)">
-		    								<img src="/image/plane.png">
-		    							</li>
-		    							<li>
-		    								<span class="bold">좋아요<span id="like_count">`+ feed['likeCount'] +`</span>개</span>	
-		    								<span class="upload-date">`+ feed['uploadDate'] +`</span>	
-		    							</li>
-		    							<li class="reply-list">
-		    								${replyList()}
-		    							</li>
-		    						</ol>
-		    						<div><!-- 댓글달기 -->
-										<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
-											<img src="/image/face.png">
-											<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
-											<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
-											<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
-										</form> 
+		    					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
+									<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
+										<div class="feed-header">
+											<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
+											<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
+												<a href="#"><span>`+ member['nickname'] +`</span></a><br>
+												<a href="#">
+													<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map" onclick="mapLoading(this)">`+ `${feed['placeTitle'] == null ? "" : feed['placeTitle']}` +`</span>									
+													<input type="hidden" value="`+ feed['placeDetail'] +`">
+												</a>
+											</p>
+										</div>
+										<img class="feed-img" src="/image/sample.jpg">				
 									</div>
-		    					</div>
-		    				</li>
-		    			`;
+									<div class="feed-desc-box">
+										<ol>
+											<li><span class="bold">`+ member['nickname'] +`</span>
+											    <span>`+ feed['feedContent'] +`</span><br>
+											    <span class="hashtag"> ${hashtagList()} </span>
+											</li>
+											<li>
+											    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
+												${likeImage()}
+												<img src="/image/speech.png" onclick="replyFocus(this)">
+												<img src="/image/plane.png">
+											</li>
+											<li>
+												<span class="bold">좋아요<span id="like_count">`+ feed['likeCount'] +`</span>개</span>	
+												<span class="upload-date">`+ feed['uploadDate'] +`</span>	
+											</li>
+											<li class="reply-list">
+												${replyList()}
+											</li>
+										</ol>
+										<div><!-- 댓글달기 -->
+											<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
+												<img src="/image/face.png">
+												<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
+												<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
+												<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
+											</form> 
+										</div>
+									</div>
+								</li>
+							`;
 		    				
 		    				$(".feed-ul").append(view);
 		    			}
@@ -291,15 +268,70 @@ $(function(){
 	    	});
 	    }
 	}); 
-
-	/*$("#replyForm").ajaxSubmit({
-		success: function(data) {
-			console.log(data);
-		}	
-	});*/
 	  
 });//ready function 종료
+//var memberId = $("#member_id").val(); //회원 아이디
+function mapLoading(param){
+	var object = $(param);
+	var placeTitle = object.html();
+	var placeDetail = object.next().val();
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+		center: new kakao.maps.LatLng(33.450701, 126.570667), //최초 지도 객체 생성 중심좌표
+		level: 3 //지도의 레벨(확대, 축소 정도)
+	};
 
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	 
+	// 0.3초 딜레이 줌 ---> modal 생성 이후 kakao map 생성
+	setTimeout(function() {
+		
+		// 주소-좌표 변환 객체를 생성
+		var geocoder = new kakao.maps.services.Geocoder();
+
+		// 주소로 좌표를 검색
+		geocoder.addressSearch(placeDetail, function(result, status) {
+				
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        var infowindow = new kakao.maps.InfoWindow({
+		            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ placeTitle +'</div>'
+		        });
+		        infowindow.open(map, marker);
+
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
+		}); 
+		
+		map.relayout();
+	}, 300);
+	
+	$.ajax({
+		url: "/place/find?placeDetail="+placeDetail,
+		type: "GET",
+		success: function(result){
+			var view = '';
+			for(var i=0; i<result.length; i++){
+				view += `<li class="inline-block placeFileList" style="width: 160px; height: 160px; margin: 8px 7px" padding: 5px;>
+								<img class="palceFileImg" src="/file/`+ result[i]['fileNo'] +`" style="width: 150px; height: 150px;">
+							</li>`;
+			}
+			$(".modal-body>ul").html(view);
+		}
+	});
+	
+}
 	//댓글 작성
 	function replySubmit(param){
 		var object = $(param);

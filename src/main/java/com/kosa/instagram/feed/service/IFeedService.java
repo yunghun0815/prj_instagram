@@ -5,6 +5,7 @@ import java.util.List;
 import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.FileVo;
+import com.kosa.instagram.feed.model.HashtagVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.feed.dao.IFeedRepository;
@@ -19,8 +20,10 @@ public interface IFeedService {
 
 	void writeReply(int feedNo, String memberId, String replyContent);
 	List<MemberVo> searchListByKeyword(String keyword);
-	List<String> searchListByHashtag(String hashtag); 
-	int countHashtag(String hashtag);
+//	List<String> searchListByHashtag(String hashtag); 
+//	int countHashtag(String hashtag);
+	List<HashtagVo> searchListByHashtag(String keyword);
+	
 	void deleteReply(int replyNo);
 	void increaseLike(int feedNo, String memberId, String logURI);
 	void decreaseLike(int feedNo, String memberId, String logURI);
@@ -44,5 +47,5 @@ public interface IFeedService {
 	List<FeedVo> getTenFeeds(String memberId, int start, int end);
 	List<ReplyVo> getReply(int feedNo);
 	int feedLikeCount(int feedNo);
+	List<FeedVo> placeFileList(String placeDetail);
 }
-
