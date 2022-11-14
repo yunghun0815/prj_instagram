@@ -1,5 +1,7 @@
 package com.kosa.instagram.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -16,10 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kosa.instagram.feed.model.FileVo;
+import com.kosa.instagram.feed.service.IFeedService;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
@@ -31,6 +35,7 @@ public class MemberController {
 
 	@Autowired
 	IMemberService memberService;
+
 
 	//회원가입
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
@@ -240,12 +245,31 @@ public class MemberController {
 	}
 
 	@RequestMapping("/follow/{toId}")
-	public void followMember(@PathVariable String toId, HttpServletRequest request) {
+	public @ResponseBody void followMember(@PathVariable String toId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String fromId = (String)session.getAttribute("memberId");
 		memberService.followMember(fromId, toId);
 	}
+	
+	@RequestMapping("/unfollow/{toId}")
+	public @ResponseBody void unfollowMember(@PathVariable String toId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String fromId = (String)session.getAttribute("memberId");
+		memberService.unfollowMember(fromId, toId);
+	}
 
+	@RequestMapping("/isfollowing/{toId}")
+	public @ResponseBody boolean isFollowing(@PathVariable String toId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String fromId = (String)session.getAttribute("memberId");
+		List<String> followList = memberService.selectFollowByUser(fromId);
+		for(String followId : followList) {
+			if(followId.equals(toId)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }//class end
 
