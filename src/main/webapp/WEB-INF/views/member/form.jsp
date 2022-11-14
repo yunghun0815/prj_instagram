@@ -5,6 +5,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <fmt:setBundle basename="i18n/member" />
+
 <!DOCTYPE html>
 <html>
 <%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>

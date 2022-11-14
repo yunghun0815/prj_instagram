@@ -249,4 +249,16 @@ public class FeedController {
 		List<FeedVo> list = feedService.placeFileList(placeDetail);
 		return list;
 	}
+	@GetMapping("/feed/detail/{feedNo}")
+	public String detailPage(@PathVariable int feedNo, Model model) {
+		model.addAttribute("feedNo", feedNo);
+		return "feed/detail";
+	}
+	@GetMapping("/feed/detail")
+	public @ResponseBody JsonVo feedDetail(@RequestParam int feedNo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
+		return  feedService.getDetailFeed(feedNo, memberId);
+	}
+	
 }

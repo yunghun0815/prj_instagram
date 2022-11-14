@@ -196,4 +196,26 @@ public List<FeedVo> placeFileList(String placeDetail) {
 	// TODO Auto-generated method stub
 	return feedRepository.placeFileList(placeDetail);
 }
+
+@Override
+public JsonVo getDetailFeed(int feedNo, String memberId) {
+	JsonVo json = new JsonVo();
+
+	Map<String, FeedVo> feedMap = new HashMap<String, FeedVo>();
+	FeedVo feed = feedRepository.getDetailFeed(feedNo);
+	feed.setHashtagList(feedRepository.getHashtagList(feedNo));
+	feed.setLikeCheck(feedRepository.likeCheck(memberId, feedNo));
+	feed.setLikeCount(feedRepository.getLikeCount(feedNo));
+	feedMap.put("feed", feed);
+	json.setFeed(feedMap);
+	MemberVo member = memberRepository.selectMember(feed.getMemberId());
+	Map<String, MemberVo> memberMap = new HashMap<String, MemberVo>();
+	memberMap.put("member", member);
+	json.setMember(memberMap);
+	List<Integer> fileNoList = feedRepository.getUploadFiles(feedNo);
+	json.setUploadFiles(fileNoList);
+	List<ReplyVo> replyList = feedRepository.getReply(feedNo);
+	json.setReply(replyList);
+	return json;
+}
 }

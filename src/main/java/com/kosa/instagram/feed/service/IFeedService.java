@@ -48,4 +48,5 @@ public interface IFeedService {
 	List<ReplyVo> getReply(int feedNo);
 	int feedLikeCount(int feedNo);
 	List<FeedVo> placeFileList(String placeDetail);
+	JsonVo getDetailFeed(int feedNo, String memberId);
 }

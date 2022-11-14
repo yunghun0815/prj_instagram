@@ -267,4 +267,19 @@
 	<select id="placeFileList" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
 		select feed.feed_no as feedNo, f.file_no as fileNo from feed join upload_file f on feed.feed_no = f.feed_no where feed.place_detail = #{placeDetail}
 	</select>
+	
+	<select id="getLikeCount" resultType="int" parameterType="int">
+		select count(*) from like_table where feed_no = #{feedNo}
+	</select>
+	
+	<select id="getDetailFeed" resultType="com.kosa.instagram.feed.model.FeedVo" parameterType="int">
+		select feed_no as feedNo, 
+			   member_id as memberId, 
+			   feed_content as feedContent, 
+			   upload_date as uploadDate, 
+			   feed.place_detail as placeDetail,
+               place.place_title as placeTitle
+		from feed join place on feed.place_detail = place.place_detail
+        where feed_no = #{feedNo}
+	</select>
 </mapper>
