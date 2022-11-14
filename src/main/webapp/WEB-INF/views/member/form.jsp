@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <fmt:setBundle basename="i18n/member" />
+
 <!DOCTYPE html>
 <html>
 <%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>

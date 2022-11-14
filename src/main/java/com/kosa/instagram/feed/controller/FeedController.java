@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.FileVo;
-
+import com.kosa.instagram.feed.model.HashtagVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 
 import com.kosa.instagram.feed.service.IFeedService;
@@ -234,12 +234,14 @@ public class FeedController {
 	//public String getMemberList(String keyword, Model model ) {
 	public String getMemberList(String keyword, HttpSession session, Model model) {
 		
-		// 지금 DB가 없으니까 일단 임시로 데이터
-		List<MemberVo> memberList = feedService.searchListByKeyword(keyword);  
-		model.addAttribute("memberList", memberList); 
-		  
-		model.addAttribute("attribute1", "Hello world");
-		
+		// 1. 계정 리스트를 키워드로 검색
+		List<MemberVo> memberList = feedService.searchListByKeyword(keyword);
+		model.addAttribute("memberList", memberList);
+	
+		// 2. 해시태그 리스트를 키워드로 검색
+		List<HashtagVo> hashtagList = feedService.searchListByHashtag(keyword);
+		model.addAttribute("hashtagList", hashtagList);
+				
 		return "feed/search"; 
 	}
 	@GetMapping("/place/find")
@@ -247,4 +249,16 @@ public class FeedController {
 		List<FeedVo> list = feedService.placeFileList(placeDetail);
 		return list;
 	}
+	@GetMapping("/feed/detail/{feedNo}")
+	public String detailPage(@PathVariable int feedNo, Model model) {
+		model.addAttribute("feedNo", feedNo);
+		return "feed/detail";
+	}
+	@GetMapping("/feed/detail")
+	public @ResponseBody JsonVo feedDetail(@RequestParam int feedNo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
+		return  feedService.getDetailFeed(feedNo, memberId);
+	}
+	
 }

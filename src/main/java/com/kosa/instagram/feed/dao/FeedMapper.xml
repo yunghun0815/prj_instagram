@@ -163,11 +163,6 @@
 
 						
 
-
-	
-	
-
-
 	<select id="searchListByKeyword" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
 		<![CDATA[ 
 			select member_id as "memberId", nickname as "nickname"
@@ -178,6 +173,7 @@
 		 ]]>
 	</select>
 
+<!-- 
 	<select id="searchListByHashtag" parameterType="String" resultType="String">
 		<![CDATA[  
 			select hashtag as "hashtag"
@@ -186,7 +182,6 @@
 		 ]]>		 
 	</select>
 	
-
 	<select id="countHashtag" parameterType="String" resultType="int">
 		<![CDATA[ 
 			select count(hashtag)
@@ -194,8 +189,18 @@
 			where hashtag like #{hashtag}		
 		 ]]>
 	</select>
-	
-		<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
+ -->
+ 
+ 	<select id="searchListByHashtag" parameterType="String" resultType="com.kosa.instagram.feed.model.HashtagVo">
+		<![CDATA[  
+			select hashtag, count(*) as cnt
+			from hashtag
+			where hashtag like #{keyword}
+			group by hashtag
+		 ]]>		 
+	</select>
+ 
+	<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
 		<![CDATA[
 			insert into feed(feed_no,member_id,feed_content,upload_date,place_detail)
 			values(feed_no_seq.nextval,#{memberId}, #{feedContent}, SYSDATE, #{placeDetail})
@@ -261,5 +266,20 @@
 	</select>
 	<select id="placeFileList" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
 		select feed.feed_no as feedNo, f.file_no as fileNo from feed join upload_file f on feed.feed_no = f.feed_no where feed.place_detail = #{placeDetail}
+	</select>
+	
+	<select id="getLikeCount" resultType="int" parameterType="int">
+		select count(*) from like_table where feed_no = #{feedNo}
+	</select>
+	
+	<select id="getDetailFeed" resultType="com.kosa.instagram.feed.model.FeedVo" parameterType="int">
+		select feed_no as feedNo, 
+			   member_id as memberId, 
+			   feed_content as feedContent, 
+			   upload_date as uploadDate, 
+			   feed.place_detail as placeDetail,
+               place.place_title as placeTitle
+		from feed join place on feed.place_detail = place.place_detail
+        where feed_no = #{feedNo}
 	</select>
 </mapper>
