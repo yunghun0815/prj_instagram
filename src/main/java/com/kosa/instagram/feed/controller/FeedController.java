@@ -305,4 +305,12 @@ public class FeedController {
 		return "redirect:/feed/detail/"+feedNo;
 	}
 	
+	@RequestMapping("/feed/delete")
+	public String deleteFeed(@RequestParam int feedNo, HttpSession session, Model model) {
+		String memberId = (String)session.getAttribute("memberId");
+		FeedVo feed = feedService.getDetailFeed(feedNo, memberId).getFeed().get("feed");
+		feedService.deleteFeed(feed);
+		return "redirect:/userfeed/"+memberId;
+	}
+	
 }

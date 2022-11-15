@@ -49,4 +49,5 @@ public interface IFeedService {
 	JsonVo getDetailFeed(int feedNo, String memberId);
 	
 	void updateFeed(FeedVo feed);
+	void deleteFeed(FeedVo feed);
 }
