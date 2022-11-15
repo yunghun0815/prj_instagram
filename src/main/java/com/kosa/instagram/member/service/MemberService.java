@@ -64,12 +64,12 @@ public class MemberService implements IMemberService{
 	}
 
 	@Override
-	public MemberVo findMmeberId(String email) {
+	public String findMmeberId(String email) {
 		return memberRepository.findMemberId(email);
 	}
 
 	@Override
-	public MemberVo findPassword(String memberId, String email) {
+	public String findPassword(String memberId, String email) {
 		return memberRepository.findPassword(memberId, email);
 	}
 
@@ -89,5 +89,14 @@ public class MemberService implements IMemberService{
 		return memberRepository.selectFollowByUser(memberId);
 	}
 	
-	
+	//아이디 중복체크
+	public String checkId(String memberId) {
+		return memberRepository.checkId(memberId);
+	}
+	public String checkNickname(String nickname) {
+		return memberRepository.checkNickname(nickname);
+	}
+	public String checkEmail(String email) {
+		return memberRepository.checkEmail(email);
+	}
 }

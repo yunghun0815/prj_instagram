@@ -30,8 +30,12 @@ public interface IMemberService {
 	
 	public String getPassword(String password);
 	
-	public MemberVo findMmeberId(String email);
+	public String findMmeberId(String email);
 	
-	public MemberVo findPassword(String memberId, String email);
+	public String findPassword(String memberId, String email);
 
+	//아이디 중복쳌
+	public String checkId(String memberId);
+	public String checkNickname(String nickname);
+	public String checkEmail(String email);
 }

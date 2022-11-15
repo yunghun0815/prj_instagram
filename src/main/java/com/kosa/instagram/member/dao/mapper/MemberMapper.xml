@@ -96,21 +96,32 @@ VALUES
 	WHERE MEMBER_ID = #{memberId}
 </select>
 
-
-
 <!-- 이메일 입력 회원아이디 조회 -->
-<select id="findMemberId" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
-	SELECT  EMAIL 	  AS "email",
-		 	MEMBER_ID AS "memberId" 
-	FROM MEMBER
+<select id="findMemberId" parameterType="String" resultType="String">
+	SELECT NVL(MAX(MEMBER_ID), 0) as "memberId"
+	FROM MEMBER 
 	WHERE EMAIL = #{email}
 </select>
 
-<select id="findPassword" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
-	SELECT 	MEMBER_ID 	AS "memberId",
-			PASSWORD	AS "password"
+<select id="findPassword" parameterType="String" resultType="String">
+	SELECT NVL(MAX(PASSWORD), 0) AS "password"
 	FROM	MEMBER
 	WHERE MEMBER_ID=#{memberId} AND EMAIL=#{email}
+</select>
+
+<select id="checkId" parameterType="String" resultType="String">
+	SELECT * FROM  MEMBER
+	WHERE MEMBER_ID = #{memberId}
+</select>
+
+<select id="checkNickname" parameterType="String" resultType="String">
+	SELECT * FROM MEMBER
+	WHERE NICKNAME = #{nickname}
+</select>
+
+<select id="checkEmail" parameterType="String" resultType="String">
+	SELECT * FROM MEMBER
+	WHERE EMAIL = #{email}
 </select>
 
 
