@@ -66,9 +66,14 @@ public class FeedController {
 		MemberVo member=memberService.selectFeedMemberInfo(memberId);
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("name",member.getName());
-//		List<FileVo> contentList=feedService.selectContentListByUser(memberId);
+		
+		
 
-//		model.addAttribute("contentList",contentList);
+		
+		List<FileVo> getFeedFile =feedService.getFeedFile(memberId);
+		model.addAttribute("contentList",getFeedFile);
+		
+		
 		
 		List<String> followerList=memberService.selectFollowerByUser(memberId);
 		model.addAttribute("followerList",followerList);
@@ -76,7 +81,8 @@ public class FeedController {
 		List<String> followList=memberService.selectFollowByUser(memberId);
 		model.addAttribute("followList",followList);
 		
-		return "/feed/userfeed";
+		return "feed/userfeed";
+	
 	}
 	
 
@@ -259,6 +265,52 @@ public class FeedController {
 		HttpSession session = request.getSession();
 		String memberId = (String)session.getAttribute("memberId");
 		return  feedService.getDetailFeed(feedNo, memberId);
+	}
+	
+	@RequestMapping(value="/feed/update", method=RequestMethod.GET)
+	public String updateFeed(@RequestParam int feedNo, HttpSession session, Model model) {
+		String memberId = (String)session.getAttribute("memberId");
+		FeedVo feed = feedService.getDetailFeed(feedNo, memberId).getFeed().get("feed");
+		model.addAttribute("feed", feed);
+		model.addAttribute("feedNo", feedNo);
+		return "feed/updatefeed";
+	}
+	
+	@RequestMapping(value="/feed/update/{feedNo}", method=RequestMethod.POST)
+	public String updateFeed(@PathVariable int feedNo, String[] hashtag, HttpServletRequest req) {
+		FeedVo feed=new FeedVo();
+		
+		String feedContent=req.getParameter("feedContent");
+		String placeTitle=req.getParameter("placeTitle");
+		String placeDetail=req.getParameter("placeDetail");
+		String memberId=req.getParameter("memberId");
+
+		feed.setFeedNo(feedNo);
+		feed.setFeedContent(feedContent);
+		feed.setPlaceTitle(placeTitle);
+		feed.setPlaceDetail(placeDetail);
+		feed.setMemberId(memberId);
+		
+		if(placeTitle==null || placeTitle.equals("")) {
+			feed.setPlaceDetail(null);
+			feed.setPlaceTitle(null);
+		}
+
+		feedService.updateFeed(feed);
+		
+		for(String hash: hashtag) {
+			feedService.insertFeedHash(feedNo, hash);
+		}
+		
+		return "redirect:/feed/detail/"+feedNo;
+	}
+	
+	@RequestMapping("/feed/delete")
+	public String deleteFeed(@RequestParam int feedNo, HttpSession session, Model model) {
+		String memberId = (String)session.getAttribute("memberId");
+		FeedVo feed = feedService.getDetailFeed(feedNo, memberId).getFeed().get("feed");
+		feedService.deleteFeed(feed);
+		return "redirect:/userfeed/"+memberId;
 	}
 	
 }

@@ -46,4 +46,5 @@ public interface IMemberRepository {
 	public MemberVo findPassword(@Param("memberId") String memberId, @Param("email")String email);
 
 	void followMember(@Param("fromId")String fromId, @Param("toId")String toId);
+	void unfollowMember(@Param("fromId")String fromId, @Param("toId")String toId);
 }
