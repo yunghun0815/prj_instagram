@@ -321,7 +321,5 @@ public class MemberController {
 		}
 		return false;
 	}
-
 }//class end
-
 

@@ -3,7 +3,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" type="text/css" href="/css/common/common.css">
+<link rel="stylesheet" type="text/css" href="/css/member/login.css">
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript" src="/js/member/login.js"></script>
 <fmt:setBundle basename="i18n/member"/>
 <!DOCTYPE html>
 <html>
@@ -148,7 +150,7 @@
 </script>
 <body>
 <section class="main flex">
-	<div>
+	<div class="phone-image">
 		<div>
 			<img class="phone" src="/image/member/login_phone.png">
 		</div>
@@ -159,7 +161,7 @@
 			<img src="/image/member/login_phone_inner4.png"> 
 		</div>
 	</div>
-	<div>
+	<div class="login-box">
 		<div class="signupForm">
 			<a href="/">
 				<img src="/image/header/instagram.png">
@@ -177,11 +179,10 @@
 			<a class="findPassword" href="/member/findPassword">비밀번호를 잊으셨나요?</a>
 		</div>
 		<div class="signupBox">
-			<span>계정을 없으신가요?</span>
+			<span>계정이 없으신가요?</span>
 			<a href="/member/insert">가입하기</a>
 		</div>
 	</div>
 </section>
-
 </body>
 </html>

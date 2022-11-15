@@ -24,7 +24,69 @@
             on log.feed_no = feed.feed_no
         join member
             on feed.member_id = member.member_id
-        where member.member_id = #{memberId} and log_time between #{before} and #{today}
+        where member.member_id = #{memberId} and to_char(log_time,'yyyy-mm-dd') between #{before} and #{today}
             group by (to_char(log_time, 'yyyy. fmmm. dd.')) order by to_char(log_time, 'yyyy. fmmm. dd.')		
+	</select>
+	
+	<select id="searchKeyword" resultType="com.kosa.instagram.log.dto.LogDto" parameterType="int">
+    select log_keyword as keyword, '10대' as age, cnt from
+        (select l.log_keyword, count(*) as cnt, '10대' as 나이, row_number() over (order by count(*) desc) as ranking
+        from member m 
+        join log l
+            on m.member_id = l.member_id 
+        where log_keyword is not null 
+              and to_char(birth, 'yyyy') between #{year}-18 and #{year}-9 and to_char(l.log_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+        group by log_keyword
+        order by cnt desc) where ranking = 1
+    union    
+        select log_keyword as keyword, '20대' as age, cnt from
+        (select l.log_keyword, count(*) as cnt, '20대' as 나이, row_number() over (order by count(*) desc) as ranking
+        from member m 
+        join log l 
+            on m.member_id = l.member_id 
+        where log_keyword is not null 
+              and to_char(birth, 'yyyy') between #{year}-28 and #{year}-19 and to_char(l.log_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+        group by log_keyword
+        order by cnt desc) where ranking = 1
+    union    
+        select log_keyword as keyword, '30대' as age, cnt from
+        (select l.log_keyword, count(*) as cnt, '30대' as 나이, row_number() over (order by count(*) desc) as ranking
+        from member m 
+        join log l 
+            on m.member_id = l.member_id 
+        where log_keyword is not null 
+              and to_char(birth, 'yyyy') between #{year}-38 and #{year}-29 and to_char(l.log_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+        group by log_keyword
+        order by cnt desc) where ranking = 1
+    union    
+        select log_keyword as keyword, '40대' as age, cnt from
+        (select l.log_keyword, count(*) as cnt, '40대' as 나이, row_number() over (order by count(*) desc) as ranking
+        from member m 
+        join log l 
+            on m.member_id = l.member_id 
+        where log_keyword is not null 
+              and to_char(birth, 'yyyy') between #{year}-48 and #{year}-39 and to_char(l.log_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+        group by log_keyword
+        order by cnt desc) where ranking = 1
+    union   
+        select log_keyword as keyword, '50대' as age, cnt from
+        (select l.log_keyword, count(*) as cnt, '50대' as 나이, row_number() over (order by count(*) desc) as ranking
+        from member m 
+        join log l 
+            on m.member_id = l.member_id 
+        where log_keyword is not null 
+              and to_char(birth, 'yyyy') between #{year}-58 and #{year}-48 and to_char(l.log_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+        group by log_keyword
+        order by cnt desc) where ranking = 1
+   union    
+        select log_keyword as keyword, '60대' as age, cnt from
+        (select l.log_keyword, count(*) as cnt, '60대' as 나이, row_number() over (order by count(*) desc) as ranking
+        from member m 
+        join log l 
+            on m.member_id = l.member_id 
+        where log_keyword is not null 
+              and to_char(birth, 'yyyy') between #{year}-68 and #{year}-58 and to_char(l.log_time, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+        group by log_keyword
+        order by cnt desc) where ranking = 1
 	</select>
 </mapper>
