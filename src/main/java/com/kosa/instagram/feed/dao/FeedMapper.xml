@@ -132,7 +132,7 @@
 		<![CDATA[
 			select nickname
 			from member
-			where member_id=(select from_id 
+			where member_id in(select from_id 
 				   from follow 
 				   where to_id=#{memberId})
 		]]>
@@ -142,7 +142,7 @@
 		<![CDATA[
 			select nickname
 			from member
-			where member_id=(select to_id
+			where member_id in (select to_id
 							from follow
 							where from_id=#{memebrId})
 		]]>
@@ -163,11 +163,6 @@
 
 						
 
-
-	
-	
-
-
 	<select id="searchListByKeyword" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
 		<![CDATA[ 
 			select member_id as "memberId", nickname as "nickname"
@@ -178,6 +173,7 @@
 		 ]]>
 	</select>
 
+<!-- 
 	<select id="searchListByHashtag" parameterType="String" resultType="String">
 		<![CDATA[  
 			select hashtag as "hashtag"
@@ -186,7 +182,6 @@
 		 ]]>		 
 	</select>
 	
-
 	<select id="countHashtag" parameterType="String" resultType="int">
 		<![CDATA[ 
 			select count(hashtag)
@@ -194,8 +189,18 @@
 			where hashtag like #{hashtag}		
 		 ]]>
 	</select>
-	
-		<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
+ -->
+ 
+ 	<select id="searchListByHashtag" parameterType="String" resultType="com.kosa.instagram.feed.model.HashtagVo">
+		<![CDATA[  
+			select hashtag, count(*) as cnt
+			from hashtag
+			where hashtag like #{keyword}
+			group by hashtag
+		 ]]>		 
+	</select>
+ 
+	<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
 		<![CDATA[
 			insert into feed(feed_no,member_id,feed_content,upload_date,place_detail)
 			values(feed_no_seq.nextval,#{memberId}, #{feedContent}, SYSDATE, #{placeDetail})
@@ -245,6 +250,17 @@
 		where file_no = #{fileNo}
 	</select>
 	
+	
+	<select id="getFeedFile" parameterType="String" resultType="com.kosa.instagram.feed.model.FileVo">
+		select file_no as fileNo, file_data as fileData,feed_no as feedNo
+		from upload_file
+		where file_no in(select max( file_no) as fileNo
+			from upload_file
+			where feed_no  in( select feed_no
+     						   from upload_file
+      					 		where member_id=#{memberId})
+			group by feed_no)
+	</select>
 
 	<insert id="insertFeedHash"  >
 		<![CDATA[
@@ -259,5 +275,60 @@
 		from like_table 
 		where feed_no = #{feedNo} and member_id = #{memberId}
 	</select>
+	<select id="placeFileList" parameterType="String" resultType="com.kosa.instagram.feed.model.FeedVo">
+		select feed.feed_no as feedNo, f.file_no as fileNo from feed join upload_file f on feed.feed_no = f.feed_no where feed.place_detail = #{placeDetail}
+	</select>
+	
+	<select id="getLikeCount" resultType="int" parameterType="int">
+		select count(*) from like_table where feed_no = #{feedNo}
+	</select>
+	
+	<select id="getDetailFeed" resultType="com.kosa.instagram.feed.model.FeedVo" parameterType="int">
+		select feed_no as feedNo, 
+			   member_id as memberId, 
+			   feed_content as feedContent, 
+			   upload_date as uploadDate, 
+			   feed.place_detail as placeDetail,
+               place.place_title as placeTitle
+		from feed join place on feed.place_detail = place.place_detail
+        where feed_no = #{feedNo}
+	</select>
+	
+<update id="updateFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
+<![CDATA[
+	UPDATE feed
+	SET feed_content=#{feedContent}, place_detail=#{placeDetail}
+	WHERE feed_no=#{feedNo}
+]]>
+</update>
 
+<delete id="deleteHashtag" parameterType="int">
+<![CDATA[
+	DELETE FROM hashtag WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deleteLog" parameterType="int">
+<![CDATA[
+	DELETE FROM log WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deletePlace" parameterType="String">
+<![CDATA[
+	DELETE FROM place WHERE place_detail=#{placeDetail} AND (SELECT COUNT(*) FROM feed WHERE place_detail=#{placeDetail}) = 0
+]]>
+</delete>
+
+<delete id="deleteFeedReply" parameterType="int">
+<![CDATA[
+	DELETE FROM reply WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deleteFeed" parameterType="int">
+<![CDATA[
+	DELETE FROM feed WHERE feed_no=#{feedNo}
+]]>
+</delete>
 </mapper>

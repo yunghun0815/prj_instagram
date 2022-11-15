@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.FileVo;
+import com.kosa.instagram.feed.model.HashtagVo;
 import com.kosa.instagram.feed.model.ReplyVo;
 import com.kosa.instagram.member.model.MemberVo;
 
@@ -25,19 +27,18 @@ public interface IFeedRepository {
 	List<Integer> getUploadFiles(int feedNo);
 	List<ReplyVo> getReply(int feedNo);
 	int feedLikeCount(int feedNo);
-	int countHashtag(String hashtag);
-	
 
-//	List<FeedVo> searchListByHashtag(@Param("hashtaglist") String hashtagist);
+
 	int countContent(String memberId);
 	int countFollower(String memberId);
 	int countFollow(String memberId);
 	int selectSeqNum();
 
 	List<MemberVo> searchListByKeyword(@Param("keyword") String keyword);
-	List<String> searchListByHashtag(@Param("hashtag") String hashtag);
-	
+//	List<String> searchListByHashtag(@Param("hashtag") String hashtag);
+//	int countHashtag(String hashtag);
 
+	List<HashtagVo> searchListByHashtag(@Param("keyword") String keyword);
 
 	List<FileVo> selectContentListByUser(String memberId);
 	void insertFeedContent(FeedVo feed);
@@ -49,12 +50,20 @@ public interface IFeedRepository {
 	List<MemberVo> selectFollowByUser(String memberId);
 	FileVo getFile(int fileNo);
 	int likeCheck(@Param("memberId") String memberId, @Param("feedNo") int feedNo);
+	List<FeedVo> placeFileList(String placeDetail);
 	
 	void insertFeedHash(@Param("feedNo")int feedNo,@Param("hashTag") String hashTag);
-
-
+	int getLikeCount(int feedNo);
+	FeedVo getDetailFeed(int feedNo);
 	
+	List<FileVo> getFeedFile(String memberId);
+	void updateArticle(FeedVo feed);
 	
-
+	void updateFeedContent(FeedVo feed);
+	void deleteHashtag(int feedNo);
+	void deleteLog(int feedNo);
+	void deletePlace(String placeDetail);
+	void deleteFeedReply(int feedNo);
+	void deleteFeed(int feedNo);
 	
 }

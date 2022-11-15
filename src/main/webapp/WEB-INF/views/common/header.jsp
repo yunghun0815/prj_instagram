@@ -7,7 +7,7 @@
 	<section class="header">
 		<input type="hidden" id="memberId" value="${memberId }">
 		<input type="hidden" id="nickname" value="${nickname }">
-		<div class="flex header-inner between">
+		<div class="flex-header header-inner between">
 			<a href="/">
 				<img class="logo" src="/image/header/instagram.png">
 			</a>
@@ -30,7 +30,7 @@
 					</a>				
 				</c:if>
 				<c:if test="${not empty sessionScope.fileNo && sessionScope.fileNo != 0}">
-					<a href='<c:url value="/userfeed/${memberId}"/>'>
+					<a href='<c:url value="/userfeed/${sessionScope.memberId}"/>'>
 						<img id="myProfileImg" src="/file/${sessionScope.fileNo}">
 					</a>
 				</c:if>

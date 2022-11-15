@@ -13,13 +13,13 @@ public interface IMemberService {
 	
 
 	MemberVo selectFeedMemberInfo(String memberId);
-	List<MemberVo> selectFollowerByUser(String memberId);
-	List<MemberVo> selectFollowByUser(String memberId);
+	List<String> selectFollowerByUser(String memberId);
+	List<String> selectFollowByUser(String memberId);
 	 
 
 	public MemberVo selectMember(String memberId);
 	
-	//업데이트
+	
 	public void updateMember(MemberVo member, FileVo file);
 	
 	public void updateMember(MemberVo member);
@@ -34,8 +34,11 @@ public interface IMemberService {
 	
 	public String findPassword(String memberId, String email);
 
-	//아이디 중복쳌
+
 	public String checkId(String memberId);
 	public String checkNickname(String nickname);
 	public String checkEmail(String email);
+
+	void followMember(String fromId, String toId);
+	void unfollowMember(String fromId, String toId);
 }

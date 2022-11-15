@@ -10,17 +10,41 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f15e87f34a476fe8fa135f049ed1d36b&libraries=services"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script type="text/javascript" src="/js/main.js"></script>
+<!-- <script type="text/javascript" src="/js/main.js"></script> -->
+<script type="text/javascript" src="/js/feed/detail.js"></script>
 <meta charset="UTF-8">
 <html>
 <head>
-	<title>Instagram</title>
+	<title>상세페이지</title>
 </head>
-<jsp:include page="common/header.jsp"></jsp:include>
+<style>
+	body{
+		height: 0 !important;
+	}
+	.main{
+		padding-bottom: 0 !important;
+		 
+	}
+	.editBox{
+		width: 800px;
+	    margin: 0 auto;
+	    text-align: right;
+	    position: relative;
+	    top: 20px;
+	    height: 30px;
+	}
+	.editBtn{
+		color: gray;
+    	font-weight: bold;
+	}
+</style>
+<jsp:include page="../common/header.jsp"></jsp:include>
 <body>
+	<input type="hidden" value="${feedNo}" id="feedNo">
 	<section class="main">
+		<div class="editBox">
+		</div>
 		<ul class="feed-ul"> 
-
 		</ul>
 	</section>
 </body>

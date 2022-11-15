@@ -17,39 +17,42 @@ public interface IMemberRepository {
 
 
 	MemberVo selectFeedMemberInfo(String memberId);
-	List<MemberVo> selectFollowerByUser(String memberId);
-	List<MemberVo> selectFollowByUser(String memberId);
+	List<String> selectFollowerByUser(String memberId);
+	List<String> selectFollowByUser(String memberId);
 
-	//회원가입(사진 x)
 	public void insertMember(MemberVo member);
 	
 	public MemberVo selectMember(String memberId);
-	//프로필사진 등록
+	
 	public void insertFile(FileVo file);
-	//프로필사진 수정
+
 	public void updateFile(FileVo file);
 	
 	public Integer selectFileNo(String memberId);
-	//비밀번호,닉네임, 핸드폰 번호 수정
+
 	public void updateMember(MemberVo member);
 	
-	//회원정보 삭제
 	public void deleteMember(MemberVo member);
 	
 	public String getPassword(String password);
 	
+
 	List<MemberVo> searchListByKeyword(@Param("keyword") String keyword);
+
 
 	//이메일을 이용해서 아이디 찾기
 	public String findMemberId(String email);
-	
+
 	//멤버아이디랑 패스워드 보여줘야 하고 아이디와 이메일 이용
 	public String findPassword(@Param("memberId") String memberId, @Param("email")String email);
+
 
 	//아이디 중복체크
 	public String checkId(String memberId);
 	public String checkNickname(String nickname);
 	public String checkEmail(String email);
 	
-	
+	void followMember(@Param("fromId")String fromId, @Param("toId")String toId);
+	void unfollowMember(@Param("fromId")String fromId, @Param("toId")String toId);
+
 }
