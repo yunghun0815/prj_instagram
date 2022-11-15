@@ -293,4 +293,17 @@
 		from feed join place on feed.place_detail = place.place_detail
         where feed_no = #{feedNo}
 	</select>
+	
+<update id="updateFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
+<![CDATA[
+	UPDATE feed
+	SET feed_content=#{feedContent}, place_detail=#{placeDetail}
+	WHERE feed_no=#{feedNo}
+]]>
+</update>
+<delete id="deleteHashtag" parameterType="int">
+<![CDATA[
+	DELETE FROM hashtag WHERE feed_no=#{feedNo}
+]]>
+</delete>
 </mapper>
