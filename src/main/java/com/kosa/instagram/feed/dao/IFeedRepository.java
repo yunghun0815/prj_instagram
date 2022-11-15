@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.kosa.instagram.JsonVo;
 import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.FileVo;
@@ -52,10 +53,20 @@ public interface IFeedRepository {
 	List<FeedVo> placeFileList(String placeDetail);
 	
 	void insertFeedHash(@Param("feedNo")int feedNo,@Param("hashTag") String hashTag);
-
-
+	int getLikeCount(int feedNo);
+	FeedVo getDetailFeed(int feedNo);
 	
+	List<FileVo> getFeedFile(String memberId);
+	void updateArticle(FeedVo feed);
 	
+	void updateFeedContent(FeedVo feed);
+	void deleteHashtag(int feedNo);
+	void deleteLog(int feedNo);
+	void deletePlace(String placeDetail);
+	void deleteFeedReply(int feedNo);
+	void deleteFeed(int feedNo);
+	
+	List<FileVo> getFileList(@Param("hashtag") String hashtag);
 
 	
 }

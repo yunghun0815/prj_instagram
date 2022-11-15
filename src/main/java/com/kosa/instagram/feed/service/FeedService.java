@@ -48,8 +48,6 @@ public class FeedService implements IFeedService {
 		reply.setNickname(member.getNickname());
 		reply.setReplyContent(replyContent);
 		reply.setFileNo(member.getFileNo());
-//		System.out.println(reply.toString());
-		// reply.setFileData(member.getFileData());
 		feedRepository.writeReply(reply);
 	}
 
@@ -81,23 +79,11 @@ public class FeedService implements IFeedService {
 	@Override
 	public void increaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.increaseLike(feedNo, memberId);
-//		LogVo log = new LogVo();
-//		log.setLogURI(logURI);
-//		log.setMemberId(memberId);
-//		log.setFeedNo(feedNo);
-//		log.setLogLikeCheck(1);
-//		feedRepository.makeLog(log);
 	}
 
 	@Override
 	public void decreaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.decreaseLike(feedNo, memberId);
-//		LogVo log = new LogVo();
-//		log.setLogURI(logURI);
-//		log.setMemberId(memberId);
-//		log.setFeedNo(feedNo);
-//		log.setLogLikeCheck(0);
-//		feedRepository.makeLog(log);
 	}
 
 	@Override
@@ -175,7 +161,63 @@ public class FeedService implements IFeedService {
 
 	@Override
 	public List<FeedVo> placeFileList(String placeDetail) {
-		// TODO Auto-generated method stub
 		return feedRepository.placeFileList(placeDetail);
 	}
+
+	@Override
+	public JsonVo getDetailFeed(int feedNo, String memberId) {
+		JsonVo json = new JsonVo();
+
+		Map<String, FeedVo> feedMap = new HashMap<String, FeedVo>();
+		FeedVo feed = feedRepository.getDetailFeed(feedNo);
+		feed.setHashtagList(feedRepository.getHashtagList(feedNo));
+		feed.setLikeCheck(feedRepository.likeCheck(memberId, feedNo));
+		feed.setLikeCount(feedRepository.getLikeCount(feedNo));
+		feedMap.put("feed", feed);
+		json.setFeed(feedMap);
+		MemberVo member = memberRepository.selectMember(feed.getMemberId());
+		Map<String, MemberVo> memberMap = new HashMap<String, MemberVo>();
+		memberMap.put("member", member);
+		json.setMember(memberMap);
+		List<Integer> fileNoList = feedRepository.getUploadFiles(feedNo);
+		json.setUploadFiles(fileNoList);
+		List<ReplyVo> replyList = feedRepository.getReply(feedNo);
+		json.setReply(replyList);
+		return json;
+	}
+
+	@Override
+	public List<FileVo> getFeedFile(String memberId) {
+		return feedRepository.getFeedFile(memberId);
+	}
+
+	@Override
+	public void updateFeed(FeedVo feed) {
+		if (feedRepository.checkPlace(feed.getPlaceDetail()) == 0) {
+			feedRepository.insertFeedPlace(feed);
+		}
+		feedRepository.deleteHashtag(feed.getFeedNo());
+		feedRepository.updateFeedContent(feed);
+	}
+
+	@Override
+	public void deleteFeed(FeedVo feed) {
+		String placeDetail = feed.getPlaceDetail();
+		int feedNo = feed.getFeedNo();
+		
+		feedRepository.deleteHashtag(feedNo);
+		feedRepository.deleteLog(feedNo);
+		feedRepository.deleteFeedReply(feedNo);
+		feedRepository.deleteFeed(feedNo);
+		if(placeDetail!=null && !placeDetail.equals("")) {
+			feedRepository.deletePlace(placeDetail);
+			System.out.println(placeDetail);}
+		}
+
+	@Override
+	public List<FileVo> getFileList(String hashtag) {
+
+		return feedRepository.getFileList(hashtag);
+	}
+
 }

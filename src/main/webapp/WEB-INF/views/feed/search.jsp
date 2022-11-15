@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Instagram_search</title>
 
 
 <style>
@@ -41,7 +41,9 @@ th, td {
 				</tr>
 				<c:forEach var="member" items="${memberList}">
 					<tr>
-						<td>아이디: ${member.memberId} 이름: ${member.nickname}</td>
+						<td>아이디:<a href='<c:url value="/userfeed/${member.memberId}"/>'>${member.memberId}</a>
+							이름:<a href='<c:url value="/userfeed/${member.memberId}"/>'> ${member.nickname}</a>
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -54,8 +56,8 @@ th, td {
 				</tr>
 				<c:forEach var="hashtag" items="${hashtagList}">
 					<tr>
-						<td><span>해시태그: ${hashtag.hashtag}</span><br /> <span
-							style="font-size: 8pt;">카운트: ${hashtag.cnt}</span></td>
+						<td><span>해시태그: <a href='<c:url value="/filelist/${hashtag.hashtag}"/>'>${hashtag.hashtag}</a></span>	<br /> 
+							<span style="font-size: 8pt;">카운트: ${hashtag.cnt}</span></td> 
 					</tr>
 				</c:forEach>
 			</table>

@@ -154,8 +154,7 @@ public class FeedController {
 		}
 		
 		
-		return "redirect:/userfeed/"+feed.getMemberId();
-		
+		return "redirect:/userfeed/"+feed.getMemberId();		
 	}
 	
 
@@ -170,7 +169,6 @@ public class FeedController {
 				headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
 				headers.setContentLength(file.getFileSize());
 				
-			
 				String fileName = new String(file.getFileName().getBytes("UTF-8"), "ISO-8859-1");
 				headers.setContentDispositionFormData("attachment", fileName);
 				return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
@@ -245,9 +243,38 @@ public class FeedController {
 	}
 	
 	
+	
+	@RequestMapping("/filelist/{hashtag}")
+	public  String getFileList(@PathVariable String hashtag, Model model ) {
+		
+		// 파일 리스트 조회 : 파라메터=해시태그
+		List<FileVo> fileList = feedService.getFileList(hashtag);
+		
+		// 조회결과를 모델에 세팅
+		model.addAttribute("fileList", fileList);
+		
+		// 리턴
+		return "/feed/filelist";
+	}
+	
+	
+	
 	@GetMapping("/place/find")
 	public @ResponseBody List<FeedVo> placeFileList(@RequestParam String placeDetail){
 		List<FeedVo> list = feedService.placeFileList(placeDetail);
 		return list;
 	}
+	@GetMapping("/feed/detail/{feedNo}")
+	public String detailPage(@PathVariable int feedNo, Model model) {
+		model.addAttribute("feedNo", feedNo);
+		return "feed/detail";
+	}
+	
+	@GetMapping("/feed/detail")
+	public @ResponseBody JsonVo feedDetail(@RequestParam int feedNo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
+		return  feedService.getDetailFeed(feedNo, memberId);
+	}
+	
 }

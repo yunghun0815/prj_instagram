@@ -35,4 +35,5 @@ public interface IMemberService {
 	public MemberVo findPassword(String memberId, String email);
 
 	void followMember(String fromId, String toId);
+	void unfollowMember(String fromId, String toId);
 }
