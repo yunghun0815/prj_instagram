@@ -39,7 +39,7 @@ public interface IFeedService {
 	void insertFeedHash(int feedNo, String hashTag);
 
 	FileVo getFile(int fileNo);
-
+	List<FileVo> getFeedFile(String memberId);
 	
 
 	JsonVo makeJsonVo(FeedVo feed, String memberId);

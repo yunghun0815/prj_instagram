@@ -66,9 +66,14 @@ public class FeedController {
 		MemberVo member=memberService.selectFeedMemberInfo(memberId);
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("name",member.getName());
-//		List<FileVo> contentList=feedService.selectContentListByUser(memberId);
+		
+		
 
-//		model.addAttribute("contentList",contentList);
+		
+		List<FileVo> getFeedFile =feedService.getFeedFile(memberId);
+		model.addAttribute("contentList",getFeedFile);
+		
+		
 		
 		List<String> followerList=memberService.selectFollowerByUser(memberId);
 		model.addAttribute("followerList",followerList);
@@ -76,7 +81,8 @@ public class FeedController {
 		List<String> followList=memberService.selectFollowByUser(memberId);
 		model.addAttribute("followList",followList);
 		
-		return "/feed/userfeed";
+		return "feed/userfeed";
+	
 	}
 	
 

@@ -218,4 +218,9 @@ public JsonVo getDetailFeed(int feedNo, String memberId) {
 	json.setReply(replyList);
 	return json;
 }
+
+@Override
+public List<FileVo> getFeedFile(String memberId) {
+	return feedRepository.getFeedFile(memberId);
+}
 }

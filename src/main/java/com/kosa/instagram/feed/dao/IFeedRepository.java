@@ -56,6 +56,9 @@ public interface IFeedRepository {
 	int getLikeCount(int feedNo);
 	FeedVo getDetailFeed(int feedNo);
 	
+	List<FileVo> getFeedFile(String memberId);
+	void updateArticle(FeedVo feed);
+	
 	
 
 	
