@@ -174,14 +174,13 @@ public class MemberController {
 	public String deleteMember(String password, HttpSession session, Model model) {
 		MemberVo member = new MemberVo();
 		member.setMemberId((String)session.getAttribute("memberId"));
-		String dbpw = memberService.getPassword(password);
+		String dbpw = memberService.getPassword(member.getMemberId());
 		if (password != null && password.equals(dbpw)) {
 			member.setPassword(password);
 			memberService.deleteMember(member);
 			session.invalidate();
 			return "member/login";
 		}else {
-			System.out.println("탈퇴 비밀번호 불일치");
 			return "member/delete";
 		}
 	}

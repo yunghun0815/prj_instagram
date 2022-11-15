@@ -35,4 +35,10 @@ public class LogController {
 	public List<LogDto> likeCountDate(HttpSession session){
 		return logServiceImpl.likeCountDate(session.getAttribute("memberId").toString());
 	}
+	
+	@ResponseBody
+	@GetMapping("/log/search/keyword")
+	public List<LogDto> searchKeyword(){
+		return logServiceImpl.searchKeyword();
+	}
 }
