@@ -66,9 +66,14 @@ public class FeedController {
 		MemberVo member=memberService.selectFeedMemberInfo(memberId);
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("name",member.getName());
-//		List<FileVo> contentList=feedService.selectContentListByUser(memberId);
+		
+		
 
-//		model.addAttribute("contentList",contentList);
+		
+		List<FileVo> getFeedFile =feedService.getFeedFile(memberId);
+		model.addAttribute("contentList",getFeedFile);
+		
+		
 		
 		List<String> followerList=memberService.selectFollowerByUser(memberId);
 		model.addAttribute("followerList",followerList);
@@ -76,7 +81,8 @@ public class FeedController {
 		List<String> followList=memberService.selectFollowByUser(memberId);
 		model.addAttribute("followList",followList);
 		
-		return "/feed/userfeed";
+		return "feed/userfeed";
+	
 	}
 	
 
@@ -249,4 +255,16 @@ public class FeedController {
 		List<FeedVo> list = feedService.placeFileList(placeDetail);
 		return list;
 	}
+	@GetMapping("/feed/detail/{feedNo}")
+	public String detailPage(@PathVariable int feedNo, Model model) {
+		model.addAttribute("feedNo", feedNo);
+		return "feed/detail";
+	}
+	@GetMapping("/feed/detail")
+	public @ResponseBody JsonVo feedDetail(@RequestParam int feedNo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
+		return  feedService.getDetailFeed(feedNo, memberId);
+	}
+	
 }

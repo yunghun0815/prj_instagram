@@ -1,6 +1,7 @@
 package com.kosa.instagram.log.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,7 @@ public class LogController {
 	
 	@ResponseBody
 	@GetMapping("/log/likeCount/date")
-	public LogDto likeCountDate(HttpSession session){
+	public List<LogDto> likeCountDate(HttpSession session){
 		return logServiceImpl.likeCountDate(session.getAttribute("memberId").toString());
 	}
 }
