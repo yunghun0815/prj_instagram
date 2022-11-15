@@ -301,9 +301,34 @@
 	WHERE feed_no=#{feedNo}
 ]]>
 </update>
+
 <delete id="deleteHashtag" parameterType="int">
 <![CDATA[
 	DELETE FROM hashtag WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deleteLog" parameterType="int">
+<![CDATA[
+	DELETE FROM log WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deletePlace" parameterType="String">
+<![CDATA[
+	DELETE FROM place WHERE place_detail=#{placeDetail} AND (SELECT COUNT(*) FROM feed WHERE place_detail=#{placeDetail}) = 0
+]]>
+</delete>
+
+<delete id="deleteFeedReply" parameterType="int">
+<![CDATA[
+	DELETE FROM reply WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deleteFeed" parameterType="int">
+<![CDATA[
+	DELETE FROM feed WHERE feed_no=#{feedNo}
 ]]>
 </delete>
 </mapper>

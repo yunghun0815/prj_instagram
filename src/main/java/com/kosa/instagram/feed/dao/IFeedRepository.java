@@ -61,5 +61,9 @@ public interface IFeedRepository {
 	
 	void updateFeedContent(FeedVo feed);
 	void deleteHashtag(int feedNo);
+	void deleteLog(int feedNo);
+	void deletePlace(String placeDetail);
+	void deleteFeedReply(int feedNo);
+	void deleteFeed(int feedNo);
 	
 }

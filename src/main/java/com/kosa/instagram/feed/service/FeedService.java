@@ -204,4 +204,19 @@ public List<FileVo> getFeedFile(String memberId) {
 		feedRepository.deleteHashtag(feed.getFeedNo());
 		feedRepository.updateFeedContent(feed);
 	}
+	
+	@Override
+	public void deleteFeed(FeedVo feed) {
+		String placeDetail = feed.getPlaceDetail();
+		int feedNo = feed.getFeedNo();
+		
+		feedRepository.deleteHashtag(feedNo);
+		feedRepository.deleteLog(feedNo);
+		feedRepository.deleteFeedReply(feedNo);
+		feedRepository.deleteFeed(feedNo);
+		if(placeDetail!=null && !placeDetail.equals("")) {
+			feedRepository.deletePlace(placeDetail);
+			System.out.println(placeDetail);
+		}
+	}
 }
