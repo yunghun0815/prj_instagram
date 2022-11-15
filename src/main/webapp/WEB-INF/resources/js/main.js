@@ -346,6 +346,7 @@ function mapLoading(param){
 			},
 			success: function(result){
 				object.parent().parent().parent().find($(".reply-list")).html(replyAddList(result));
+				object.prev().val("");
 			}
 		});
 	}

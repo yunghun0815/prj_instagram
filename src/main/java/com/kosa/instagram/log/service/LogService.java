@@ -12,4 +12,6 @@ public interface LogService {
 
 	List<LogDto> likeCountDate(String memberId);
 
+	List<LogDto> searchKeyword();
+
 }

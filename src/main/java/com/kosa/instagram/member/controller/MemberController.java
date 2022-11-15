@@ -1,6 +1,36 @@
-package com.kosa.instagram.member.controller;
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@yunghun0815 
+yunghun0815
+/
+prj_instagram
+Public
+Code
+Issues
+Pull requests
+3
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+prj_instagram/src/main/java/com/kosa/instagram/member/controller/MemberController.java /
 
-import java.util.List;
+KOSA 로그 추가, 반응형 웹 추가(로그인, 메인, 로그)
+Latest commit e28f4cc 1 hour ago
+ History
+ 3 contributors
+@jini4u@Gayoung-Jeong@yailyailya
+251 lines (231 sloc)  8.67 KB
+
+package com.kosa.instagram.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,12 +48,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kosa.instagram.feed.model.FileVo;
-import com.kosa.instagram.feed.service.IFeedService;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
@@ -35,7 +63,6 @@ public class MemberController {
 
 	@Autowired
 	IMemberService memberService;
-
 
 	//회원가입
 	@RequestMapping(value="/member/insert", method=RequestMethod.GET)
@@ -179,14 +206,13 @@ public class MemberController {
 	public String deleteMember(String password, HttpSession session, Model model) {
 		MemberVo member = new MemberVo();
 		member.setMemberId((String)session.getAttribute("memberId"));
-		String dbpw = memberService.getPassword(password);
+		String dbpw = memberService.getPassword(member.getMemberId());
 		if (password != null && password.equals(dbpw)) {
 			member.setPassword(password);
 			memberService.deleteMember(member);
 			session.invalidate();
 			return "member/login";
 		}else {
-			System.out.println("탈퇴 비밀번호 불일치");
 			return "member/delete";
 		}
 	}
@@ -245,32 +271,27 @@ public class MemberController {
 	}
 
 	@RequestMapping("/follow/{toId}")
-	public @ResponseBody void followMember(@PathVariable String toId, HttpServletRequest request) {
+	public void followMember(@PathVariable String toId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String fromId = (String)session.getAttribute("memberId");
 		memberService.followMember(fromId, toId);
 	}
-	
-	@RequestMapping("/unfollow/{toId}")
-	public @ResponseBody void unfollowMember(@PathVariable String toId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String fromId = (String)session.getAttribute("memberId");
-		memberService.unfollowMember(fromId, toId);
-	}
 
-	@RequestMapping("/isfollowing/{toId}")
-	public @ResponseBody boolean isFollowing(@PathVariable String toId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String fromId = (String)session.getAttribute("memberId");
-		List<String> followList = memberService.selectFollowByUser(fromId);
-		for(String followId : followList) {
-			if(followId.equals(toId)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 }//class end
 
-
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+yunghun0815/prj_instagram at jyh2prj_instagram/MemberController.java at jyh2 · yunghun0815/prj_instagram
