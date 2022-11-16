@@ -25,6 +25,9 @@ body{
 .flex{
 	display: flex;
 }
+.column{
+	flex-direction: column;	
+}
 .between{
 	justify-content: space-between;
 }
@@ -47,7 +50,8 @@ header{
 	width: 1000px;
 	height: 60px;
 	padding-top: 10px;
-    padding-right: 70px;
+	padding-left: 20px;
+    padding-right: 35px;
 }
 .menu-img{
 	padding-top: 7px;
@@ -90,4 +94,25 @@ header{
 }
 #myProfileImg{
 	border-radius: 10px;
+}
+
+@media(max-width: 1024px) {
+	.header{
+		height: 80px;
+	}
+	.header-inner .menu-img img{
+		width: 40px;
+		height: 40px;
+	}
+	.header-inner{
+		height: 80px;
+		padding-top: 15px;
+	}
+	.header-inner .search-bar{
+		width: 290px;
+		height: 50px;
+	}
+	.header-inner .logo{
+		width: 160px;
+	}	
 }

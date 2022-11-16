@@ -44,4 +44,12 @@ public class LogServiceImpl implements LogService {
 		return logRepository.likeCountDate(memberId, before, today);
 	}
 
+	@Override
+	public List<LogDto> searchKeyword() {
+		
+		Calendar today = Calendar.getInstance();
+		
+		return logRepository.searchKeyword(today.get(Calendar.YEAR));
+	}
+
 }

@@ -13,5 +13,7 @@ public interface LogRepository {
 	Map<String, BigDecimal> likeCount(String memberId);
 
 	List<LogDto> likeCountDate(@Param("memberId") String memberId, @Param("before") String before, @Param("today") String today);
+
+	List<LogDto> searchKeyword(int year);
 	
 }

@@ -6,10 +6,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style type="text/css">
+	.error{
+	color:Red
+	}
+</style>
 <body>
-<form action="/member/delete" method="post">
+<form action="/member/delete" method="post" >
 	${memberId }
-	비밀번호 <input type="password" name="password">
+	비밀번호 <input type="password" name="password" required="required" />
 	<input type="submit" value="회원탈퇴">
 </form>
 </body>

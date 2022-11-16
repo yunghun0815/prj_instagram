@@ -1,0 +1,155 @@
+@charset "UTF-8";
+	@media(max-width: 1024px) and (min-height: 800px) {
+		html{
+			height: 100%;
+		}
+		body{
+		    display: flex;
+		    height: 100% !important;
+		    flex-direction: column;
+		    justify-content: center;
+		}
+		.main{
+		    margin: 0 auto !important;
+		}
+		.phone-image{
+			display: none;
+		}	
+		.login-box{
+			width: 100% !important;
+		}
+		.signupForm{
+			width: 100% !important;
+			height: 620px !important;
+		}
+		.signupBox{
+			width: 100% !important;
+			height: 150px !important;
+		    font-size: 30px !important;
+    		padding-top: 45px !important;
+		}
+		.signupForm img{ /* 로고이미지 */
+			width: 340px;
+		}
+		.formInput{
+		    width: 540px  !important;
+		    height: 80px !important;
+		    font-size: 30px !important;
+		    padding-left: 25px !important;
+		}
+		.signupForm input[type="submit"]{ /* 로그인버튼 */
+			width: 540px !important;
+		    height: 70px !important;
+		    font-size: 30px !important;
+		}		
+		.or{ /* 로그인 밑 '또는' 글자 */
+			font-size: 30px !important;
+		}
+		.line{
+			width: 233px !important;
+		}
+		.findPassword{/* 아이디 또는 비밀번호를 잊으셨나요 */
+			font-size:30px !important;
+			font-weight: 400 !important;
+		}
+	}
+	
+	html{
+		background-color: rgb(250, 250, 250);
+	}
+	body{
+		height: 700px;
+	}
+	.main{
+		width: 760px;
+		margin: 150px auto;
+	}
+	.phone{
+	    width: 410px;
+   	 	height: 560px;
+	}
+	.phone_inner{
+		position: relative;
+	}
+	.phone_inner img{
+        position: absolute;
+	    bottom: 57px;
+	    width: 224px;
+	    height: 480px;
+	    left: 135px;
+	    display: none;
+       /*  opacity: 0;
+        visibility: hidden; */
+	}
+	.phone_inner img:first-child{
+		display: inline;
+	}
+	.phone_inner img:not(:nth-child(1)) {
+	}
+	.signupForm{
+	    border: 1px solid rgb(219,219,219);
+	    width: 350px;
+	    height: 390px;
+	    text-align: center;
+	    background-color: white;
+	    padding-top: 50px;
+	    margin-bottom: 20px;
+	}
+	.signupForm form{
+		margin-bottom: 20px;
+	}
+	.formInput{
+	    width: 250px;
+	    height: 40px;
+	    padding-left: 10px;
+	    background-color: #fafafa;
+	    border: 1px solid rgb(219,219,219);
+		margin-top: 10px;
+	}
+	.signupForm>img{
+		margin-bottom: 15px;
+	}
+	.signupForm input[type="submit"]{
+	    width: 250px;
+	    background-color: rgb(0, 149, 246);
+	    border: none;
+	    height: 30px;
+	    color: white;
+	    border-radius: 6px;
+	    margin-top: 15px;
+	    font-weight: bold;
+	    cursor: pointer;
+	}
+	.findPassword{
+		color: gray;
+	    font-weight: bold;
+	    font-size: 12px;
+        display: inline-block;
+ 	    margin-top: 30px;
+	}
+	.line{
+	    background-color: #dbdbdb;
+	    height: 1px;
+	    width: 100px;
+	    margin-bottom: 5px;
+    }
+    
+	.or{
+	    color: #8e8e8e;
+	    font-size: 13px;
+	    font-weight: bold;
+	}
+	.signupBox{
+	    width: 350px;
+	    height: 60px;
+	    background-color: white;
+	    margin-top: 15px;
+	    border: 1px solid rgb(219,219,219);
+	    text-align: center;
+	    font-size: 13px;
+	    padding-top: 20px;
+	}
+	.signupBox a{
+	    color: #0095f6;
+    	font-weight: bold;
+	}
