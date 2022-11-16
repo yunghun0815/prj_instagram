@@ -123,7 +123,7 @@ body{
 	margin-top: 10px;
 }
 .reply-profile{
-	bottom: 8px;
+	bottom: 16px;
     width: 30px !important;
     height: 30px !important;
     border-radius: 15px;
@@ -284,6 +284,9 @@ body{
 	}
 	.prevBtn{
 		top:485px;
+	}
+	.nullPlace{
+		margin-top: 10px;
 	}
 	/* 모달 */
 	.modal{
