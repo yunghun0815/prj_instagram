@@ -21,7 +21,7 @@
 				<a href="/log"><img src="/image/header/chart.png"></a>	
 				<img src="/image/header/house.png" onclick="window.scrollTo(0,0);">
 				<img src="/image/header/plane.png">
-				<img src="/image/header/plus.png">
+				<a href='<c:url value="/writefeed/${memberId}"/>'><img src="/image/header/plus.png"></a>
 				<img src="/image/header/compass.png">
 				<img src="/image/header/heart.png">
 				<c:if test="${empty sessionScope.fileNo || sessionScope.fileNo ==0}">
