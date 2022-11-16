@@ -50,9 +50,13 @@ $(function(){
 							
 							replyText += `
 								<div>
-									<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+									<a href="/userfeed/`+reply[k]['memberId']+`">
+										<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+									</a>
 									<p class="inline-block">
-										<span class="bold">`+ reply[k]['nickname'] +`</span>
+										<a href="/userfeed/`+reply[k]['memberId']+`">
+											<span class="bold">`+ reply[k]['nickname'] +`</span>
+										</a>
 										<span>`+ reply[k]['replyContent'] +`</span><!-- 댓글내용  --><br>
 										<span class="upload-date">`+ reply[k]['replyDate'] +`</span>
 										${reply[k]['nickname'] == nickname ? deleteSpan : ""}
@@ -95,9 +99,11 @@ $(function(){
 					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
 					<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
 						<div class="feed-header">
-							<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
+							<a href="/userfeed/`+member['memberId']+`">
+								<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
+							</a>
 							<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
-								<a href="#"><span>`+ member['nickname'] +`</span></a><br>
+								<a href="/userfeed/`+member['memberId']+`"><span>`+ member['nickname'] +`</span></a><br>
 								<a href="#">
 									<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map" onclick="mapLoading(this)">`+ `${feed['placeTitle'] == null ? "" : feed['placeTitle']}` +`</span>								
 									<input type="hidden" value="`+ feed['placeDetail'] +`">
