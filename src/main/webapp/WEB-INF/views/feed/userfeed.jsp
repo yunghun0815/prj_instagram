@@ -13,6 +13,16 @@
 <input type="hidden" value="${sessionScope.memberId}" id="fromId">
 <div style="margin-top: 60px;">
 <h1>개인피드</h1>
+<c:if test="${not empty sessionScope.fileNo && sessionScope.fileNo != 0}">
+					<a href='<c:url value="/userfeed/${sessionScope.memberId}"/>'>
+						<img id="myProfileImg" src="/file/${sessionScope.fileNo}">
+					</a>
+				</c:if>
+<c:if test="${empty sessionScope.fileNo || sessionScope.fileNo ==0}">
+					<a href='<c:url value="/userfeed/${memberId}"/>'> <!-- ${sessionScope.nickname} -->
+						<img class="profile-img" src="/image/profile_null.jpg">
+					</a>				
+				</c:if>
 멤버아이디 ${memberId}<br>
 게시글 수${contentCount }<br>
 팔로워 수${followerCount}<br>
@@ -33,7 +43,15 @@
 	</tr>
 </c:forEach>
 </table>
-
+<table>
+<c:forEach var="file"  items="${contentList }">
+	<tr>
+		<td>
+			<a href='<c:url value="/feed/detail/${file.feedNo}"/>'><img src='<c:url value="/file/${file.fileNo }"/>' width="100"></a>
+		</td>
+	</tr>
+</c:forEach>
+</table>
 
 <c:if test="${sessionScope.memberId eq memberId}">
 	<a href='<c:url value="/writefeed/${memberId}"/>'>새글쓰기</a><br>
@@ -48,12 +66,9 @@
 <script type="text/javascript">
 var fromIdEl = $("#fromId");
 var toIdEl = $("#toId");
-
 var fromId = fromIdEl.val();
 var toId = toIdEl.val();
-
 var isFollowing = false;
-
 $(function(){
 	
 	$.ajax({
@@ -74,9 +89,7 @@ $(function(){
 		}
 	})
 	
-
 })
-
 	function changeFollowing(){
 		const btn = document.getElementById('btn');
 		if(isFollowing == true){

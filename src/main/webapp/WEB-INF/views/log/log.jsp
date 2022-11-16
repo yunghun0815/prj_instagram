@@ -49,19 +49,18 @@ function likeCount(param){
 			const day = d.getDate();     
 			
 			const date = [];
-			const likeData = [];
+			const likeData = [0,0,0,0,0,0,0];
 			for(var i=6; i>=0; i--){
 				date.push(new Date(year, month, day - i).toLocaleDateString());
 			}
-			
-			for(var j=0; j<7; j++){
-				if(result['logDate'] == date[j]){
-					likeData.push(result['likeCount']);	
-				}else{
-					likeData.push(0);
+			for(var j=0; j<result.length; j++){
+				for(var k=0; k<7; k++){
+					if(result[j]['logDate'] == date[k]){
+						likeData[k] = result[j]['likeCount'];	
+					}					
 				}
 			}
-				
+			console.log(likeData);
 				 const data = {
 				   labels: date,
 				   datasets: [{

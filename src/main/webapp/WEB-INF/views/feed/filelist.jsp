@@ -42,8 +42,7 @@ th, td {
 			</td>
 			<c:if test="${(status.index % 3) eq 2 || status.last}">
 				</tr>
-			</c:if>
-			
+			</c:if>			
 		</c:forEach>
 	</table>	
 </div>
