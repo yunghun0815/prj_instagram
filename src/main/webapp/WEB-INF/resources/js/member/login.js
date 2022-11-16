@@ -15,5 +15,21 @@
 			}
 			object.eq(idx).fadeOut(3000);
 		}
-		 
+		$(".submit").click(function () {
+			let memberId = $('#memberId').val();
+			let password = $('#password').val();
+			
+			$.ajax({
+				url : "/member/loginCheck",
+				type : "post",
+				data : {
+					memberId : memberId,
+					passowrd : passowrd
+				},
+				dataType : 'json',
+				success : function() {
+					
+				} 
+			})
+	 	})	 
 	});

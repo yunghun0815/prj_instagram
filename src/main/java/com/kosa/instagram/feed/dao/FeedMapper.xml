@@ -112,7 +112,7 @@
 
 	<select id="countContent" parameterType="String" resultType="int">
 		<![CDATA[
-			select count(feed_no) 
+			select distinct count(feed_no) 
 			from feed
 			where member_id=#{memberId}
 		

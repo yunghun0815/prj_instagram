@@ -19,7 +19,7 @@ public interface IMemberService {
 
 	public MemberVo selectMember(String memberId);
 	
-	//�뾽�뜲�씠�듃
+	
 	public void updateMember(MemberVo member, FileVo file);
 	
 	public void updateMember(MemberVo member);
@@ -30,9 +30,14 @@ public interface IMemberService {
 	
 	public String getPassword(String password);
 	
-	public MemberVo findMmeberId(String email);
+	public String findMmeberId(String email);
 	
-	public MemberVo findPassword(String memberId, String email);
+	public String findPassword(String memberId, String email);
+
+
+	public String checkId(String memberId);
+	public String checkNickname(String nickname);
+	public String checkEmail(String email);
 
 	void followMember(String fromId, String toId);
 	void unfollowMember(String fromId, String toId);

@@ -28,13 +28,14 @@
 				<img src="/image/header/instagram.png">
 			</a>
 			<form action="<c:url value='/member/login'/>" method="post">
-				<input class="formInput" type="text" name="memberId" placeholder="아이디"><br>
-				<input class="formInput" type="password" name="password" placeholder="비밀번호"><br>
-				<input type="submit" value="로그인"><br>
+				<input class="formInput" type="text" name="memberId" id="memberId" placeholder="아이디" value="${loginId }"><br>
+				<input class="formInput" type="password" name="password" id="password" placeholder="비밀번호" value="${loginPw}"><br>
+				<input type="submit" class="submit" value="로그인확인"><br>
 			</form>
 			<div class="inline-block line"></div>
 			<span class="or">또는</span>
 			<div class="inline-block line"></div><br>
+			${message }<br>
 			<a class="findPassword" href="/member/findMemberId">아이디 /</a>
 			<a class="findPassword" href="/member/findPassword">비밀번호를 잊으셨나요?</a>
 		</div>
@@ -44,6 +45,5 @@
 		</div>
 	</div>
 </section>
-
 </body>
 </html>
