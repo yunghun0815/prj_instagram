@@ -30,10 +30,19 @@
 </delete>
 
 <insert id="makeLog" parameterType="com.kosa.instagram.LogVo">
-<![CDATA[
+<if test="feedNo != 0">
+	<![CDATA[
 	INSERT INTO log(log_no, log_time, log_uri, member_id, log_keyword, feed_no, log_like_check)
 	VALUES (LOG_NO_SEQ.NEXTVAL, SYSDATE, #{logURI}, #{memberId}, #{logKeyword, jdbcType=VARCHAR}, #{feedNo, jdbcType=INTEGER}, #{logLikeCheck, jdbcType=INTEGER})
 ]]>
+</if>
+<if test="feedNo == 0">
+	<![CDATA[
+	INSERT INTO log(log_no, log_time, log_uri, member_id, log_keyword, feed_no, log_like_check)
+	VALUES (LOG_NO_SEQ.NEXTVAL, SYSDATE, #{logURI}, #{memberId}, #{logKeyword, jdbcType=VARCHAR}, null, null)
+]]>
+</if>
+
 </insert>
 
 <select id="getTenFeeds" resultType="com.kosa.instagram.feed.model.FeedVo">
@@ -84,6 +93,7 @@
     select 
 	    r.reply_no as "replyNo", 
     	m.nickname as "nickname", 
+    	m.member_id as "memberId",
     	r.feed_no as "feedNo",
     	r.reply_content as "replyContent", 
     	r.reply_date as "replyDate", 
@@ -102,7 +112,7 @@
 
 	<select id="countContent" parameterType="String" resultType="int">
 		<![CDATA[
-			select count(feed_no) 
+			select distinct count(feed_no) 
 			from feed
 			where member_id=#{memberId}
 		
@@ -247,6 +257,16 @@
 		]]>
 	</select>
 	
+	<select id="getFeedFile" parameterType="String" resultType="com.kosa.instagram.feed.model.FileVo">
+		select file_no as fileNo, file_data as fileData,feed_no as feedNo
+		from upload_file
+		where file_no in(select max( file_no) as fileNo
+			from upload_file
+			where feed_no  in( select feed_no
+     						   from upload_file
+      					 		where member_id=#{memberId})
+			group by feed_no)
+	</select>
 
 	<insert id="insertFeedHash"  >
 		<![CDATA[
@@ -276,7 +296,44 @@
 			   upload_date as uploadDate, 
 			   feed.place_detail as placeDetail,
                place.place_title as placeTitle
-		from feed join place on feed.place_detail = place.place_detail
+		from feed left join place on feed.place_detail = place.place_detail
         where feed_no = #{feedNo}
 	</select>
+<update id="updateFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
+<![CDATA[
+	UPDATE feed
+	SET feed_content=#{feedContent}, place_detail=#{placeDetail}
+	WHERE feed_no=#{feedNo}
+]]>
+</update>
+
+<delete id="deleteHashtag" parameterType="int">
+<![CDATA[
+	DELETE FROM hashtag WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deleteLog" parameterType="int">
+<![CDATA[
+	DELETE FROM log WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deletePlace" parameterType="String">
+<![CDATA[
+	DELETE FROM place WHERE place_detail=#{placeDetail} AND (SELECT COUNT(*) FROM feed WHERE place_detail=#{placeDetail}) = 0
+]]>
+</delete>
+
+<delete id="deleteFeedReply" parameterType="int">
+<![CDATA[
+	DELETE FROM reply WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deleteFeed" parameterType="int">
+<![CDATA[
+	DELETE FROM feed WHERE feed_no=#{feedNo}
+]]>
+</delete>
 </mapper>

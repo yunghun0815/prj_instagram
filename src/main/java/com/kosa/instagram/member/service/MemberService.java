@@ -26,7 +26,7 @@ public class MemberService implements IMemberService{
 		return memberRepository.selectMember(memberId);
 	}
 
-	//硫ㅻ쾭�븘�씠�뵒瑜� 議고쉶�빐�꽌 feed_no媛� null�씠硫� �뾽�뜲�씠�듃, �뾾�쑝硫� �씤�꽌�듃
+	//硫ㅻ쾭�븘�씠�뵒瑜� 議고쉶�빐�꽌 feed_no媛� null�씠硫� �뾽�뜲�씠�듃, �
 	@Override
 	public void updateMember(MemberVo member, FileVo file) {
 		if (file != null && file.getFileNo()==0) {
@@ -36,7 +36,7 @@ public class MemberService implements IMemberService{
 		else{
 			System.out.println("update file");
 			memberRepository.updateFile(file);
-			
+
 		}
 		memberRepository.updateMember(member);
 	}
@@ -64,19 +64,19 @@ public class MemberService implements IMemberService{
 	}
 
 	@Override
-	public MemberVo findMmeberId(String email) {
+	public String findMmeberId(String email) {
 		return memberRepository.findMemberId(email);
 	}
 
 	@Override
-	public MemberVo findPassword(String memberId, String email) {
+	public String findPassword(String memberId, String email) {
 		return memberRepository.findPassword(memberId, email);
 	}
 
 	@Override
 	public MemberVo selectFeedMemberInfo(String memberId) {
 		return memberRepository.selectFeedMemberInfo(memberId);
-		
+
 	}
 
 	@Override
@@ -88,12 +88,22 @@ public class MemberService implements IMemberService{
 	public List<String> selectFollowByUser(String memberId) {
 		return memberRepository.selectFollowByUser(memberId);
 	}
-	
+
+	//아이디 중복체크
+	public String checkId(String memberId) {
+		return memberRepository.checkId(memberId);
+	}
+	public String checkNickname(String nickname) {
+		return memberRepository.checkNickname(nickname);
+	}
+	public String checkEmail(String email) {
+		return memberRepository.checkEmail(email);
+	}
 	@Override
 	public void followMember(String fromId, String toId) {
 		memberRepository.followMember(fromId, toId);
 	}
-	
+
 	@Override
 	public void unfollowMember(String fromId, String toId) {
 		memberRepository.unfollowMember(fromId, toId);

@@ -1,7 +1,5 @@
 package com.kosa.instagram.feed.service;
 
-import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kosa.instagram.JsonVo;
-import com.kosa.instagram.LogVo;
 import com.kosa.instagram.feed.dao.IFeedRepository;
-
 import com.kosa.instagram.feed.model.FeedVo;
 import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.model.HashtagVo;
@@ -30,10 +26,12 @@ public class FeedService implements IFeedService {
 	@Autowired
 	IMemberRepository memberRepository;
 
-	@Override
-	public List<MemberVo> searchListByKeyword(String keyword) {
-		return feedRepository.searchListByKeyword("%" + keyword + "%");
-	}
+	
+	@Override  
+	public List<MemberVo> searchListByKeyword(String keyword) {	    	         
+		return feedRepository.searchListByKeyword("%"+ keyword+ "%");	
+	   }
+	
 
 	@Override
 	public List<HashtagVo> searchListByHashtag(String keyword) {
@@ -75,6 +73,7 @@ public class FeedService implements IFeedService {
 	public List<FileVo> selectContentListByUser(String memberId) {
 		return feedRepository.selectContentListByUser(memberId);
 	}
+
 
 	@Override
 	public void increaseLike(int feedNo, String memberId, String logURI) {
@@ -153,10 +152,10 @@ public class FeedService implements IFeedService {
 		return feedRepository.checkPlace(placeDetail);
 	}
 
+
 	@Override
 	public void insertFeedHash(int feedNo, String hashTag) {
 		feedRepository.insertFeedHash(feedNo, hashTag);
-
 	}
 
 	@Override

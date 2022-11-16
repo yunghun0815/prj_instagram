@@ -36,13 +36,11 @@ public class LogInterceptor implements HandlerInterceptor {
 			throws Exception {
 		HttpSession session = request.getSession();
 		String uri = request.getRequestURI();
-
 		log = new LogVo();
 		log.setLogURI(uri);
 		log.setMemberId((String)session.getAttribute("memberId"));
 		uri = uri.substring(1);	//remove first slash
 		String[] splitUri = uri.split("/");
-
 		if(splitUri[0].equals("increaseLike") || splitUri[0].equals("decreaseLike")) {	// [0]���� [1]feedno
 
 			log.setFeedNo(Integer.parseInt(splitUri[1]));
@@ -51,8 +49,11 @@ public class LogInterceptor implements HandlerInterceptor {
 			} else {
 				log.setLogLikeCheck(0);
 			}
-		} else if(splitUri[0].equals("search")) {
-			log.setLogKeyword(splitUri[1]);
+		} else if(splitUri[0].equals("memberlist")) {
+			String keyword = (String)request.getParameter("keyword");
+			log.setLogURI("/search");
+			log.setLogKeyword(keyword);
+			log.setFeedNo(0);
 		}
 		System.out.println(log.toString());
 		feedRepository.makeLog(log);

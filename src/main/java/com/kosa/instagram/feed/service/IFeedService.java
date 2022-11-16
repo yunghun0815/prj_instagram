@@ -50,6 +50,8 @@ public interface IFeedService {
 	
 	void updateFeed(FeedVo feed);
 	void deleteFeed(FeedVo feed);
+
 	
 	List<FileVo> getFileList(String hashtag);
+
 }

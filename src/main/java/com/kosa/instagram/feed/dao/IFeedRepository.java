@@ -57,6 +57,7 @@ public interface IFeedRepository {
 	FeedVo getDetailFeed(int feedNo);
 	
 	List<FileVo> getFeedFile(String memberId);
+	
 	void updateArticle(FeedVo feed);
 	
 	void updateFeedContent(FeedVo feed);
@@ -65,6 +66,7 @@ public interface IFeedRepository {
 	void deletePlace(String placeDetail);
 	void deleteFeedReply(int feedNo);
 	void deleteFeed(int feedNo);
+
 	
 	List<FileVo> getFileList(@Param("hashtag") String hashtag);
 
