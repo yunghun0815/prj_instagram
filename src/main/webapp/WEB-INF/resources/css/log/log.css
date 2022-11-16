@@ -1,1 +1,92 @@
 @charset "UTF-8";
+	.log-box{
+		width: 1300px;
+		margin: 200px auto 0;
+	}
+	.log-nav{
+	    width: 220px;
+	    margin: 0px 35px 0 80px;
+	    background-color: white;
+	    border: 1px solid rgb(219,219,219);
+	    border-radius: 8px;
+	    padding-left: 15px;
+	}
+	.chart-box{
+		width: 900px;
+	    height: 500px;
+	    border: 1px solid rgb(219, 219, 219);
+	    border-radius: 8px;
+	    padding: 50px;
+	}	
+	body{
+		height: 70% !important;
+	}
+	.log-nav-title{
+	    font-weight: bold;
+    	font-size: 20px;
+    	margin-top: 20px;
+	}
+	.log-nav-content{
+		margin-left: 20px;
+	    font-size: 16px;
+	    color: #8e8e8e;
+	    cursor: pointer;
+	    margin-top: 5px;
+	}
+	canvas{
+		display: none;
+	}
+	table{
+		box-shadow:  7px 7px 10px #8e8e8e;
+	}
+	table, tr, td, th{
+	border-collapse: collapse;
+	border: 2px solid gray;
+	text-align: center;
+	}
+	#searchRanking h1{
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	#searchRanking table tr:first-child{
+	    background-color: rgb(100,100,100);
+    	color: white;
+	}
+	#searchRanking table tr th:first-child{
+		width: 30%;
+	}
+	#searchRanking, table{
+		width: 600px;
+	    margin: 0 auto;
+	    height: 350px;
+	}
+		@media(max-width: 1023px){
+		.main{
+		    display: flex;
+		    align-items: center;
+		    height: 100%;
+		    margin-top: 0 !important;
+		}
+		.log-box .log-nav{
+			 margin: 0 auto;
+			 width: 900px;
+			 display: flex;
+			 justify-content: space-between;
+			 height: 90px;
+			 margin-bottom: 50px;
+			 padding-right: 30px;
+			 line-height: 83px;
+		}
+		.log-nav-title{
+			display: none;
+		}
+		
+		.log-box{
+			display: block !important;
+			margin: 0 auto !important;
+		}
+		
+		.chart-box{
+			margin: 0 auto;
+		}		
+	}

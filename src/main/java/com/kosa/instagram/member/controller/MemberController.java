@@ -1,6 +1,8 @@
 package com.kosa.instagram.member.controller;
 
+import java.net.http.HttpRequest;
 import java.util.List;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,6 +29,7 @@ import com.kosa.instagram.feed.service.IFeedService;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
+import jdk.internal.org.jline.utils.Log;
 import lombok.val;
 
 @Controller
@@ -59,16 +62,21 @@ public class MemberController {
 
 	//로그인
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
-	public String login() {
+	public String login(HttpServletRequest request, Model model) {
+		request.getAttribute("loginId");
+		request.getAttribute("loginPw");
+		logger.info((String) request.getAttribute("loginId"));
 		return "member/login";
 	}
 
 	//로그인
 	@RequestMapping(value="member/login", method=RequestMethod.POST)
-	public String login(String memberId, String password, HttpSession session, Model model) {
+	public String login(String memberId, String password, HttpSession session, HttpServletRequest request, Model model) {
 		MemberVo member = memberService.selectMember(memberId);
+		request.setAttribute("loginId", memberId);
 		if (member != null) {
 			System.out.println("아이디 o");
+			request.setAttribute("loginPw", password);
 			String dbPassword = member.getPassword();
 			if (dbPassword==null) {
 				System.out.println("비밀번호 입력 x");
@@ -179,7 +187,7 @@ public class MemberController {
 	public String deleteMember(String password, HttpSession session, Model model) {
 		MemberVo member = new MemberVo();
 		member.setMemberId((String)session.getAttribute("memberId"));
-		String dbpw = memberService.getPassword(password);
+		String dbpw = memberService.getPassword(member.getMemberId());
 		if (password != null && password.equals(dbpw)) {
 			member.setPassword(password);
 			memberService.deleteMember(member);
@@ -189,61 +197,104 @@ public class MemberController {
 			System.out.println("탈퇴 비밀번호 불일치");
 			return "member/delete";
 		}
+
 	}
 	@RequestMapping(value="/member/findMemberId", method=RequestMethod.GET)
 	public String findMemberId(Model model) {
-		model.addAttribute("findMemberId", new MemberVo());
 		return "member/findMemberId";
 	}
+	@ResponseBody
 	@RequestMapping(value="/member/findMemberId", method=RequestMethod.POST)
-	public String findMemberId(@ModelAttribute("findMemberId") @Valid String email, BindingResult result, HttpSession session, Model model) {
-		if (result.hasErrors()) {
-			return "member/findMemberId";
-		}else {
-			if (email != null && !email.equals("")) {
-				MemberVo member = memberService.findMmeberId(email);
-				if (member!=null) {
-					model.addAttribute("member", member);
-					//session.setAttribute("member", member);
-					System.out.println("이메일 일치");
-					//session.invalidate();
-					return "/member/findMemberId";
-				}else {
-					System.out.println("가입된 회원정보가 없습니다.");
-					return "/member/findMemberId";
-				}
-			}
-			return "redirect:/member/login";
+	public String findMemberId(String email, HttpSession session, Model model) {
+		String member = "1";
+		if (email != null && !email.equals("")) {
+			member = memberService.findMmeberId(email);
+//			System.out.println("email :" + email);
+//			System.out.println("member :" + member);
+			return member;
 		}
+		return member;
 	}
-	@RequestMapping(value="/member/findPassword", method=RequestMethod.GET)
-	public String findPassword() {
-		return "member/findPassword";
-	}
-
+	@ResponseBody
 	@RequestMapping(value="/member/findPassword", method=RequestMethod.POST)
 	public String findPassword(String memberId, String email, Model model ) {
+		String member = "1";
+		System.out.println("확인 중입니다");
 		if (memberId !=null && !memberId.equals("")) {
-			if (email != null && !email.equals("")) {
-				MemberVo member = new MemberVo();
-				member = memberService.findPassword(memberId, email);
-				System.out.println("뭔가 입력되긴 함");
-				//member가 null이 아니라는 건 email과 memberid가 맞게 들어갔다는 소리
-				if (member != null) {
-					model.addAttribute("memberId", member.getMemberId());
-					model.addAttribute("password", member.getPassword());
-					System.out.println("아이디 이메일 일치" + member.getPassword() + member.getMemberId());
-					return "member/findPassword";
-				}else {
-					System.out.println("아이디와 이메일 일치 x");
-					return "member/findPassword";
-				}
-			}
+			member = memberService.findPassword(memberId, email);
+			System.out.println("memberId : " + memberId);
+			System.out.println("email : " + email);
+			System.out.println("member :" +member);
+			return member;
 		}
-		System.out.println("null 입력");
-		return "redirect:/member/login";
+		return member;
 	}
 
+	//id중복체크
+	//RequestMapping 와responseBody를 같이 써주면 
+	//return의 string이 .jsp를 반환하지 않고 문자열 그 자체를 반환하게 된다
+	@ResponseBody
+	@RequestMapping(value="/member/checkId")
+	public String checkId(String memberId) { //유저가 입력한 값을 매개변수로 한다
+		int idCheck = 0;
+		try {
+			//
+			String result = memberService.checkId(memberId);
+			//아이디가 있는 경우
+			if (memberId != null && !memberId.equals("")) {
+				if (result != null) {
+					System.out.println("같은 아이디 있음");
+					idCheck = 0;
+				}else {
+					System.out.println("같은 아이디 없음");
+					idCheck = 1;
+				}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return idCheck + "";
+	}
+	@ResponseBody
+	@RequestMapping(value="/member/checkNickname")
+	public String checkNickname(String nickname) {
+		int nicknameCheck = 0;
+		String result = memberService.checkNickname(nickname);
+		if (nickname != null && !nickname.equals("")) {
+			try {
+				if (result !=null) {
+					System.out.println("같은 닉네임 있음");
+					nicknameCheck = 0;
+				}else {
+					System.out.println("같은 닉네임 없음");
+					nicknameCheck = 1;
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return  nicknameCheck + "";
+	}
+	@ResponseBody
+	@RequestMapping(value="/member/checkEmail")
+	public String checkEmail(String email) {
+		int emailCheck = 0;
+		String result = memberService.checkEmail(email);
+		if (email != null && !email.equals("")) {
+			try {
+				if (result != null) {
+					System.out.println("같은 이메일 o");
+					emailCheck = 0;
+				}else {
+					System.out.println("같은 이메일 x");
+					emailCheck = 1;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return emailCheck +"";
+	}
 	@RequestMapping("/follow/{toId}")
 	public @ResponseBody void followMember(@PathVariable String toId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -270,7 +321,5 @@ public class MemberController {
 		}
 		return false;
 	}
-
 }//class end
-
 

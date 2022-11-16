@@ -36,16 +36,6 @@ public class FeedService implements IFeedService {
 	public List<MemberVo> searchListByKeyword(String keyword) {	    	         
 		return feedRepository.searchListByKeyword("%"+ keyword+ "%");	
 	   }
-
-//	@Override
-//	public List<String> searchListByHashtag(String hashtag) {
-//		return feedRepository.searchListByHashtag("%"+ hashtag+ "%");
-//	}
-//	
-//	@Override
-//	public int countHashtag(String hashtag) {
-//		return feedRepository.countHashtag(hashtag);
-//	}
 	
 	@Override
 	public List<HashtagVo> searchListByHashtag(String keyword) {
@@ -60,8 +50,6 @@ public class FeedService implements IFeedService {
 		reply.setNickname(member.getNickname());
 		reply.setReplyContent(replyContent);
 		reply.setFileNo(member.getFileNo());
-//		System.out.println(reply.toString());
-	//	reply.setFileData(member.getFileData());
 		feedRepository.writeReply(reply);
 	}
 	
@@ -69,9 +57,6 @@ public class FeedService implements IFeedService {
 	public void deleteReply(int replyNo) {
 		feedRepository.deleteReply(replyNo);
 	}
-
-
-
 
 @Override
 public int countContent(String memberId) {
@@ -95,23 +80,11 @@ public List<FileVo> selectContentListByUser(String memberId) {
 	@Override
 	public void increaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.increaseLike(feedNo, memberId);
-//		LogVo log = new LogVo();
-//		log.setLogURI(logURI);
-//		log.setMemberId(memberId);
-//		log.setFeedNo(feedNo);
-//		log.setLogLikeCheck(1);
-//		feedRepository.makeLog(log);
 	}
 	
 	@Override
 	public void decreaseLike(int feedNo, String memberId, String logURI) {
 		feedRepository.decreaseLike(feedNo, memberId);
-//		LogVo log = new LogVo();
-//		log.setLogURI(logURI);
-//		log.setMemberId(memberId);
-//		log.setFeedNo(feedNo);
-//		log.setLogLikeCheck(0);
-//		feedRepository.makeLog(log);
 	}
 
 	@Override
@@ -193,7 +166,6 @@ public void insertFeedHash(int feedNo, String hashTag) {
 
 @Override
 public List<FeedVo> placeFileList(String placeDetail) {
-	// TODO Auto-generated method stub
 	return feedRepository.placeFileList(placeDetail);
 }
 
@@ -223,4 +195,28 @@ public JsonVo getDetailFeed(int feedNo, String memberId) {
 public List<FileVo> getFeedFile(String memberId) {
 	return feedRepository.getFeedFile(memberId);
 }
+
+	@Override
+	public void updateFeed(FeedVo feed) {
+		if(feedRepository.checkPlace(feed.getPlaceDetail()) == 0) {
+			feedRepository.insertFeedPlace(feed);
+		}
+		feedRepository.deleteHashtag(feed.getFeedNo());
+		feedRepository.updateFeedContent(feed);
+	}
+	
+	@Override
+	public void deleteFeed(FeedVo feed) {
+		String placeDetail = feed.getPlaceDetail();
+		int feedNo = feed.getFeedNo();
+		
+		feedRepository.deleteHashtag(feedNo);
+		feedRepository.deleteLog(feedNo);
+		feedRepository.deleteFeedReply(feedNo);
+		feedRepository.deleteFeed(feedNo);
+		if(placeDetail!=null && !placeDetail.equals("")) {
+			feedRepository.deletePlace(placeDetail);
+			System.out.println(placeDetail);
+		}
+	}
 }

@@ -30,10 +30,19 @@
 </delete>
 
 <insert id="makeLog" parameterType="com.kosa.instagram.LogVo">
-<![CDATA[
+<if test="feedNo != 0">
+	<![CDATA[
 	INSERT INTO log(log_no, log_time, log_uri, member_id, log_keyword, feed_no, log_like_check)
 	VALUES (LOG_NO_SEQ.NEXTVAL, SYSDATE, #{logURI}, #{memberId}, #{logKeyword, jdbcType=VARCHAR}, #{feedNo, jdbcType=INTEGER}, #{logLikeCheck, jdbcType=INTEGER})
 ]]>
+</if>
+<if test="feedNo == 0">
+	<![CDATA[
+	INSERT INTO log(log_no, log_time, log_uri, member_id, log_keyword, feed_no, log_like_check)
+	VALUES (LOG_NO_SEQ.NEXTVAL, SYSDATE, #{logURI}, #{memberId}, #{logKeyword, jdbcType=VARCHAR}, null, null)
+]]>
+</if>
+
 </insert>
 
 <select id="getTenFeeds" resultType="com.kosa.instagram.feed.model.FeedVo">
@@ -293,4 +302,41 @@
 		from feed join place on feed.place_detail = place.place_detail
         where feed_no = #{feedNo}
 	</select>
+<update id="updateFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
+<![CDATA[
+	UPDATE feed
+	SET feed_content=#{feedContent}, place_detail=#{placeDetail}
+	WHERE feed_no=#{feedNo}
+]]>
+</update>
+
+<delete id="deleteHashtag" parameterType="int">
+<![CDATA[
+	DELETE FROM hashtag WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deleteLog" parameterType="int">
+<![CDATA[
+	DELETE FROM log WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deletePlace" parameterType="String">
+<![CDATA[
+	DELETE FROM place WHERE place_detail=#{placeDetail} AND (SELECT COUNT(*) FROM feed WHERE place_detail=#{placeDetail}) = 0
+]]>
+</delete>
+
+<delete id="deleteFeedReply" parameterType="int">
+<![CDATA[
+	DELETE FROM reply WHERE feed_no=#{feedNo}
+]]>
+</delete>
+
+<delete id="deleteFeed" parameterType="int">
+<![CDATA[
+	DELETE FROM feed WHERE feed_no=#{feedNo}
+]]>
+</delete>
 </mapper>

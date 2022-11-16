@@ -29,8 +29,6 @@ public interface IFeedService {
 	void decreaseLike(int feedNo, String memberId, String logURI);
 
 	
-	
-	
 	void insertFeedContent(FeedVo feed);
 	void insertFeedData(FileVo file);
 	void insertFeedPlace(FeedVo feed);
@@ -49,4 +47,7 @@ public interface IFeedService {
 	int feedLikeCount(int feedNo);
 	List<FeedVo> placeFileList(String placeDetail);
 	JsonVo getDetailFeed(int feedNo, String memberId);
+	
+	void updateFeed(FeedVo feed);
+	void deleteFeed(FeedVo feed);
 }

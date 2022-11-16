@@ -24,8 +24,8 @@ $(function(){
 				if(feed['memberId'] == memberId){
 					let editText = 
 						`
-						<a href="#" class="editBtn">수정</a>
-						<a href="#" class="editBtn">삭제</a>
+						<a href="/feed/update?feedNo=${feedNo}" class="editBtn">수정</a>
+						<a href="/feed/delete?feedNo=${feedNo}" class="editBtn">삭제</a>
 						`;
 					$(".editBox").html(editText);
 				}

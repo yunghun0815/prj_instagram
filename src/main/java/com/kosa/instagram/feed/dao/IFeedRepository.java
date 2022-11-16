@@ -59,7 +59,11 @@ public interface IFeedRepository {
 	List<FileVo> getFeedFile(String memberId);
 	void updateArticle(FeedVo feed);
 	
-	
-
+	void updateFeedContent(FeedVo feed);
+	void deleteHashtag(int feedNo);
+	void deleteLog(int feedNo);
+	void deletePlace(String placeDetail);
+	void deleteFeedReply(int feedNo);
+	void deleteFeed(int feedNo);
 	
 }

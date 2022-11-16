@@ -89,7 +89,7 @@ $(function(){
 						<div class="feed-header">
 							<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
 							<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
-								<a href="#"><span>`+ member['nickname'] +`</span></a><br>
+								<a href="userfeed/`+member['memberId']+`"><span>`+ member['nickname'] +`</span></a><br>
 								<a href="#">
 									<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map" onclick="mapLoading(this)">`+ `${feed['placeTitle'] == null ? "" : feed['placeTitle']}` +`</span>									
 									<input type="hidden" value="`+ feed['placeDetail'] +`">
@@ -102,7 +102,7 @@ $(function(){
 					</div>
 					<div class="feed-desc-box">
 						<ol>
-							<li><span class="bold">`+ member['nickname'] +`</span>
+							<li><a href="userfeed/`+member['memberId']+`"><span class="bold">`+ member['nickname'] +`</span></a>
 							    <span>`+ feed['feedContent'] +`</span><br>
 							    <span class="hashtag"> ${hashtagList()} </span>
 							</li>
@@ -218,7 +218,7 @@ $(function(){
 										<div class="feed-header">
 											<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
 											<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
-												<a href="#"><span>`+ member['nickname'] +`</span></a><br>
+												<a href="userfeed/`+member['memberId']+`"><span>`+ member['nickname'] +`</span></a><br>
 												<a href="#">
 													<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map" onclick="mapLoading(this)">`+ `${feed['placeTitle'] == null ? "" : feed['placeTitle']}` +`</span>									
 													<input type="hidden" value="`+ feed['placeDetail'] +`">
@@ -346,6 +346,7 @@ function mapLoading(param){
 			},
 			success: function(result){
 				object.parent().parent().parent().find($(".reply-list")).html(replyAddList(result));
+				object.prev().val("");
 			}
 		});
 	}
