@@ -285,6 +285,9 @@ body{
 	.prevBtn{
 		top:485px;
 	}
+	.nullPlace{
+		margin-top: 10px;
+	}
 	/* 모달 */
 	.modal{
 		width: 1122px;

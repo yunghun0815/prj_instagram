@@ -93,6 +93,7 @@
     select 
 	    r.reply_no as "replyNo", 
     	m.nickname as "nickname", 
+    	m.member_id as "memberId",
     	r.feed_no as "feedNo",
     	r.reply_content as "replyContent", 
     	r.reply_date as "replyDate", 

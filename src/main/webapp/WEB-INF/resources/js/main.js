@@ -37,13 +37,18 @@ $(function(){
 					
 					if(reply.length > 0){
 						for(let k=0; k<reply.length; k++){
+							console.log(reply[k]);
 							let deleteSpan = `<span id="replyDelete" onclick="replyDelete(this);">삭제</span>`;
 							
 							replyText += `
 								<div>
-									<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+									<a href="userfeed/`+reply[k]['memberId']+`">
+										<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+									</a>
 									<p class="inline-block">
-										<span class="bold">`+ reply[k]['nickname'] +`</span>
+										<a href="userfeed/`+reply[k]['memberId']+`">
+											<span class="bold">`+ reply[k]['nickname'] +`</span>
+										</a>
 										<span>`+ reply[k]['replyContent'] +`</span><!-- 댓글내용  --><br>
 										<span class="upload-date">`+ reply[k]['replyDate'] +`</span>
 										${reply[k]['nickname'] == nickname ? deleteSpan : ""}
@@ -87,7 +92,9 @@ $(function(){
 					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
 					<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
 						<div class="feed-header">
+							<a href="userfeed/`+member['memberId']+`">
 							<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
+							</a>
 							<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
 								<a href="userfeed/`+member['memberId']+`"><span>`+ member['nickname'] +`</span></a><br>
 								<a href="#">
@@ -182,11 +189,18 @@ $(function(){
 		    						for(let k=0; k<reply.length; k++){
 		    							replyText += `
 		    								<div>
-		    									<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+		    									<a href="userfeed/`+reply[k]['memberId']+`">
+		    										<img src="/file/`+ reply[k]['fileNo'] +`" class="reply-profile" onerror="this.src='/image/profile_null.jpg';">
+		    									</a>
 		    									<p class="inline-block">
-		    										<span class="bold">`+ reply[k]['nickname'] +`</span>
+		    										<a href="userfeed/`+reply[k]['memberId']+`">
+		    											<span class="bold">`+ reply[k]['nickname'] +`</span>
+		    										</a>
 		    										<span>`+ reply[k]['replyContent'] +`</span><!-- 댓글내용  --><br>
 		    										<span class="upload-date">`+ reply[k]['replyDate'] +`</span>
+		    										${reply[k]['nickname'] == nickname ? deleteSpan : ""}
+		    										<input type="hidden" id="deleteReplyNo" value="`+ reply[k]['replyNo'] +`">
+		    										<input type="hidden" id="deleteFeedNo" value="`+ reply[k]['feedNo'] +`">
 		    									</p>
 		    								</div>
 		    							`;
@@ -212,52 +226,55 @@ $(function(){
 		    					return heart;
 		    				}
 		    				
-		    				let view= `
-		    					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
-									<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
-										<div class="feed-header">
-											<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
-											<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
-												<a href="userfeed/`+member['memberId']+`"><span>`+ member['nickname'] +`</span></a><br>
-												<a href="#">
-													<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map" onclick="mapLoading(this)">`+ `${feed['placeTitle'] == null ? "" : feed['placeTitle']}` +`</span>									
-													<input type="hidden" value="`+ feed['placeDetail'] +`">
+		    				let view= `<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
+										<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
+											<div class="feed-header">
+												<a href="userfeed/`+member['memberId']+`">
+												<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
 												</a>
-											</p>
+												<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
+													<a href="userfeed/`+member['memberId']+`"><span>`+ member['nickname'] +`</span></a><br>
+													<a href="#">
+														<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map" onclick="mapLoading(this)">`+ `${feed['placeTitle'] == null ? "" : feed['placeTitle']}` +`</span>									
+														<input type="hidden" value="`+ feed['placeDetail'] +`">
+													</a>
+												</p>
+											</div>
+										    <div class="single-item">
+											    ${feedImage()}	
+											</div>			
 										</div>
-										<img class="feed-img" src="/image/sample.jpg">				
-									</div>
-									<div class="feed-desc-box">
-										<ol>
-											<li><span class="bold">`+ member['nickname'] +`</span>
-											    <span>`+ feed['feedContent'] +`</span><br>
-											    <span class="hashtag"> ${hashtagList()} </span>
-											</li>
-											<li>
-											    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
-												${likeImage()}
-												<img src="/image/speech.png" onclick="replyFocus(this)">
-												<img src="/image/plane.png">
-											</li>
-											<li>
-												<span class="bold">좋아요<span id="like_count">`+ feed['likeCount'] +`</span>개</span>	
-												<span class="upload-date">`+ feed['uploadDate'] +`</span>	
-											</li>
-											<li class="reply-list">
-												${replyList()}
-											</li>
-										</ol>
-										<div><!-- 댓글달기 -->
-											<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
-												<img src="/image/face.png">
-												<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
-												<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
-												<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
-											</form> 
+										<div class="feed-desc-box">
+											<ol>
+												<li><a href="userfeed/`+member['memberId']+`"><span class="bold">`+ member['nickname'] +`</span></a>
+												    <span>`+ feed['feedContent'] +`</span><br>
+												    <span class="hashtag"> ${hashtagList()} </span>
+												</li>
+												<li>
+												    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
+													${likeImage()}
+													<img src="/image/speech.png" onclick="replyFocus(this)">
+													<img src="/image/plane.png">
+												</li>
+												<li>
+													<span class="bold">좋아요<span id="like_count">`+ feed['likeCount'] +`</span>개</span>	
+													<span class="upload-date">`+ feed['uploadDate'] +`</span>	
+												</li>
+												<li class="reply-list">
+													${replyList()}
+												</li>
+											</ol>
+											<div><!-- 댓글달기 -->
+												<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
+													<img src="/image/face.png">
+													<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
+													<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
+													<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
+												</form> 
+											</div>
 										</div>
-									</div>
-								</li>
-							`;
+									</li>
+								`;
 		    				
 		    				$(".feed-ul").append(view);
 		    			}
