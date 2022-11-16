@@ -25,7 +25,7 @@
 					<label id="nickname">${nickname }</label>
 					<c:if test="${sessionScope.memberId eq memberId}">
 						<span id="updateprofile"><a href='<c:url value="/member/update"/>'>프로필 편집</a></span>
-						<span id="insertspan"><a href='<c:url value="/writefeed/${memberId}"/>'><img src="../image/add.png" ></a></span>
+						
 					</c:if>
 					<c:if test="${sessionScope.memberId ne memberId}">
 						<button id="btn" onclick="changeFollowing()"></button>

@@ -1,9 +1,6 @@
 package com.kosa.instagram.member.controller;
 
-import java.net.http.HttpRequest;
 import java.util.List;
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -29,7 +26,6 @@ import com.kosa.instagram.feed.service.IFeedService;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
-import jdk.internal.org.jline.utils.Log;
 import lombok.val;
 
 @Controller
@@ -323,4 +319,3 @@ public class MemberController {
 		return false;
 	}
 }//class end
-
