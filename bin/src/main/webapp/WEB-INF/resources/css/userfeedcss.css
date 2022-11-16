@@ -1,0 +1,191 @@
+@font-face {
+    font-family: 'segoe';
+    src: url('../fonts/Segoe UI.woff') format('truetype');
+}
+
+@font-face {
+    font-family: 'segoe-b';
+    src: url('../fonts/Segoe UI Bold.woff') format('truetype');
+}
+
+#maindiv_outer{
+	
+	text-align: center;
+	
+}
+
+#maindiv_inner{
+	
+	display:inline-block;
+}
+
+#feed_top{
+
+	width:1000px;
+	height:200px;
+	
+}
+
+.myProfileImg{
+	display:inline-block;
+	border-radius:50%;
+	width:150px;
+	height:150px;
+	margin:auto;
+	
+}
+#img_div{
+	float:left;
+	display:inline-block;
+	margin-right:30px;
+	width:320px;
+	height:200px;
+	padding:25px;
+	
+}
+#info_div{
+	float:left;
+	display:inline-block;
+	text-align:left;
+
+	width:650px;
+	height:200px;
+}
+
+#info1_div{
+
+	width:650px;
+	height:100px;
+	
+}
+#info2_div{
+
+	width:650px;
+	height:100px;
+}
+
+#follower_modal{
+	display: none;
+        width: 500px;
+        height: 500px;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        margin: -250px 0 0 -250px;
+        background:#eee;
+        z-index: 2;
+}
+
+#follow_modal{
+	display: none;
+        width: 500px;
+        height: 500px;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        margin: -250px 0 0 -250px;
+        background:#eee;
+        z-index: 2;
+}
+
+.black_bg{
+	 display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color:rgba(0, 0,0, 0.5);
+        top:0;
+        left: 0;
+        z-index: 1;
+}
+
+ .modal_close{
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: -30px;
+        right: 0;
+    }
+
+  .modal_close> a{
+        display: block;
+        width: 100%;
+        height: 100%;
+        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+        text-indent: -9999px;
+    }
+
+#content_table{
+	width:1000px;
+}
+#content_img{
+	display:inline-block;
+	float:left;
+	margin: 20px 20px ;
+	width:293px;
+	height:293px;
+}
+
+#nickname{
+	font-size: 35px;
+    margin-right: 25px;
+	
+}
+label{
+	display:inline-block;
+	font-weight:lighter;
+	margin-right:20px;
+}
+
+.followsbtn{
+	border:0px;
+	background-color:white;
+	font-family:'segoe-b';
+	font-size:15px;
+}
+#updateprofile{
+	
+                    border: 0;
+                    outline: 0;
+                    cursor: pointer;
+                    color: rgb(60, 66, 87);
+                    background-color: rgb(255, 255, 255);
+                    box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    padding: 4px 8px;
+                    display: inline-block;
+                    min-height: 28px;
+                    transition: background-color .24s,box-shadow .24s;
+                    
+                
+}
+#updateprofile>a{
+	text-decoration: none;
+    color: black;
+    font-family: 'segoe';
+    font-weight: 400;
+}
+
+
+#insertspan>a{
+	text-decoration:none;
+	color:black;
+}
+
+#insertspan{
+	
+}
+#insertspan img{
+	width:34px;
+	height:34px;
+	margin: 13px;
+    float: right;
+    border:1px solid gray;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px gray;
+    
+}
+	
