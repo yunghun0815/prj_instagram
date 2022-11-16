@@ -23,6 +23,7 @@
 	}
 	.main{
 		padding-bottom: 100px !important;
+		margin-top: 70px !important;
 		 
 	}
 	.editBox{

@@ -300,7 +300,7 @@
 			   upload_date as uploadDate, 
 			   feed.place_detail as placeDetail,
                place.place_title as placeTitle
-		from feed join place on feed.place_detail = place.place_detail
+		from feed left join place on feed.place_detail = place.place_detail
         where feed_no = #{feedNo}
 	</select>
 <update id="updateFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
