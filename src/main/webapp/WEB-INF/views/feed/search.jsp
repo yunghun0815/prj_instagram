@@ -49,14 +49,14 @@ th, td {
 
 			<div class="row">
 				<div class="col">
-					<ul class="list-group">
+					<ul class="list-group"> 
 						<c:forEach var="member" items="${memberList}">
 							<li class="list-group-item">아이디:<a
 								href='<c:url value="/userfeed/${member.memberId}"/>'>${member.memberId}</a>
 								이름:<a href='<c:url value="/userfeed/${member.memberId}"/>'>${member.nickname}</a>
 							</li>
 						</c:forEach>
-					</ul>
+					</ul> 
 
 				</div>
 				<div class="col">
