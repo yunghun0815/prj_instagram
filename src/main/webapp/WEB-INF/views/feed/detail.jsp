@@ -22,7 +22,8 @@
 		height: 0 !important;
 	}
 	.main{
-		padding-bottom: 0 !important;
+		padding-bottom: 100px !important;
+		margin-top: 70px !important;
 		 
 	}
 	.editBox{

@@ -63,10 +63,11 @@ public class FeedController {
 		model.addAttribute("followerCount", followerCount);
 		model.addAttribute("followCount",followCount);
 		model.addAttribute("contentCount",contentCount);
-		MemberVo member=memberService.selectFeedMemberInfo(memberId);
+//		MemberVo member=memberService.selectFeedMemberInfo(memberId);
+		MemberVo member = memberService.selectMember(memberId);
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("name",member.getName());
-		
+		model.addAttribute("memberProfileFileId", member.getFileNo());
 		
 
 		
@@ -111,6 +112,10 @@ public class FeedController {
 		
 	
 		if(placeTitle!=null && !placeTitle.equals("")) {
+			if(placeDetail == null || placeDetail.equals("")) {
+				placeDetail = placeTitle+"KOSA";
+				feed.setPlaceDetail(placeDetail);
+			}
 		int check=feedService.checkPlace(placeDetail); //등록된 장소가 있는지 없는지
 		
 		System.out.println(check);

@@ -18,12 +18,7 @@
 	<div style="margin-top: 60px;"></div>
 	<div id="feed_top">
 		<div id="img_div">
-			<c:if test="${not empty sessionScope.fileNo && sessionScope.fileNo != 0}">
-						<img class="myProfileImg" src="/file/${sessionScope.fileNo}">
-				</c:if>
-			<c:if test="${empty sessionScope.fileNo || sessionScope.fileNo ==0}">
-						<img class="myProfileImg" src="/image/profile_null.jpg">
-				</c:if>
+			<img id="myProfileImg" class="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
 		</div><div id="info_div">
 				<div id="info1_div">
 					<div style="display: inline-block; margin-top:30px">
