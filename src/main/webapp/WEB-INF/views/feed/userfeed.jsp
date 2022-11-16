@@ -18,7 +18,7 @@
 	<div style="margin-top: 60px;"></div>
 	<div id="feed_top">
 		<div id="img_div">
-			<img id="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
+			<img id="myProfileImg" class="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
 		</div><div id="info_div">
 				<div id="info1_div">
 					<div style="display: inline-block; margin-top:30px">
