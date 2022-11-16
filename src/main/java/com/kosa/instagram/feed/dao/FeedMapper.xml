@@ -190,6 +190,7 @@
 	group by hashtag
 	]]>
  	</select>
+ 	
 	<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
 		<![CDATA[
 			insert into feed(feed_no,member_id,feed_content,upload_date,place_detail)
@@ -249,7 +250,8 @@
 				file_name as fileName,
 			    file_size as fileSize,
 			    file_type as fileType,
-			    member_id as memberId
+			    member_id as memberId, 
+			    U.feed_no as feedNo
 			FROM upload_file U
 			INNER JOIN hashtag H
 			ON U.feed_no = H.feed_no
