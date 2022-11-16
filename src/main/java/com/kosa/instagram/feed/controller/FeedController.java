@@ -112,6 +112,10 @@ public class FeedController {
 		
 	
 		if(placeTitle!=null && !placeTitle.equals("")) {
+			if(placeDetail == null || placeDetail.equals("")) {
+				placeDetail = placeTitle+"KOSA";
+				feed.setPlaceDetail(placeDetail);
+			}
 		int check=feedService.checkPlace(placeDetail); //등록된 장소가 있는지 없는지
 		
 		System.out.println(check);
