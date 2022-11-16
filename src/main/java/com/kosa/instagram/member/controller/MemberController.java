@@ -313,9 +313,10 @@ public class MemberController {
 	public @ResponseBody boolean isFollowing(@PathVariable String toId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String fromId = (String)session.getAttribute("memberId");
-		List<String> followList = memberService.selectFollowByUser(fromId);
-		for(String followId : followList) {
-			if(followId.equals(toId)) {
+		String toNickname = memberService.selectFeedMemberInfo(toId).getNickname();
+		List<String> followNicknameList = memberService.selectFollowByUser(fromId);
+		for(String followNickname : followNicknameList) {
+			if(followNickname.equals(toNickname)) {
 				return true;
 			}
 		}
