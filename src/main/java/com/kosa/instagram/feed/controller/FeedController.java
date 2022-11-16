@@ -63,10 +63,11 @@ public class FeedController {
 		model.addAttribute("followerCount", followerCount);
 		model.addAttribute("followCount",followCount);
 		model.addAttribute("contentCount",contentCount);
-		MemberVo member=memberService.selectFeedMemberInfo(memberId);
+//		MemberVo member=memberService.selectFeedMemberInfo(memberId);
+		MemberVo member = memberService.selectMember(memberId);
 		model.addAttribute("nickname",member.getNickname());
 		model.addAttribute("name",member.getName());
-		
+		model.addAttribute("memberProfileFileId", member.getFileNo());
 		
 
 		
