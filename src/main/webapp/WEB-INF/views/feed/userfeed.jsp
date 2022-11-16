@@ -14,8 +14,8 @@
 <div style="margin-top: 60px;">
 <h1>개인피드</h1>
 <c:if test="${not empty sessionScope.fileNo && sessionScope.fileNo != 0}">
-					<a href='<c:url value="/userfeed/${sessionScope.memberId}"/>'>
-						<img id="myProfileImg" src="/file/${sessionScope.fileNo}">
+					<a href='<c:url value="/userfeed/${memberId}"/>'>
+						<img id="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
 					</a>
 				</c:if>
 <c:if test="${empty sessionScope.fileNo || sessionScope.fileNo ==0}">
