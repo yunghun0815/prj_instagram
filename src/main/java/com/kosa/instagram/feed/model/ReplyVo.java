@@ -9,11 +9,18 @@ public class ReplyVo {
 	private int replyNo;
 	private int feedNo;
 	private String nickname;
+	private String memberId;
 	private String replyContent;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date replyDate;
 	private int fileNo;
 	
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
 	public int getReplyNo() {
 		return replyNo;
 	}

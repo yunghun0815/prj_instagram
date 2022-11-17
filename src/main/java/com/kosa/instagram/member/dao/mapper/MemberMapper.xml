@@ -36,19 +36,23 @@ VALUES
 	]]>
 </select>
 
-<select id="selectFollowerByUser" parameterType="String" resultType="String">
+<select id="selectFollowerByUser" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
 	<![CDATA[
-		select nickname
-			from member
+		select nickname AS "nickname",
+				name AS "name",
+				member_id AS "memberId"
+			from member 
 			where member_id IN (select from_id 
 				   from follow 
 				   where to_id=#{memberId})
 	]]>
 </select>
 
-<select id="selectFollowByUser" parameterType="String" resultType="String">
+<select id="selectFollowByUser" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
 	<![CDATA[
-		select nickname
+		select nickname AS "nickname",
+				name AS "name",
+				member_id AS "memberId"
 			from member
 			where member_id IN (select to_id
 							from follow

@@ -113,5 +113,6 @@ h3 {
 			<input type="submit" value="확인" class="submit_button">
 		</form>
 	</div>
+
 </body>
 </html>

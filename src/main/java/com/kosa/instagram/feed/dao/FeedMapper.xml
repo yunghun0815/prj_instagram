@@ -93,6 +93,7 @@
     select 
 	    r.reply_no as "replyNo", 
     	m.nickname as "nickname", 
+    	m.member_id as "memberId",
     	r.feed_no as "feedNo",
     	r.reply_content as "replyContent", 
     	r.reply_date as "replyDate", 
@@ -111,7 +112,7 @@
 
 	<select id="countContent" parameterType="String" resultType="int">
 		<![CDATA[
-			select count(feed_no) 
+			select distinct count(feed_no) 
 			from feed
 			where member_id=#{memberId}
 		
@@ -134,8 +135,6 @@
 		]]>
 	</select>
 	
-
-
 
 	<select id="selectFollowerByUser" parameterType="String" resultType="String">
 		<![CDATA[
@@ -182,33 +181,16 @@
 		 ]]>
 	</select>
 
-<!-- 
-	<select id="searchListByHashtag" parameterType="String" resultType="String">
-		<![CDATA[  
-			select hashtag as "hashtag"
-			from hashtag
-			where hashtag like #{hashtag}
-		 ]]>		 
-	</select>
-	
-	<select id="countHashtag" parameterType="String" resultType="int">
-		<![CDATA[ 
-			select count(hashtag)
-			from hashtag
-			where hashtag like #{hashtag}		
-		 ]]>
-	</select>
- -->
- 
  	<select id="searchListByHashtag" parameterType="String" resultType="com.kosa.instagram.feed.model.HashtagVo">
-		<![CDATA[  
-			select hashtag, count(*) as cnt
-			from hashtag
-			where hashtag like #{keyword}
-			group by hashtag
-		 ]]>		 
-	</select>
- 
+
+	<![CDATA[     
+	select hashtag, count(*) as cnt
+	from hashtag
+	where hashtag like #{keyword}
+	group by hashtag
+	]]>
+ 	</select>
+ 	
 	<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
 		<![CDATA[
 			insert into feed(feed_no,member_id,feed_content,upload_date,place_detail)
@@ -260,6 +242,23 @@
 	</select>
 	
 	
+	<select id="getFileList" parameterType="String" resultType="com.kosa.instagram.feed.model.FileVo">
+		<![CDATA[
+			SELECT 
+				file_no as fileNo,
+		  	    file_data as fileData,
+				file_name as fileName,
+			    file_size as fileSize,
+			    file_type as fileType,
+			    member_id as memberId, 
+			    U.feed_no as feedNo
+			FROM upload_file U
+			INNER JOIN hashtag H
+			ON U.feed_no = H.feed_no
+			WHERE h.hashtag = #{hashtag}
+		]]>
+	</select>
+	
 	<select id="getFeedFile" parameterType="String" resultType="com.kosa.instagram.feed.model.FileVo">
 		select file_no as fileNo, file_data as fileData,feed_no as feedNo
 		from upload_file
@@ -299,7 +298,7 @@
 			   upload_date as uploadDate, 
 			   feed.place_detail as placeDetail,
                place.place_title as placeTitle
-		from feed join place on feed.place_detail = place.place_detail
+		from feed left join place on feed.place_detail = place.place_detail
         where feed_no = #{feedNo}
 	</select>
 <update id="updateFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">

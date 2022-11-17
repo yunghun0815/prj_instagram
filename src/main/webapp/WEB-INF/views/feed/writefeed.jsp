@@ -266,8 +266,5 @@ function removeAllChildNods(el) {
 
 <a href="sample2">아이디/비밀번호 찾기</a>
 
-
-
-
 </body>
 </html>
