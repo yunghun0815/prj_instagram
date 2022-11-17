@@ -65,6 +65,22 @@
     </div>
 </div>
 
+
+
+<div>
+	<h1>게시글 작성 예시</h1>
+<form id="upload" action="/writefeed" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="memberId" value="${memberId}">
+		<input type="text" name="feedContent" placeholder="내용입력"><br>
+		<input type="text" id="placeDetailInput" name="placeDetail" placeholder="place detail" readonly="readonly"><br>
+		<input type="text" id="placeTitleInput" name="placeTitle"  placeholder="place title" readonly="readonly"><br>
+		<input type="text" id="hashtag" name="hashtag" placeholder="hashtag"><button type="button" onclick="addHashtag();">해시태그 추가</button><br>
+		<input multiple="multiple" type="file"  id="multiple-image" name="fileList" required >
+		<input type="submit" id="submit" value="글 작성" >
+	</form>
+</div>
+<div id="preview"></div>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f15e87f34a476fe8fa135f049ed1d36b&libraries=services"></script>
 <script>
 // 마커를 담을 배열입니다
@@ -249,22 +265,53 @@ function removeAllChildNods(el) {
 	 $("#placeTitleInput").val(placeTitle);
 	 $("#placeDetailInput").val(placeDetail);
  }
+ 
+function readMultipleImage(input){
+	const multipleContainer = document.getElementById("preview");
+	if(input.files){
+		const fileArr = Array.from(input.files);
+		const $colDiv1 = document.createElement("div");
+		const $colDiv2 = document.createElement("div");
+		
+		$colDiv1.classList.add("column");
+		$colDiv2.classList.add("column");
+		
+		fileArr.forEach((file, index) => {
+			const reader = new FileReader();
+			
+			const $imgDiv = document.createElement("div");
+			const $img = document.createElement("img");
+			$img.classList.add("image");
+			
+			const $label = document.createElement("label");
+			$label.classList.add("image-label");
+			$label.textContent = file.name;
+			
+			$imgDiv.appendChild($img);
+			$imgDiv.appendChild($label);
+			
+			reader.onload = e => {
+				$img.src = e.target.result;
+			}
+			
+			if(index%2 == 0){
+				$colDiv1.appendChild($imgDiv);
+			} else {
+				$colDiv2.appendChild($imgDiv);
+			}
+			
+			reader.readAsDataURL(file)
+		})
+		
+		multipleContainer.appendChild($colDiv1);
+		multipleContainer.appendChild($colDiv2);
+	}
+}
+
+const inputMultipleImage = document.getElementById("multiple-image");
+inputMultipleImage.addEventListener("change", e => {
+	readMultipleImage(e.target);
+})
  </script>
-
-<div>
-	<h1>게시글 작성 예시</h1>
-<form id="upload" action="/writefeed" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="memberId" value="${memberId}">
-		<input type="text" name="feedContent" placeholder="내용입력"><br>
-		<input type="text" id="placeDetailInput" name="placeDetail" placeholder="place detail" readonly="readonly"><br>
-		<input type="text" id="placeTitleInput" name="placeTitle"  placeholder="place title" readonly="readonly"><br>
-		<input type="text" id="hashtag" name="hashtag" placeholder="hashtag"><button type="button" onclick="addHashtag();">해시태그 추가</button><br>
-		<input multiple="multiple" type="file"  name="fileList" required >
-		<input type="submit" id="submit" value="글 작성" >
-	</form>
-</div>
-
-<a href="sample2">아이디/비밀번호 찾기</a>
-
 </body>
 </html>
