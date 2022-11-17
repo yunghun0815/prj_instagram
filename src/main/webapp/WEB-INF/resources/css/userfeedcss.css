@@ -87,6 +87,7 @@
         background:#eee;
         z-index: 2;
         border-radius: 10%;
+        overflow: auto;
 }
 
 #follow_modal{
@@ -100,6 +101,11 @@
         background:#eee;
         z-index: 2;
         border-radius: 10%;
+        overflow: auto;
+}
+
+::-webkit-scrollbar {
+display: none;
 }
 .listhover{
 	text-align: left; 

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kosa.instagram.member.dao.IMemberRepository">
+
+<insert id="insertMember" parameterType="com.kosa.instagram.member.model.MemberVo">
+
+INSERT INTO MEMBER 
+	(MEMBER_ID, PASSWORD, NICKNAME, NAME, GENDER, EMAIL, BIRTH, PHONE_NUMBER)
+VALUES
+	(#{memberId}, #{password}, #{nickname}, #{name}, #{gender}, #{email}, #{birth}, #{phoneNumber}) 
+</insert>
+
+<select id="selectMember" resultType="com.kosa.instagram.member.model.MemberVo" parameterType="String">
+	SELECT  
+		M.MEMBER_ID  	AS  "memberId", 
+		M.PASSWORD 		AS  "password", 
+		M.NICKNAME		AS  "nickname", 
+		M.NAME			AS  "name", 
+		M.GENDER		AS	"gender",
+		M.EMAIL			AS	"email", 
+		M.BIRTH			AS	"birth", 
+		M.PHONE_NUMBER 	AS "phoneNumber",
+        F.FILE_NO 	AS "fileNo"
+	FROM MEMBER M LEFT JOIN UPLOAD_FILE F
+    ON M.MEMBER_ID = F.MEMBER_ID and F.FEED_NO IS NULL
+	WHERE M.MEMBER_ID = #{memberId} 
+</select>
+
+
+<select id="selectFeedMemberInfo" parameterType="String" resultType="com.kosa.instagram.member.model.MemberVo">
+	<![CDATA[
+		select nickname AS "nickname",
+				name As "name"
+				from member
+				where member_id=#{memberId}
+	]]>
+</select>
+
+<select id="selectFollowerByUser" parameterType="String" resultType="String">
+	<![CDATA[
+		select nickname
+			from member
+			where member_id IN (select from_id 
+				   from follow 
+				   where to_id=#{memberId})
+	]]>
+</select>
+
+<select id="selectFollowByUser" parameterType="String" resultType="String">
+	<![CDATA[
+		select nickname
+			from member
+			where member_id IN (select to_id
+							from follow
+							where from_id=#{memberId})
+	]]>
+</select>
+
+<insert id="insertFile" parameterType="com.kosa.instagram.feed.model.FileVo">
+	INSERT INTO UPLOAD_FILE
+			(FILE_NO, FILE_DATA, FILE_NAME, FILE_SIZE, FILE_TYPE, MEMBER_ID)
+	VALUES 
+			(FILE_NO_SEQ.NEXTVAL, #{fileData}, #{fileName}, #{fileSize}, #{fileType}, #{memberId})
+</insert>
+
+<update id="updateFile" parameterType="com.kosa.instagram.feed.model.FileVo">
+	UPDATE UPLOAD_FILE
+	SET FILE_DATA=#{fileData}, FILE_NAME=#{fileName}, FILE_SIZE=#{fileSize}, FILE_TYPE=#{fileType}
+	WHERE MEMBER_ID = #{memberId}
+</update>
+
+
+<update id="updateMember" parameterType="com.kosa.instagram.member.model.MemberVo">
+	UPDATE MEMBER
+	SET PASSWORD=#{password}, NICKNAME=#{nickname}, PHONE_NUMBER=#{phoneNumber}
+	WHERE MEMBER_ID=#{memberId} 
+</update>
+
+<!-- 회원아이디 중 게시글 정보가 없는 파일 조회=>프로필 사진 찾기 위한 sql문 -->
+<select id="selectFileNo" parameterType="String" resultType="integer">
+	select file_no as "fileNo"
+	from upload_file 
+	where member_id =#{memberId} and feed_no is null
+</select>
+
+<!-- 회원아이디&비밀번호 입력 맴버정보 조회 -->
+<delete id="deleteMember" parameterType="com.kosa.instagram.member.model.MemberVo">
+	DELETE FROM MEMBER
+	WHERE MEMBER_ID = #{memberId} AND PASSWORD = #{password} 
+</delete>
+
+<!-- 회원아이디 입력 패쓰워드 조회 -->
+<select id="getPassword" parameterType="String" resultType="String">
+	SELECT PASSWORD AS "password"
+	FROM MEMBER
+	WHERE MEMBER_ID = #{memberId}
+</select>
+
+<!-- 이메일 입력 회원아이디 조회 -->
+<select id="findMemberId" parameterType="String" resultType="String">
+	SELECT NVL(MAX(MEMBER_ID), 0) as "memberId"
+	FROM MEMBER 
+	WHERE EMAIL = #{email}
+</select>
+
+<select id="findPassword" parameterType="String" resultType="String">
+	SELECT NVL(MAX(PASSWORD), 0) AS "password"
+	FROM	MEMBER
+	WHERE MEMBER_ID=#{memberId} AND EMAIL=#{email}
+</select>
+
+<select id="checkId" parameterType="String" resultType="String">
+	SELECT * FROM  MEMBER
+	WHERE MEMBER_ID = #{memberId}
+</select>
+
+<select id="checkNickname" parameterType="String" resultType="String">
+	SELECT * FROM MEMBER
+	WHERE NICKNAME = #{nickname}
+</select>
+
+<select id="checkEmail" parameterType="String" resultType="String">
+	SELECT * FROM MEMBER
+	WHERE EMAIL = #{email}
+</select>
+
+<insert id="followMember">
+<![CDATA[
+	INSERT INTO follow (to_id, from_id) VALUES (#{toId}, #{fromId})
+]]>
+</insert>
+
+<delete id="unfollowMember">
+<![CDATA[
+	DELETE FROM follow WHERE from_id=#{fromId} AND to_id=#{toId}
+]]>
+</delete>
+
+</mapper>
