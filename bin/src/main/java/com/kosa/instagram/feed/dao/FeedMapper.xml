@@ -104,6 +104,7 @@
 	where r.feed_no = #{feedNo}
 ]]>
 </select>
+
 <select id="feedLikeCount" parameterType="int" resultType="int">
 <![CDATA[
 	SELECT COUNT(*) FROM like_table WHERE feed_no=#{feedNo}
@@ -190,6 +191,7 @@
 	group by hashtag
 	]]>
  	</select>
+ 	
 	<insert id="insertFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
 		<![CDATA[
 			insert into feed(feed_no,member_id,feed_content,upload_date,place_detail)
@@ -241,7 +243,6 @@
 	</select>
 	
 	
-<<<<<<< HEAD
 	<select id="getFileList" parameterType="String" resultType="com.kosa.instagram.feed.model.FileVo">
 		<![CDATA[
 			SELECT 
@@ -258,7 +259,7 @@
 		]]>
 	</select>
 	
-=======
+
 	<select id="getFeedFile" parameterType="String" resultType="com.kosa.instagram.feed.model.FileVo">
 		select file_no as fileNo, file_data as fileData,feed_no as feedNo
 		from upload_file
@@ -269,7 +270,7 @@
       					 		where member_id=#{memberId})
 			group by feed_no)
 	</select>
->>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git
+
 
 	<insert id="insertFeedHash"  >
 		<![CDATA[
@@ -339,4 +340,5 @@
 	DELETE FROM feed WHERE feed_no=#{feedNo}
 ]]>
 </delete>
+
 </mapper>

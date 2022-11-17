@@ -25,7 +25,7 @@
 				<img src="/image/header/compass.png">
 				<img src="/image/header/heart.png">
 				<c:if test="${empty sessionScope.fileNo || sessionScope.fileNo ==0}">
-					<a href='<c:url value="/userfeed/${memberId}"/>'> <!-- ${sessionScope.nickname} -->
+					<a href='<c:url value="/userfeed/${sessionScope.memberId}"/>'> <!-- ${sessionScope.nickname} -->
 						<img class="profile-img" src="/image/profile_null.jpg">
 					</a>				
 				</c:if>
