@@ -18,7 +18,7 @@
 	<div style="margin-top: 60px;"></div>
 	<div id="feed_top">
 		<div id="img_div">
-			<img id="myProfileImg" class="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
+			<img class="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
 		</div><div id="info_div">
 				<div id="info1_div">
 					<div style="display: inline-block; margin-top:30px">
@@ -41,34 +41,39 @@
 				</div>
 		</div> <!-- info_div-end -->
 	</div>	
-		<hr>	
+		
 			
 									
 <div class="black_bg"></div>
 <div id="follower_modal">
-	<c:forEach var="followerList" items="${ followerList}">
-		<div>${followerList }</div>
+	<h4 style="       font-family: 'segoe-b';margin: 10px 80px 10px 120px;display: inline-block;">팔로워
+	</h4><div class="modal_close" id="modal_close1"><img src="../image/x.png" style="width: 20px; display: inline-block;height: 21px;margin: 10px 20px 10px 10px;float: right; "><a href="#"></a></div>
+	<hr>
+	<c:forEach var="follower" items="${ followerList}">
+		<div onclick="location.href='<c:url value="/userfeed/${follower.memberId }"/>'" class="listhover" id="listhover"><span class="follow_nickname">${follower.nickname}</span><span class="follow_name">${follower.name}</span> </div>
 	</c:forEach>
- 	<div class="modal_close" id="modal_close1"><a href="#">close</a></div>
+ 	
 </div>
 
 <div class="black_bg"></div>
 <div id="follow_modal">
-	<c:forEach var="followList" items="${ followList}">
-		<div>${followList }</div>
+<h4 style="font-family: 'segoe-b';margin: 10px 80px 10px 120px;display: inline-block;">팔로우
+	</h4><div class="modal_close" id="modal_close2"><img src="../image/x.png" style="width: 20px; display: inline-block;height: 21px;margin: 10px 20px 10px 10px;float: right; "><a href="#"></a></div>
+	<hr>
+	<c:forEach var="follow" items="${ followList}">
+		<div onclick="location.href='<c:url value="/userfeed/${follow.memberId }"/>'" class="listhover" id="listhover"><span class="follow_nickname">${follow.nickname}</span><span class="follow_name">${follow.name}</span></div>
 	</c:forEach>
-	<div class="modal_close" id="modal_close2"><a href="#">close</a></div>
 </div>
 
 
 <div id="content_table">
-<table >
+
 <c:forEach var="file"  items="${contentList }">
 	
 			<a href='<c:url value="/feed/detail/${file.feedNo}"/>'><img id="content_img" src='<c:url value="/file/${file.fileNo }"/>' ></a>
-		
+			
 </c:forEach>
-</table>
+
 </div>
 
 
@@ -103,7 +108,6 @@
  
     document.getElementById('followbtn').addEventListener('click', onClick2);
     document.querySelector('#modal_close2').addEventListener('click', offClick2);
- 
     
 };
 </script>

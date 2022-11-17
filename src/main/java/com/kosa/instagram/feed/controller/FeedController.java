@@ -55,7 +55,7 @@ public class FeedController {
 
 
 	@RequestMapping("/userfeed/{memberId}")
-	public String getUserFeed(@PathVariable String memberId,Model model ) {
+	public String getUserFeed(@PathVariable String memberId,Model model) {
 		int contentCount=feedService.countContent(memberId);
 		int followerCount=feedService.countFollowerByUser(memberId);
 		int followCount=feedService.countFollowByUser(memberId);
@@ -76,10 +76,12 @@ public class FeedController {
 		
 		
 		
-		List<String> followerList=memberService.selectFollowerByUser(memberId);
-		model.addAttribute("followerList",followerList);
+		List<MemberVo> followerList=memberService.selectFollowerByUser(memberId);
+		model.addAttribute("followerList", followerList);
 		
-		List<String> followList=memberService.selectFollowByUser(memberId);
+		
+		
+		List<MemberVo> followList=memberService.selectFollowByUser(memberId);
 		model.addAttribute("followList",followList);
 		
 		return "feed/userfeed";
@@ -165,8 +167,7 @@ public class FeedController {
 		}
 		
 		
-		return "redirect:/userfeed/"+feed.getMemberId();
-		
+		return "redirect:/userfeed/"+feed.getMemberId();		
 	}
 	
 
@@ -181,7 +182,6 @@ public class FeedController {
 				headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
 				headers.setContentLength(file.getFileSize());
 				
-			
 				String fileName = new String(file.getFileName().getBytes("UTF-8"), "ISO-8859-1");
 				headers.setContentDispositionFormData("attachment", fileName);
 				return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
@@ -240,9 +240,8 @@ public class FeedController {
 		return feedService.feedLikeCount(feedNo);
 	}
 	
-	//@RequestMapping("/memberlist")
-	@RequestMapping(value="memberlist", method=RequestMethod.POST)
-	//public String getMemberList(String keyword, Model model ) {
+
+	@RequestMapping("/getmemberlist/{keyword}")
 	public String getMemberList(String keyword, HttpSession session, Model model) {
 		
 		// 1. 계정 리스트를 키워드로 검색
@@ -255,6 +254,24 @@ public class FeedController {
 				
 		return "feed/search"; 
 	}
+	
+	
+	
+	@RequestMapping("/filelist/{hashtag}")
+	public  String getFileList(@PathVariable String hashtag, Model model ) {
+		
+		// 파일 리스트 조회 : 파라메터=해시태그
+		List<FileVo> fileList = feedService.getFileList(hashtag);
+		
+		// 조회결과를 모델에 세팅
+		model.addAttribute("fileList", fileList);
+		
+		// 리턴
+		return "/feed/filelist";
+	}
+	
+	
+	
 	@GetMapping("/place/find")
 	public @ResponseBody List<FeedVo> placeFileList(@RequestParam String placeDetail){
 		List<FeedVo> list = feedService.placeFileList(placeDetail);
@@ -265,6 +282,7 @@ public class FeedController {
 		model.addAttribute("feedNo", feedNo);
 		return "feed/detail";
 	}
+	
 	@GetMapping("/feed/detail")
 	public @ResponseBody JsonVo feedDetail(@RequestParam int feedNo, HttpServletRequest request) {
 		HttpSession session = request.getSession();

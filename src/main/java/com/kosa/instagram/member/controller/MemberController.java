@@ -306,6 +306,7 @@ public class MemberController {
 	}
 
 	@RequestMapping("/isfollowing/{toId}")
+<<<<<<< HEAD
 	public @ResponseBody boolean isFollowing(@PathVariable String toId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String fromId = (String)session.getAttribute("memberId");
@@ -319,3 +320,18 @@ public class MemberController {
 		return false;
 	}
 }//class end
+=======
+	   public @ResponseBody boolean isFollowing(@PathVariable String toId, HttpServletRequest request) {
+	      HttpSession session = request.getSession();
+	      String fromId = (String)session.getAttribute("memberId");
+	      List<MemberVo> followList = memberService.selectFollowByUser(fromId);
+	      for(MemberVo followMember : followList) {
+	         if(toId.equals(followMember.getMemberId())) {
+	            return true;
+	         }
+	      }
+	      return false;
+	   }
+}//class end
+
+>>>>>>> branch 'master' of https://github.com/yunghun0815/prj_instagram.git

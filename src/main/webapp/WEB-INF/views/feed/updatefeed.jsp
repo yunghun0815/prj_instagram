@@ -240,7 +240,7 @@ function removeAllChildNods(el) {
 }
  
  function addHashtag(){
-	$("#hashtag").after('<input type="text" id="hashtag" name="hashtag" placeholder="hashtag">'	);
+	$("#hash").after('<input type="text" id="hashtag" name="hashtag" placeholder="hashtag">'	);
  }
  
  function inputPlace(param){
@@ -250,6 +250,20 @@ function removeAllChildNods(el) {
 	 $("#placeTitleInput").val(placeTitle);
 	 $("#placeDetailInput").val(placeDetail);
  }
+ 
+
+ 
+ $(function(){
+	 $("#removeplace").click(function(){
+		    $('#placeDetailInput').val('');
+		     $('#placeTitleInput').val('');
+
+		 });	 
+	 
+	 $("#deletehash").click(function(){
+		$('#hashtag').remove(); 
+	 });
+ });
  </script>
 
 <div>
@@ -258,10 +272,12 @@ function removeAllChildNods(el) {
 		<input type="hidden" name="memberId" value="${memberId}">
 		<input type="text" name="feedContent" value="${feed.feedContent}"><br>
 		<input type="text" id="placeDetailInput" name="placeDetail" value="${feed.placeDetail}" readonly="readonly"><br>
-		<input type="text" id="placeTitleInput" name="placeTitle"  value="${feed.placeTitle}" readonly="readonly"><br>
+		<input type="text" id="placeTitleInput" name="placeTitle"  value="${feed.placeTitle}" readonly="readonly">
+		<button type="button" id="removeplace" >장소초기화</button>
+		<input type="hidden" id="hash" >
 		<c:forEach var="tag" items="${feed.hashtagList}">
 		<input type="text" id="hashtag" name="hashtag" value="${tag}">
-		</c:forEach>
+		</c:forEach><button type="button" id="deletehash" onclick="deletehash()">해시태그 삭제</button>
 		<button type="button" onclick="addHashtag();">해시태그 추가</button><br>
 		<input type="submit" id="submit" value="수정" >
 	</form>
