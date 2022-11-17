@@ -64,28 +64,50 @@
 	height:100px;
 }
 
+.follow_nickname{
+	margin-right: 20px;
+    font-family: 'segoe-b';
+}
+
+.follow_name{
+	font-family: 'segoe';
+    font-weight: 100;
+    font-size: 13px;
+    color: gray;
+	
+}
 #follower_modal{
 	display: none;
-        width: 500px;
-        height: 500px;
+        width: 300px;
+        height: 400px;
         position: absolute;
         top:50%;
         left: 50%;
         margin: -250px 0 0 -250px;
         background:#eee;
         z-index: 2;
+        border-radius: 10%;
 }
 
 #follow_modal{
 	display: none;
-        width: 500px;
-        height: 500px;
+        width: 300px;
+        height: 400px;
         position: absolute;
         top:50%;
         left: 50%;
         margin: -250px 0 0 -250px;
         background:#eee;
         z-index: 2;
+        border-radius: 10%;
+}
+.listhover{
+	text-align: left; 
+	height51px;
+	padding:15px 0px 15px 15px;
+}
+.listhover:hover{
+	background-color:rgb(230, 230, 230);
 }
 
 .black_bg{
@@ -97,29 +119,30 @@
         background-color:rgba(0, 0,0, 0.5);
         top:0;
         left: 0;
-        z-index: 1;
+        z-index: 2;
 }
 
  .modal_close{
-        width: 26px;
-        height: 26px;
-        position: absolute;
-        top: -30px;
-        right: 0;
+ 		    display: inline-block;
+    float: right;
     }
 
   .modal_close> a{
         display: block;
         width: 100%;
         height: 100%;
-        background:url(https://img.icons8.com/metro/26/000000/close-window.png);
+    
         text-indent: -9999px;
     }
 
 #content_table{
 	width:1000px;
+	border-top:1px solid rgb(230, 230, 230);
+	
 }
+
 #content_img{
+	position:relative;
 	display:inline-block;
 	float:left;
 	margin: 20px 20px ;
@@ -162,11 +185,42 @@ label{
                     
                 
 }
+
+#updateprofile:hover{
+    color: #fff;
+     background-color: rgb(142, 142, 142);
+}
+                   
+#btn{
+	border: 0;
+                    outline: 0;
+                    cursor: pointer;
+                    color: rgb(60, 66, 87);
+                    background-color: rgb(255, 255, 255);
+                    box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    padding: 4px 8px;
+                    display: inline-block;
+                    min-height: 28px;
+                    transition: background-color .24s,box-shadow .24s;
+}
+                    
+
+#btn:hover{
+	color: #fff;
+     background-color: rgb(142, 142, 142);
+}
 #updateprofile>a{
 	text-decoration: none;
     color: black;
     font-family: 'segoe';
     font-weight: 400;
+}
+
+#updateprofile>a:hover{
+	color:white;
 }
 
 
