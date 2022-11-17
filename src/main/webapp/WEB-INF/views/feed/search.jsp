@@ -23,7 +23,6 @@ th, td {
 	padding: 20px;
 }
 
-
 /* 왜 적용이 안 되지 글자색깔 바꾸고 싶은데 안 됨 */
 .nav-link {
 	color: #212529;
