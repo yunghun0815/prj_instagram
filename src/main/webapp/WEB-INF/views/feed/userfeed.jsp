@@ -15,7 +15,7 @@
 	
 		<input type="hidden" value="${memberId}" id="toId">
 		<input type="hidden" value="${sessionScope.memberId}" id="fromId">
-	<div style="margin-top: 60px;"></div>
+	<div style="margin-top: 100px;"></div>
 	<div id="feed_top">
 		<div id="img_div">
 			<img id="myProfileImg" class="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
