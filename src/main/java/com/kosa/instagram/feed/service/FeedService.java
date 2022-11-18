@@ -70,8 +70,8 @@ public class FeedService implements IFeedService {
 	}
 
 	@Override
-	public List<FileVo> selectContentListByUser(String memberId) {
-		return feedRepository.selectContentListByUser(memberId);
+	public List<Integer> selectContentListByUser(int feedNo) {
+		return feedRepository.selectContentListByUser(feedNo);
 	}
 
 

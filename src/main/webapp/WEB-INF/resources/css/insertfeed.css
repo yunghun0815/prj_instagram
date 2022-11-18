@@ -1,0 +1,177 @@
+@font-face {
+    font-family: 'segoe';
+    src: url('../fonts/Segoe UI.woff') format('truetype');
+}
+
+@font-face {
+    font-family: 'segoe-b';
+    src: url('../fonts/Segoe UI Bold.woff') format('truetype');
+}
+
+
+.outerdiv{
+	
+	text-align: center;
+	z-index:-1;
+}
+
+.innerdiv{
+	display:inline-block;
+	border:1px solid rgb(216, 216, 216);
+	width:1000px;
+	height:700px;
+	margin-top:130px;
+	border-radius: 20px;
+	background-color:white;
+}
+
+.info1{
+	width:1000px;
+	height:50px;
+
+	line-height: 50px;
+	border-bottom: 1px solid rgb(216, 216, 216);
+}
+
+.info1_label{
+	    vertical-align: middle;
+    font-size: 16px;
+    margin: auto 350px;
+    font-family: 'segoe';
+    font-weight: 600;
+}
+
+.info1_btn{
+	    vertical-align: middle;
+    width: 70px;
+    height: 30px;
+    border: none;
+    background: none;
+    color: blue;
+    font-weight: bold;
+    font-size: 14px;
+    color:rgb(0,149,246);
+}
+
+
+.info2{
+	display:inline-block;
+	width:647px;
+	height:650px;
+	border-right: 1px solid rgb(216, 216, 216);
+
+}
+.info3{
+	display:inline-block;
+	float:right;
+	width:350px;
+	height:650px;
+	text-align: left;
+	overflow:hidden;
+	
+}
+
+.content{
+    width: 320px;
+    height: 150px;
+    border: none;
+    margin: 10px 10px 0px 15px;
+    font-weight: 400;
+    font-family: 'segoe';
+    font-size: 18px;
+ 
+}
+.content:focus{
+	outline:none;
+}
+
+.imgbtn{
+	
+	vertical-align: center;
+}
+.preview{
+	
+	display:inline-block;
+}
+.preview img{
+	width:200px;
+	height:200px;
+}
+
+
+.profile_div{
+	display: block;
+    width: 350px;
+    height: 50px;
+    margin: 10px;
+    text-align: left;
+     
+       
+	
+	
+}
+.profile_div label{
+	     vertical-align: middle;
+    margin-left: 15px;
+    font-size: 20px;
+    font-family: 'segoe';
+    font-weight: bolder;
+}
+.myProfileImg{
+	width:50px;
+	height:50px;
+	border-radius: 50%;
+	vertical-align: middle;
+	
+}
+
+
+.hashtag{
+	    width: 90px;
+    border: none;
+    border-bottom: 1px solid gray;
+    margin-left: 9px;
+    
+}
+
+.hashtag:focus{
+	outline:none;
+}
+
+.addhash{
+	display: block;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
+    margin-left:8px;
+}
+
+.placetitle{
+	border: none;
+    border-bottom: 1px solid gray;
+    width: 290px;
+    margin-left: 8px;
+    line-height: 25px;
+   
+}
+
+.placetitle:focus{
+	outline:none;
+}
+
+.placebtn{
+	    width: 30px;
+    height: 30px;
+    background-color: white;
+    border: none;
+        margin-left: 5px;
+}
+
+.map_wrap{
+	position: relative;
+    width: 100%;
+    height: 250px;
+    display: inline-block;
+}
+

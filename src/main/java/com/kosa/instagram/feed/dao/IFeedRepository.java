@@ -40,7 +40,7 @@ public interface IFeedRepository {
 
 	List<HashtagVo> searchListByHashtag(@Param("keyword") String keyword);
 
-	List<FileVo> selectContentListByUser(String memberId);
+	List<Integer> selectContentListByUser(int feedNo);
 	void insertFeedContent(FeedVo feed);
 	void insertFeedData(FileVo file);
 	void insertFeedPlace(FeedVo feed);

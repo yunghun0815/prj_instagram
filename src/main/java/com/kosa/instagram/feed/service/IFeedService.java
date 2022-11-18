@@ -16,7 +16,7 @@ public interface IFeedService {
 	int countFollowerByUser(String memberId);
 	int countFollowByUser(String memberId);
 	
-	List<FileVo> selectContentListByUser(String memberId);
+	List<Integer> selectContentListByUser(int feedNo);
 
 	void writeReply(int feedNo, String memberId, String replyContent);
 	List<MemberVo> searchListByKeyword(String keyword);

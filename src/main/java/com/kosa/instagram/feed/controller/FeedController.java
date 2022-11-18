@@ -76,6 +76,8 @@ public class FeedController {
 		
 		
 		
+		
+		
 		List<MemberVo> followerList=memberService.selectFollowerByUser(memberId);
 		model.addAttribute("followerList", followerList);
 		
@@ -92,6 +94,8 @@ public class FeedController {
 	@RequestMapping(value="/writefeed/{memberId}",method=RequestMethod.GET)
 	public String insertFeed(FileVo file,@PathVariable String memberId,Model model ) {
 		model.addAttribute("memberId",memberId);
+		MemberVo member = memberService.selectMember(memberId);
+		model.addAttribute("memberProfileFileId", member.getFileNo());
 		return "feed/writefeed";
 	}
 	
@@ -109,6 +113,7 @@ public class FeedController {
 		feed.setPlaceTitle(placeTitle);
 		feed.setPlaceDetail(placeDetail);
 		feed.setMemberId(memberId);
+		
 		
 		
 		
@@ -131,12 +136,14 @@ public class FeedController {
 		feedService.insertFeedContent(feed); //피드 등록
 		
 		int seqnum=(feedService.selectSeqNum())-1;
-		
-		for(String hash: hashtag) {
-			feedService.insertFeedHash(seqnum, hash);
-			System.out.println(hash);
+		System.out.println(hashtag);
+		if(hashtag!=null) {
+			for(String hash: hashtag) {
+				feedService.insertFeedHash(seqnum, hash);
+				System.out.println(hash);
+			}			
 		}
-
+		
 		try {
 		for(MultipartFile mf: fileList) {
 			
@@ -296,6 +303,11 @@ public class FeedController {
 		FeedVo feed = feedService.getDetailFeed(feedNo, memberId).getFeed().get("feed");
 		model.addAttribute("feed", feed);
 		model.addAttribute("feedNo", feedNo);
+		List<Integer> selectContentbyUser =feedService.selectContentListByUser(feedNo);
+		model.addAttribute("contentList",selectContentbyUser);
+		
+		
+		
 		return "feed/updatefeed";
 	}
 	
@@ -318,7 +330,7 @@ public class FeedController {
 			feed.setPlaceDetail(null);
 			feed.setPlaceTitle(null);
 		}
-
+		
 		feedService.updateFeed(feed);
 		
 		for(String hash: hashtag) {
