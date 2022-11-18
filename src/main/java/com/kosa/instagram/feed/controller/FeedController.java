@@ -239,22 +239,7 @@ public class FeedController {
       feedService.decreaseLike(feedNo, memberId, request.getRequestURI());
       return feedService.feedLikeCount(feedNo);
    }
-   
-   //@RequestMapping("/memberlist")
-   @RequestMapping(value="memberlist", method=RequestMethod.POST)
-   //public String getMemberList(String keyword, Model model ) {
-   public String getMemberList(String keyword, HttpSession session, Model model) {
-      
-      // 1. 계정 리스트를 키워드로 검색
-      List<MemberVo> memberList = feedService.searchListByKeyword(keyword);
-      model.addAttribute("memberList", memberList);
-   
-      // 2. 해시태그 리스트를 키워드로 검색
-      List<HashtagVo> hashtagList = feedService.searchListByHashtag(keyword);
-      model.addAttribute("hashtagList", hashtagList);
-            
-      return "feed/search"; 
-   }
+  
    @GetMapping("/place/find")
    public @ResponseBody List<FeedVo> placeFileList(@RequestParam String placeDetail){
       List<FeedVo> list = feedService.placeFileList(placeDetail);
@@ -280,15 +265,45 @@ public class FeedController {
       model.addAttribute("feedNo", feedNo);
       return "feed/updatefeed";
    }
-   
-   @RequestMapping(value="/feed/update/{feedNo}", method=RequestMethod.POST)
-   public String updateFeed(@PathVariable int feedNo, String[] hashtag, HttpServletRequest req) {
-      FeedVo feed=new FeedVo();
-      
-      String feedContent=req.getParameter("feedContent");
-      String placeTitle=req.getParameter("placeTitle");
-      String placeDetail=req.getParameter("placeDetail");
-      String memberId=req.getParameter("memberId");
+  
+	@RequestMapping("/getmemberlist/{keyword}")
+	public String getMemberList(String keyword, HttpSession session, Model model) {
+		
+		// 1. 계정 리스트를 키워드로 검색
+		List<MemberVo> memberList = feedService.searchListByKeyword(keyword);
+		model.addAttribute("memberList", memberList);
+	
+		// 2. 해시태그 리스트를 키워드로 검색
+		List<HashtagVo> hashtagList = feedService.searchListByHashtag(keyword);
+		model.addAttribute("hashtagList", hashtagList);
+				
+		return "feed/search"; 
+	}
+	
+	
+	
+	@RequestMapping("/filelist/{hashtag}")
+	public  String getFileList(@PathVariable String hashtag, Model model ) {
+		
+		// 파일 리스트 조회 : 파라메터=해시태그
+		List<FileVo> fileList = feedService.getFileList(hashtag);
+		
+		// 조회결과를 모델에 세팅
+		model.addAttribute("fileList", fileList);
+		model.addAttribute("hashcount", fileList.size());
+		
+		// 리턴
+		return "/feed/filelist";
+	}
+	
+	@RequestMapping(value="/feed/update/{feedNo}", method=RequestMethod.POST)
+	public String updateFeed(@PathVariable int feedNo, String[] hashtag, HttpServletRequest req) {
+		FeedVo feed=new FeedVo();
+		
+		String feedContent=req.getParameter("feedContent");
+		String placeTitle=req.getParameter("placeTitle");
+		String placeDetail=req.getParameter("placeDetail");
+		String memberId=req.getParameter("memberId");
 
       feed.setFeedNo(feedNo);
       feed.setFeedContent(feedContent);
