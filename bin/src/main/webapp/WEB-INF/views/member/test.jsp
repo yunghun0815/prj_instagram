@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<h4>${memberId }</h4>
+<h4>${password }</h4>
 </body>
 </html>

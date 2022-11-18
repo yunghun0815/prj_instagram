@@ -1,3 +1,4 @@
+
 package com.kosa.instagram.member.controller;
 
 import java.net.http.HttpRequest;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kosa.instagram.feed.model.FileVo;
 import com.kosa.instagram.feed.service.IFeedService;
@@ -112,14 +114,15 @@ public class MemberController {
 		return "member/check";
 	}
 	@PostMapping("/member/check")
-	public String checkPassword(String password, HttpSession session, Model model) {
+	public String checkPassword(String password, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
 		//로그인
 		String memberId = (String)session.getAttribute("memberId");
 		MemberVo member = memberService.selectMember(memberId);
 		if(password.equals(member.getPassword())) {
 			return "redirect:/member/update";
 		}else {
-			model.addAttribute("message", "비밀번호가 틀렸습니다");
+			//redirect로 페이지가 이동될 때 사용
+			redirectAttributes.addFlashAttribute("message","비밀번호가 일치하지 않습니다.");
 			return "redirect:/member/check";
 		}
 	}
@@ -194,7 +197,7 @@ public class MemberController {
 			session.invalidate();
 			return "member/login";
 		}else {
-			System.out.println("탈퇴 비밀번호 불일치");
+			model.addAttribute("message", "비밀번호가 일치하지 않습니다.");
 			return "member/delete";
 		}
 
@@ -209,8 +212,6 @@ public class MemberController {
 		String member = "1";
 		if (email != null && !email.equals("")) {
 			member = memberService.findMmeberId(email);
-//			System.out.println("email :" + email);
-//			System.out.println("member :" + member);
 			return member;
 		}
 		return member;
@@ -219,14 +220,12 @@ public class MemberController {
 	@RequestMapping(value="/member/findPassword", method=RequestMethod.POST)
 	public String findPassword(String memberId, String email, Model model ) {
 		String member = "1";
-		System.out.println("확인 중입니다");
+		System.out.println("작동?");
 		if (memberId !=null && !memberId.equals("")) {
 			member = memberService.findPassword(memberId, email);
-			System.out.println("memberId : " + memberId);
-			System.out.println("email : " + email);
-			System.out.println("member :" +member);
 			return member;
 		}
+		System.out.println("member:" + member);
 		return member;
 	}
 
@@ -310,16 +309,15 @@ public class MemberController {
 	}
 
 	@RequestMapping("/isfollowing/{toId}")
-	public @ResponseBody boolean isFollowing(@PathVariable String toId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String fromId = (String)session.getAttribute("memberId");
-		List<String> followList = memberService.selectFollowByUser(fromId);
-		for(String followId : followList) {
-			if(followId.equals(toId)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public @ResponseBody boolean isFollowing(@PathVariable String toId, HttpServletRequest request) {
+       HttpSession session = request.getSession();
+       String fromId = (String)session.getAttribute("memberId");
+       List<MemberVo> followList = memberService.selectFollowByUser(fromId);
+       for(MemberVo followMember : followList) {
+          if(toId.equals(followMember.getMemberId())) {
+             return true;
+          }
+       }
+       return false;
+    }
 }//class end
-
