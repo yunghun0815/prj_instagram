@@ -10,7 +10,7 @@
 <jsp:include page="../common/header.jsp"></jsp:include>
 
 <style>
-table {   <%-- border 0으로 수정하고 width 800으로 줄임 --%>
+table {   <%-- 수정해야함 --%>
 	border: 0px solid #444444;
 	margin-top: 50px;
 	margin-left: auto;
@@ -18,7 +18,7 @@ table {   <%-- border 0으로 수정하고 width 800으로 줄임 --%>
 	width: 800px;
 }
 
-th, td {   <%-- 1px인거 수정하고 padding 20이었는데 10으로 줄였음  --%>
+th, td {   <%-- 수정해야함  --%>
 	border: 0px solid #444444;   
 	padding: 10px;
 }
@@ -30,9 +30,7 @@ img {
   object-fit: cover;
 }
 
-
-
-
+<%-- 수정해야 함 --%>
 
 </style>
 
@@ -67,4 +65,5 @@ img {
 	</table>	
 </div>
 </body>
+
 </html>

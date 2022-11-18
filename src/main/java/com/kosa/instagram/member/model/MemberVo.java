@@ -33,7 +33,7 @@ public class MemberVo {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date birth;
 	
-	@Pattern(regexp="^[0-9]{11}", message="핸드폰 번호는'-'를 제외한 숫자만 입력해주세요")
+	@Pattern(regexp="^[0-9]{11}", message="핸드폰 번호는'-'를 제외한 11개로 이루어진 숫자만 입력해주세요")
 	private String phoneNumber;
 	
 	
