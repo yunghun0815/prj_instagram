@@ -201,8 +201,9 @@ a {
 				<div class="input_total">
 					<div class="info_name">번호</div>
 					<div class="input_form">
-						<form:input path="phoneNumber" required="required" id="input_box" />
+						<form:input path="phoneNumber" class="phoneNumber" required="required" id="input_box" />
 						<br>
+						<span id="checkPhoneNumber"></span> <br>
 						<form:errors path="phoneNumber" class="error" />
 						<br>
 					</div>
@@ -291,6 +292,28 @@ a {
 						$(".submit").prop("disabled", false);
 					}
 				}
+			})
+		})
+		$(".phoneNumber").focusout(function() {
+			let phoneNumber = $('.phoneNumber').val();
+			
+			$.ajax({
+				url : "/member/phoneNumber",
+				type : "post",
+				data : {
+					phoneNumber : phoneNumber
+				},
+				dataType : 'json',
+				success : function(phoneNumberCheck){
+					if (phoneNumberCheck == 0) {
+						$('#checkPhoneNumber').html('사용할 수 없는 전화번호입니다.');
+						$('.submit').prop('disabled', true);
+					}else {
+						$("#checkPhoneNumber").html('사용할 수 있는 전화번호입니다.');
+						$(".submit").prop('disabled', false);
+					}
+				}
+				
 			})
 		})
 	</script>

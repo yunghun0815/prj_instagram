@@ -117,12 +117,9 @@
 <script type="text/javascript">
 var fromIdEl = $("#fromId");
 var toIdEl = $("#toId");
-
 var fromId = fromIdEl.val();
 var toId = toIdEl.val();
-
 var isFollowing = false;
-
 $(function(){
 	
 	$.ajax({
@@ -143,9 +140,7 @@ $(function(){
 		}
 	})
 	
-
 })
-
 	function changeFollowing(){
 		const btn = document.getElementById('btn');
 		if(isFollowing == true){

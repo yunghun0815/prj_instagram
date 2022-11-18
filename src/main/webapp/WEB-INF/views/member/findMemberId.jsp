@@ -347,5 +347,6 @@ a {
 				}
 			});
 		}
+		var 
 	</script>
 </body>
