@@ -139,5 +139,8 @@ VALUES
 	DELETE FROM follow WHERE from_id=#{fromId} AND to_id=#{toId}
 ]]>
 </delete>
-
+<select id="checkPhoneNumber" resultType="String">
+	SELECT * FROM MEMBER
+	WHERE PHONE_NUMBER = #{phoneNumber}
+</select>
 </mapper>

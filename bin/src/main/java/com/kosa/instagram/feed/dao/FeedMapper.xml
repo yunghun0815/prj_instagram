@@ -158,13 +158,11 @@
 	</select>
 
 	
-	<select id="selectContentListByUser" parameterType="String" resultType="byte">
+	<select id="selectContentListByUser" parameterType="int" resultType="int">
 		<![CDATA[
-			select file_data
+			select file_no AS fileNo
 			from upload_file
-			where feed_no in (select feed_no
-							  from feed
-							  where member_id= #{memberId} )
+			where feed_no =#{feedNo}
 
 			
 		]]>
