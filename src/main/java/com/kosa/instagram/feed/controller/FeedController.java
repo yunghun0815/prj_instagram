@@ -265,6 +265,7 @@ public class FeedController {
 		
 		// 조회결과를 모델에 세팅
 		model.addAttribute("fileList", fileList);
+		model.addAttribute("hashcount", fileList.size());
 		
 		// 리턴
 		return "/feed/filelist";
