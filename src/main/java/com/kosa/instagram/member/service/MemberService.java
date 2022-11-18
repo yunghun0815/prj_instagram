@@ -108,4 +108,9 @@ public class MemberService implements IMemberService{
 	public void unfollowMember(String fromId, String toId) {
 		memberRepository.unfollowMember(fromId, toId);
 	}
+
+	@Override
+	public String checkPhoneNumber(String phoneNumber) {
+		return memberRepository.checkPhoneNumber(phoneNumber);
+	}
 }
