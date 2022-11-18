@@ -7,10 +7,29 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <meta charset="UTF-8">
 <title>게시글 수정</title>
+<link href="../css/updatefeed.css" rel="stylesheet" >
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+  
+   <script>
+    $(document).ready(function(){
+      $('.bxslider').bxSlider({
+    	  captions: true,
+    	    slideWidth: 650,
+    	    slideHeight:650
+    	  
+      });
+    });
+  </script>
 <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {position:relative;width:100%;height:500px;}
+.map_wrap {position: relative;
+    width: 100%;
+    height:100%;
+
+    display: inline-block;}
 #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
@@ -48,16 +67,58 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-<div class="map_wrap" style="margin-top: 60px">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+<div class="outerdiv">
+<div class="innerdiv">
+<div>
+<form id="update" action="/feed/update/${feedNo}" method="post">
+<input type="hidden" value="${memberId}" id="toId">
+		<input type="hidden" value="${sessionScope.memberId}" id="fromId">
+		
+		<div class="info1">
+		<label class="info1_label">정보 수정</label>
+   			<input type="submit" id="submit"  class="info1_btn" value="완료" >
+   			
+   			
+   			
+   		</div><div class="info2">
+   		<!-- 사진불러오기 -->
+	<div class="bxslider">
+   		<c:forEach var="fileNo"  items="${contentList}">
+   <div><img id="content_img" class="content_img" src='<c:url value="/file/${fileNo}"/>' ></div>
+		</c:forEach>
+  </div>
+			
+			
+   		
+   		
+   		</div><div class="info3">
+   				<div id="img_div" class="profile_div">
+				<img class="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
+				<label class="nickname" >${nickname} </label>
+				</div>
+		
+		<textarea class="content" name="feedContent"  id="content">${feed.feedContent }</textarea>
+		<input type="hidden" id="hash" >
+		<c:forEach var="tag" items="${feed.hashtagList}">
+		<input type="text" class="hashtag" id="hashtag" name="hashtag" value="${tag}">
+		
+		</c:forEach>
+		<div style="margin-top:5px;"><button type="button" class="addhash" id="deletehash" onclick="deletehash()">del</button>
+		<button type="button" class="addhash" onclick="addHashtag();">add</button></div>
+		<input type="hidden" id="placeDetailInput" name="placeDetail" value="${feed.placeDetail}" readonly="readonly"><br>
+		<input type="text" id="placeTitleInput" class="placetitle" name="placeTitle"  value="${feed.placeTitle}" readonly="readonly">
+		<button type="button"  class="placebtn" id="placebtn" >reset</button>
+		
+		<div class="map_wrap" id="map_wrap">
+    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;display:none;border-radius: 0px 0px 30px 0px;"></div>
+    <div id="menu_wrap" class="bg_white" style="display:none;">
 
-    <div id="menu_wrap" class="bg_white">
         <div class="option">
             <div>
-                <form onsubmit="searchPlaces(); return false;">
+                
                     키워드 : <input type="text" value="${feed.placeDetail}" id="keyword" size="15"> 
-                    <button type="submit">검색하기</button> 
-                </form>
+                    <button type="button" onclick="searchPlaces();">검색하기</button> 
+              
             </div>
         </div>
         <hr>
@@ -65,7 +126,20 @@
         <div id="pagination"></div>
     </div>
 </div>
+		
+		
+		
+		</div>
+	</form>
+</div>
 
+
+
+
+
+
+</div>
+</div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f15e87f34a476fe8fa135f049ed1d36b&libraries=services"></script>
 <script>
 // 마커를 담을 배열입니다
@@ -240,7 +314,7 @@ function removeAllChildNods(el) {
 }
  
  function addHashtag(){
-	$("#hash").after('<input type="text" id="hashtag" name="hashtag" placeholder="hashtag">'	);
+	$("#hash").after('<input type="text" id="hashtag" class="hashtag" name="hashtag" placeholder="hashtag">'	);
  }
  
  function inputPlace(param){
@@ -251,10 +325,24 @@ function removeAllChildNods(el) {
 	 $("#placeDetailInput").val(placeDetail);
  }
  
+ $("#placebtn").click(function () {
+	console.log("클릭됨")
+	 if($("#map").css("display") == "none")
+	 {
+		 console.log("여기까지옴")
+	   $("#map").show();
+	   $("#menu_wrap").show();
+	   // display: block 이 된 직 후,
+	   window.setTimeout(function() {
+	    	map.relayout();
+	    	menu_wrap.relayout();
+	}, 0);
+	 } // if($("#div_normal").css("display") == "none")
+})
 
  
  $(function(){
-	 $("#removeplace").click(function(){
+	 $("#placebtn").click(function(){
 		    $('#placeDetailInput').val('');
 		     $('#placeTitleInput').val('');
 
@@ -264,23 +352,9 @@ function removeAllChildNods(el) {
 		$('#hashtag').remove(); 
 	 });
  });
+ 
  </script>
 
-<div>
-	<h1>장소, 해시태그 지울수 있는 버튼 만들어주기</h1>
-<form id="update" action="/feed/update/${feedNo}" method="post">
-		<input type="hidden" name="memberId" value="${memberId}">
-		<input type="text" name="feedContent" value="${feed.feedContent}"><br>
-		<input type="text" id="placeDetailInput" name="placeDetail" value="${feed.placeDetail}" readonly="readonly"><br>
-		<input type="text" id="placeTitleInput" name="placeTitle"  value="${feed.placeTitle}" readonly="readonly">
-		<button type="button" id="removeplace" >장소초기화</button>
-		<input type="hidden" id="hash" >
-		<c:forEach var="tag" items="${feed.hashtagList}">
-		<input type="text" id="hashtag" name="hashtag" value="${tag}">
-		</c:forEach><button type="button" id="deletehash" onclick="deletehash()">해시태그 삭제</button>
-		<button type="button" onclick="addHashtag();">해시태그 추가</button><br>
-		<input type="submit" id="submit" value="수정" >
-	</form>
-</div>
+
 </body>
 </html>

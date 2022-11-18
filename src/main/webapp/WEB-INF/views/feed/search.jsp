@@ -23,10 +23,7 @@ th, td {
 	padding: 20px;
 }
 
-/* 왜 적용이 안 되지 글자색깔 바꾸고 싶은데 안 됨 */
-.nav-link {
-	color: #212529;
-	}
+
 </style>
 </head>
 
@@ -39,8 +36,8 @@ th, td {
 		<div class="card-header">
 
 			<ul class="nav nav-pills nav-fill">
-				<li class="nav-item"><a class="nav-link" href="#">계 정</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">태 그</a></li>
+				<li class="nav-item"><a class="nav-link text-dark" href="#" aria-disabled="true">계 정</a></li>
+				<li class="nav-item"><a class="nav-link text-dark" href="#" aria-disabled="true">태 그</a></li>
 			</ul>
 
 		</div>
@@ -56,7 +53,6 @@ th, td {
 							</li>
 						</c:forEach>
 					</ul> 
-
 				</div>
 				<div class="col">
 					<ul class="list-group">
