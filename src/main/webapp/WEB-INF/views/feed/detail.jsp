@@ -41,6 +41,7 @@
 </style>
 <jsp:include page="../common/header.jsp"></jsp:include>
 <body>
+
 	<input type="hidden" value="${feedNo}" id="feedNo">
 	<section class="main">
 		<div class="editBox">
@@ -48,6 +49,24 @@
 		<ul class="feed-ul"> 
 		</ul>
 	</section>
+	
+	<div class="modal" id="delmodal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Feed</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>게시물을 삭제하시겠습니까?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="/feed/delete?feedNo=${feedNo}"><button type="button" class="btn btn-primary">Delete</button></a>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 <!-- kakao map modal -->
 <div class="modal fade" id="modal-map" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
