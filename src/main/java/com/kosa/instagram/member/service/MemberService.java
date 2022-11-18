@@ -80,12 +80,12 @@ public class MemberService implements IMemberService{
 	}
 
 	@Override
-	public List<String> selectFollowerByUser(String memberId) {
+	public List<MemberVo> selectFollowerByUser(String memberId) {
 		return memberRepository.selectFollowerByUser(memberId);
 	}
 
 	@Override
-	public List<String> selectFollowByUser(String memberId) {
+	public List<MemberVo> selectFollowByUser(String memberId) {
 		return memberRepository.selectFollowByUser(memberId);
 	}
 

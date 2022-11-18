@@ -17,8 +17,8 @@ public interface IMemberRepository {
 
 
 	MemberVo selectFeedMemberInfo(String memberId);
-	List<String> selectFollowerByUser(String memberId);
-	List<String> selectFollowByUser(String memberId);
+	List<MemberVo> selectFollowerByUser(String memberId);
+	List<MemberVo> selectFollowByUser(String memberId);
 
 	public void insertMember(MemberVo member);
 	

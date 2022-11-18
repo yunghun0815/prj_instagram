@@ -12,7 +12,7 @@
 				<img class="logo" src="/image/header/instagram.png">
 			</a>
 			<div> <!-- 검색바 -->
-				<form action="memberlist" method="post">
+				<form action="/getmemberlist/{keyword}" method="post">
 					<input class="search-bar" type="text" name="keyword" placeholder="검색">
 					<input type="submit" style="display: none;">
 				</form>
@@ -21,11 +21,11 @@
 				<a href="/log"><img src="/image/header/chart.png"></a>	
 				<img src="/image/header/house.png" onclick="window.scrollTo(0,0);">
 				<img src="/image/header/plane.png">
-				<img src="/image/header/plus.png">
+				<a href='<c:url value="/writefeed/${memberId}"/>'><img src="/image/header/plus.png"></a>
 				<img src="/image/header/compass.png">
-				<img src="/image/header/heart.png">
+				<a href="/member/logout"><img src="/image/header/logout.png"></a>
 				<c:if test="${empty sessionScope.fileNo || sessionScope.fileNo ==0}">
-					<a href='<c:url value="/userfeed/${memberId}"/>'> <!-- ${sessionScope.nickname} -->
+					<a href='<c:url value="/userfeed/${sessionScope.memberId}"/>'> <!-- ${sessionScope.nickname} -->
 						<img class="profile-img" src="/image/profile_null.jpg">
 					</a>				
 				</c:if>

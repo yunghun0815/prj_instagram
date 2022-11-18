@@ -1,4 +1,4 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -16,12 +16,44 @@
 <head>
 	<title>Instagram</title>
 </head>
+<style>
+	.allCheck{
+	    border: 1px solid rgb(219,219,219);
+	    padding-top: 50px;
+	    width: 800px;
+	    margin: 0 auto;
+	    background-color: white;
+	    text-align: center;
+	    margin-top: 30px;
+	    height: 350px;
+	}
+	.allCheck img{
+		width: 120px;	
+	}
+	.allCheck span:first-child {
+			display: block;
+		    font-size: 25px;
+		    margin-bottom: 20px;
+		    margin-top: 20px;
+	}
+	.allCheck span:last-child {
+		    font-size: 15px;
+    	color: gray;
+	}
+</style>
 <jsp:include page="common/header.jsp"></jsp:include>
 <body>
 	<section class="main">
 		<ul class="feed-ul"> 
 
 		</ul>
+		<div class="allCheck"  style="display: none;">
+			<img src="/image/allCheck.png">
+			<div>
+				<span>모두 확인했습니다</span>
+				<span>최근 3일 동안 새롭게 올라온 게시물을 모두 확인했습니다.</span>
+			</div>
+		</div>
 	</section>
 </body>
 <!-- kakao map modal -->
