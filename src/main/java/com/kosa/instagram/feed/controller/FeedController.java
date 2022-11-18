@@ -45,30 +45,31 @@ import com.kosa.instagram.member.service.IMemberService;
 @Controller
 public class FeedController {
 
-	@Autowired
-	IFeedService feedService;
-	
+   @Autowired
+   IFeedService feedService;
+   
 
-	@Autowired
-	IMemberService memberService;
-	
+   @Autowired
+   IMemberService memberService;
+   
 
 
-	@RequestMapping("/userfeed/{memberId}")
-	public String getUserFeed(@PathVariable String memberId,Model model) {
-		int contentCount=feedService.countContent(memberId);
-		int followerCount=feedService.countFollowerByUser(memberId);
-		int followCount=feedService.countFollowByUser(memberId);
-		model.addAttribute("memberId",memberId);
-		model.addAttribute("followerCount", followerCount);
-		model.addAttribute("followCount",followCount);
-		model.addAttribute("contentCount",contentCount);
-//		MemberVo member=memberService.selectFeedMemberInfo(memberId);
-		MemberVo member = memberService.selectMember(memberId);
-		model.addAttribute("nickname",member.getNickname());
-		model.addAttribute("name",member.getName());
-		model.addAttribute("memberProfileFileId", member.getFileNo());
-		
+   @RequestMapping("/userfeed/{memberId}")
+   public String getUserFeed(@PathVariable String memberId,Model model ) {
+      int contentCount=feedService.countContent(memberId);
+      int followerCount=feedService.countFollowerByUser(memberId);
+      int followCount=feedService.countFollowByUser(memberId);
+      model.addAttribute("memberId",memberId);
+      model.addAttribute("followerCount", followerCount);
+      model.addAttribute("followCount",followCount);
+      model.addAttribute("contentCount",contentCount);
+//      MemberVo member=memberService.selectFeedMemberInfo(memberId);
+      MemberVo member = memberService.selectMember(memberId);
+      model.addAttribute("nickname",member.getNickname());
+      model.addAttribute("name",member.getName());
+      model.addAttribute("memberProfileFileId", member.getFileNo());
+      
+
 
 		
 		List<FileVo> getFeedFile =feedService.getFeedFile(memberId);
@@ -91,6 +92,8 @@ public class FeedController {
 	}
 	
 
+
+
 	@RequestMapping(value="/writefeed/{memberId}",method=RequestMethod.GET)
 	public String insertFeed(FileVo file,@PathVariable String memberId,Model model ) {
 		model.addAttribute("memberId",memberId);
@@ -101,6 +104,8 @@ public class FeedController {
 	
 	@RequestMapping(value="/writefeed",method=RequestMethod.POST)
 	public String writefeed(List<MultipartFile> fileList, String[] hashtag, HttpServletRequest req,FileVo file) {
+
+
 
 
 		FeedVo feed=new FeedVo();
@@ -130,9 +135,6 @@ public class FeedController {
 			feedService.insertFeedPlace(feed); //장소등록
 		}
 		}
-		
-		
-
 		feedService.insertFeedContent(feed); //피드 등록
 		
 		int seqnum=(feedService.selectSeqNum())-1;
@@ -178,76 +180,82 @@ public class FeedController {
 	}
 	
 
-	@GetMapping("/file/{fileNo}")
-	public ResponseEntity<byte[]> getFile(@PathVariable int fileNo){
-		try {
-			if(fileNo != 0) {
-				FileVo file = feedService.getFile(fileNo);
-				
-				HttpHeaders headers = new HttpHeaders();
-				String[] mtypes = file.getFileType().split("/");
-				headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
-				headers.setContentLength(file.getFileSize());
-				
-				String fileName = new String(file.getFileName().getBytes("UTF-8"), "ISO-8859-1");
-				headers.setContentDispositionFormData("attachment", fileName);
-				return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
-			}else {
-				return null;
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			
-			return null; 
-		}
-	}
 
-	@RequestMapping("/mainfeed/{page}")
-	public @ResponseBody List<JsonVo> getTenFeeds(@PathVariable int page, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String memberId = (String)session.getAttribute("memberId");
-		List<JsonVo> jsonList = new ArrayList<JsonVo>();
-		int start = page*10+1;
-		int end = start+9;
-		List<FeedVo> feedList = feedService.getTenFeeds(memberId, start, end);
-		for(FeedVo feed : feedList) {
-			jsonList.add(feedService.makeJsonVo(feed, memberId));
-		}
-		return jsonList;
-	}
+   @GetMapping("/file/{fileNo}")
+   public ResponseEntity<byte[]> getFile(@PathVariable int fileNo){
+      try {
+         if(fileNo != 0) {
+            FileVo file = feedService.getFile(fileNo);
+            
+            HttpHeaders headers = new HttpHeaders();
+            String[] mtypes = file.getFileType().split("/");
+            headers.setContentType(new MediaType(mtypes[0], mtypes[1]));
+            headers.setContentLength(file.getFileSize());
+            
+         
+            String fileName = new String(file.getFileName().getBytes("UTF-8"), "ISO-8859-1");
+            headers.setContentDispositionFormData("attachment", fileName);
+            return new ResponseEntity<byte[]>(file.getFileData(), headers, HttpStatus.OK);
+         }else {
+            return null;
+         }
+      } catch (UnsupportedEncodingException e) {
+         e.printStackTrace();
+         
+         return null; 
+      }
+   }
 
-	@RequestMapping(value="/writeReply/{feedNo}", method=RequestMethod.POST)
-	public @ResponseBody List<ReplyVo> writeReply(@PathVariable int feedNo, @RequestParam String replyInput, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String memberId = (String)session.getAttribute("memberId");
-		feedService.writeReply(feedNo, memberId, replyInput);
-		return feedService.getReply(feedNo);
-	}
-	
-	@RequestMapping("/deleteReply/{feedNo}/{replyNo}")
-	public @ResponseBody List<ReplyVo> deleteReply(@PathVariable int feedNo, @PathVariable int replyNo) {
-		feedService.deleteReply(replyNo);
-		return feedService.getReply(feedNo);
-	}
-	
-	@RequestMapping("/increaseLike/{feedNo}")
-	public @ResponseBody int increaseLike(@PathVariable int feedNo, HttpServletRequest request) {
-		System.out.println("좋아요 요청");
-		HttpSession session = request.getSession();
-		String memberId = (String)session.getAttribute("memberId");
-		feedService.increaseLike(feedNo, memberId, request.getRequestURI());
-		return feedService.feedLikeCount(feedNo); //누른 후 좋아요 갯수
-	}
-	
-	@RequestMapping("/decreaseLike/{feedNo}")
-	public @ResponseBody int decreaseLike(@PathVariable int feedNo, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String memberId = (String)session.getAttribute("memberId");
-		feedService.decreaseLike(feedNo, memberId, request.getRequestURI());
-		return feedService.feedLikeCount(feedNo);
-	}
-	
+   @RequestMapping("/mainfeed/{page}")
+   public @ResponseBody List<JsonVo> getTenFeeds(@PathVariable int page, HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      String memberId = (String)session.getAttribute("memberId");
+      List<JsonVo> jsonList = new ArrayList<JsonVo>();
+      int start = page*10+1;
+      int end = start+9;
+      List<FeedVo> feedList = feedService.getTenFeeds(memberId, start, end);
+      for(FeedVo feed : feedList) {
+         jsonList.add(feedService.makeJsonVo(feed, memberId));
+      }
+      return jsonList;
+   }
 
+   @RequestMapping(value="/writeReply/{feedNo}", method=RequestMethod.POST)
+   public @ResponseBody List<ReplyVo> writeReply(@PathVariable int feedNo, @RequestParam String replyInput, HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      String memberId = (String)session.getAttribute("memberId");
+      feedService.writeReply(feedNo, memberId, replyInput);
+      return feedService.getReply(feedNo);
+   }
+   
+   @RequestMapping("/deleteReply/{feedNo}/{replyNo}")
+   public @ResponseBody List<ReplyVo> deleteReply(@PathVariable int feedNo, @PathVariable int replyNo) {
+      feedService.deleteReply(replyNo);
+      return feedService.getReply(feedNo);
+   }
+   
+   @RequestMapping("/increaseLike/{feedNo}")
+   public @ResponseBody int increaseLike(@PathVariable int feedNo, HttpServletRequest request) {
+      System.out.println("좋아요 요청");
+      HttpSession session = request.getSession();
+      String memberId = (String)session.getAttribute("memberId");
+      feedService.increaseLike(feedNo, memberId, request.getRequestURI());
+      return feedService.feedLikeCount(feedNo); //누른 후 좋아요 갯수
+   }
+   
+   @RequestMapping("/decreaseLike/{feedNo}")
+   public @ResponseBody int decreaseLike(@PathVariable int feedNo, HttpServletRequest request) {
+      HttpSession session = request.getSession();
+      String memberId = (String)session.getAttribute("memberId");
+      feedService.decreaseLike(feedNo, memberId, request.getRequestURI());
+      return feedService.feedLikeCount(feedNo);
+   }
+  
+  
+  
+ 
+   
+  
 	@RequestMapping("/getmemberlist/{keyword}")
 	public String getMemberList(String keyword, HttpSession session, Model model) {
 		
@@ -272,11 +280,13 @@ public class FeedController {
 		
 		// 조회결과를 모델에 세팅
 		model.addAttribute("fileList", fileList);
+		model.addAttribute("hashcount", fileList.size());
 		
 		// 리턴
 		return "/feed/filelist";
 	}
 	
+
 	
 	
 	@GetMapping("/place/find")
@@ -311,6 +321,7 @@ public class FeedController {
 		return "feed/updatefeed";
 	}
 	
+
 	@RequestMapping(value="/feed/update/{feedNo}", method=RequestMethod.POST)
 	public String updateFeed(@PathVariable int feedNo, String[] hashtag, HttpServletRequest req) {
 		FeedVo feed=new FeedVo();
@@ -319,6 +330,7 @@ public class FeedController {
 		String placeTitle=req.getParameter("placeTitle");
 		String placeDetail=req.getParameter("placeDetail");
 		String memberId=req.getParameter("memberId");
+
 
 		feed.setFeedNo(feedNo);
 		feed.setFeedContent(feedContent);
@@ -348,4 +360,8 @@ public class FeedController {
 		return "redirect:/userfeed/"+memberId;
 	}
 	
+
+
+   
+  
 }
