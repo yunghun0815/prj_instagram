@@ -1,3 +1,4 @@
+
 package com.kosa.instagram.member.controller;
 
 import java.net.http.HttpRequest;
@@ -308,16 +309,15 @@ public class MemberController {
 	}
 
 	@RequestMapping("/isfollowing/{toId}")
-	public @ResponseBody boolean isFollowing(@PathVariable String toId, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String fromId = (String)session.getAttribute("memberId");
-		List<String> followList = memberService.selectFollowByUser(fromId);
-		for(String followId : followList) {
-			if(followId.equals(toId)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public @ResponseBody boolean isFollowing(@PathVariable String toId, HttpServletRequest request) {
+       HttpSession session = request.getSession();
+       String fromId = (String)session.getAttribute("memberId");
+       List<MemberVo> followList = memberService.selectFollowByUser(fromId);
+       for(MemberVo followMember : followList) {
+          if(toId.equals(followMember.getMemberId())) {
+             return true;
+          }
+       }
+       return false;
+    }
 }//class end
-
