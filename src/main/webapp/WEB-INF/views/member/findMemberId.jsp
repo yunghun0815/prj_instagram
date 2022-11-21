@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="i18n/member"/>
 <!DOCTYPE html>
 <html style="height: 100%;">
 <head>
@@ -154,8 +156,8 @@ a {
 	<div class="find-info-main">
 		<div class="sub-title font-weight-bold text-white">
 			<img src="/image/member/find_lock.png">
-			<h3>아이디/비밀번호 찾기</h3>
-			<p>정보를 입력해 주세요</p>
+			<h3><fmt:message key="FIND_ID_PW"/></h3>
+			<p><fmt:message key="FILL_INFO"/></p>
 		</div>
 		<div class="custom-control custom-radio custom-control-inline">
 			<input type="radio" class="custom-control-input" id="search_1"
@@ -163,18 +165,18 @@ a {
 			<!-- label for는 type이 radio같이 누르기 힘든 걸 input에 있는 id와 연결해 클릭이 가능하게 해준다 -->
 			<!-- 그래서 input id와 label for이 같아야 한다 -->
 			<label class="custom-control-label font-weight-bold text-white"
-				for="search_1"> 아이디 찾기 </label>
+				for="search_1"> <fmt:message key="FIND_ID" /> </label>
 		</div>
 		<div class="custom-control custom-radio custom-control-inline">
 			<input type="radio" class="custom-control-input" id="search_2"
 				name="search_total" onclick="search_check(2)"> <label
 				class="custom-control-label font-weight-bold text-white"
-				for="search_2"> 비밀번호 찾기 </label>
+				for="search_2"> <fmt:message key="FIND_PW" /> </label>
 		</div>
 		<div id="searchI">
 			<div class="form-group">
 				<div class="label_content">
-					<label class="label_findId_email" for="inputEmail_1">이메일</label>
+					<label class="label_findId_email" for="inputEmail_1"><fmt:message key="MEMBER_EMAIL"/></label>
 				</div>
 				<div class="input_id">
 					<input type="text" class="form-control" id="inputEmail_1"
@@ -183,22 +185,21 @@ a {
 			</div>
 			<div class="ok_button">
 				<button id="searchBtn" type="button" onclick="idSearch_click()"
-					class="btn btn-primary btn-block">확인</button>
+					class="btn btn-primary btn-block"><fmt:message key="OK"/></button>
 				<div class="label_cancel">
 					<a class="btn btn-danger btn-block"
-						href="${pageContext.request.contextPath}">취소</a>
+						href="${pageContext.request.contextPath}"><fmt:message key="CANCEL"/></a>
 				</div>
 			</div>
 			<div class="inline-block line"></div>
-			<span class="or">또는</span>
+			<span class="or"><fmt:message key="OR"/></span>
 			<div class="inline-block line"></div>
 			<br>
 			<div class="link_signup">
-				<a href="/member/insert" id="font_link">새 계정 만들기</a>
+				<a href="/member/insert" id="font_link"><fmt:message key="SIGN_UP_SUBMIT"/></a>
 			</div>
 			<div class="login_link">
-				<a href="/member/login" id="font_link" class="font_link_login">로그인으로
-					돌아가기</a>
+				<a href="/member/login" id="font_link" class="font_link_login"><fmt:message key="LOGIN"/></a>
 			</div>
 		</div>
 
@@ -208,7 +209,7 @@ a {
 				<div class="input_findpw_id">
 					<div class="label_content">
 						<label class="font-weight-bold text-white" for="inputId">
-							아이디 </label>
+							<fmt:message key="MEMBER_ID"/> </label>
 					</div>
 					<div>
 						<input type="text" class="form-control" id="inputId"
@@ -217,7 +218,7 @@ a {
 				</div>
 				<div class="input_findpw_email">
 					<div class="label_content">
-						<label class="font-weight-bold text-white" for="inputEmail_2">이메일</label>
+						<label class="font-weight-bold text-white" for="inputEmail_2"><fmt:message key="MEMBER_EMAIL"/></label>
 					</div>
 					<div>
 						<input type="email" class="form-control" id="inputEmail_2"
@@ -227,20 +228,19 @@ a {
 			</div>
 			<div class="form-pwbutton">
 				<button id="searchBtn2" type="button"
-					class="btn btn-primary btn-block" onclick="pwSearch_click()">확인</button>
+					class="btn btn-primary btn-block" onclick="pwSearch_click()"><fmt:message key="OK"/></button>
 				<div class="label_cancel">
 					<a class="btn btn-danger btn-block"
-						href="${pageContext.request.contextPath}">취소</a>
+						href="${pageContext.request.contextPath}"><fmt:message key="CANCEL"/></a>
 				</div>
 				<div class="inline-block line"></div>
-				<span class="or">또는</span>
+				<span class="or"><fmt:message key="OR"/></span>
 				<div class="inline-block line"></div>
 				<div class="link_signup">
-					<a href="/member/insert" id="font_link">새 계정 만들기</a>
+					<a href="/member/insert" id="font_link"><fmt:message key="SIGN_UP_SUBMIT"/></a>
 				</div>
 				<div class="login_link2">
-					<a href="/member/login" id="font_link" class="font_link_login2">로그인으로
-						돌아가기</a>
+					<a href="/member/login" id="font_link" class="font_link_login2"><fmt:message key="LOGIN"/></a>
 				</div>
 			</div>
 		</div>
@@ -347,7 +347,6 @@ a {
 				}
 			});
 		}
-		
 	</script>
 </body>
 </html>

@@ -10,30 +10,33 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 public class MemberVo {
-   @Pattern(regexp="^[a-zA-Z0-9]{5,15}", message="ì•„ì´ë””ëŠ” ì˜ë¬¸ ëŒ€/ì†Œë¬¸ì, ìˆ«ìë¥¼ ì´ìš©í•´ 5~10ë¡œ ì„¤ì •í•´ ì£¼ì„¸ìš”.")
+
+   @Pattern(regexp="^[a-zA-Z0-9]{5,15}", message="{MEMBERID_MESSAGE}")
    private String memberId;
    
    @Pattern(regexp="(?=.*[0-9])(?=.[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
-   message="ë¹„ë°€ë²ˆí˜¸ëŠ” ì˜ë¬¸ ëŒ€/ì†Œë¬¸ìì™€ ìˆ«ì, íŠ¹ìˆ˜ê¸°í˜¸ê°€ ì ì–´ë„ 1ê°œ ì´ìƒì”© í¬í•¨ëœ 8~20ìë¡œ ì„¤ì •í•´ ì£¼ì„¸ìš”.")
+   message="ºñ¹Ğ¹øÈ£´Â ¿µ¹® ´ë/¼Ò¹®ÀÚ¿Í ¼ıÀÚ, Æ¯¼ö±âÈ£°¡ Àû¾îµµ 1°³ ÀÌ»ó¾¿ Æ÷ÇÔµÈ 8~20ÀÚ·Î ¼³Á¤ÇØ ÁÖ¼¼¿ä.")
    private String password;
    
    @Pattern(regexp="^[a-zA-Z0-9~!@#$%^&*()-_=+]{4,20}", 
-   message="ë‹‰ë„¤ì„ì€ ì˜ì–´ ëŒ€/ì†Œë¬¸ì, ìˆ«ì ë° íŠ¹ìˆ˜ë¬¸ì(~!@#$%^&*()-_=+)ë¡œ ì´ë£¨ì–´ì§„ 8~20ìë¡œ ì„¤ì •í•´ ì£¼ì„¸ìš”.")
+   message="´Ğ³×ÀÓÀº ¿µ¾î ´ë/¼Ò¹®ÀÚ, ¼ıÀÚ ¹× Æ¯¼ö¹®ÀÚ(~!@#$%^&*()-_=+)·Î ÀÌ·ç¾îÁø 8~20ÀÚ·Î ¼³Á¤ÇØ ÁÖ¼¼¿ä.")
    private String nickname;
    
-   @Pattern(regexp="^[a-zA-Zê°€-í£]{2,20}", message="ì´ë¦„ì€ ì˜ì–´ ëŒ€/ì†Œë¬¸ìì™€ í•œê¸€ë¡œ ì´ë£¨ì–´ì§„ 2ì ì´ìƒìœ¼ë¡œ ì„¤ì •í•´ ì£¼ì„¸ìš”.")
+   @Pattern(regexp="^[a-zA-Z°¡-ÆR]{2,20}", message="ÀÌ¸§Àº ¿µ¾î ´ë/¼Ò¹®ÀÚ¿Í ÇÑ±Û·Î ÀÌ·ç¾îÁø 2ÀÚ ÀÌ»óÀ¸·Î ¼³Á¤ÇØ ÁÖ¼¼¿ä.")
+
    private String name;
 
    private String gender;
    
-   @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "ì´ë©”ì¼ í˜•ì‹ì— ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.")
+   @Pattern(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,6}$", message = "ÀÌ¸ŞÀÏ Çü½Ä¿¡ ¸ÂÁö ¾Ê½À´Ï´Ù.")
    private String email;
    
-   @Past(message="ìƒë…„ì›”ì¼ì„ í™•ì¸í•´ ì£¼ì„¸ìš”.")
+   @Past(message="»ı³â¿ùÀÏÀ» È®ÀÎÇØ ÁÖ¼¼¿ä.")
    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
    private Date birth;
    
-   @Pattern(regexp="^[0-9]{11}", message="í•¸ë“œí° ë²ˆí˜¸ëŠ”'-'ë¥¼ ì œì™¸í•œ 11ê°œë¡œ ì´ë£¨ì–´ì§„ ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”")
+   @Pattern(regexp="^[0-9]{11}", message="ÇÚµåÆù ¹øÈ£´Â'-'¸¦ Á¦¿ÜÇÑ 11°³·Î ÀÌ·ç¾îÁø ¼ıÀÚ¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä")
+
    private String phoneNumber;
    
    

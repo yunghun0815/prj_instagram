@@ -105,6 +105,7 @@ public class MemberController {
 	@RequestMapping(value="/member/logout", method=RequestMethod.GET)
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
+		model.addAttribute("message", "BLANK");
 		return "member/login";
 	}
 	//수정 페이지 비밀번호로 정보 확인

@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/kosa/instagram/HomeController.java=UTF-8
 encoding//src/main/java/com/kosa/instagram/feed/controller/FeedController.java=UTF-8
 encoding//src/main/java/com/kosa/instagram/feed/service/FeedService.java=UTF-8
 encoding//src/main/java/com/kosa/instagram/member/controller/MemberController.java=UTF-8
