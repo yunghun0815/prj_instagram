@@ -6,14 +6,27 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <meta charset="UTF-8">
 <title>지도 테스트</title>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+<link href="../css/insertfeed.css" rel="stylesheet" >
 <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {position:relative;width:100%;height:500px;}
+.map_wrap {position: relative;
+    width: 100%;
+    height:100%;
+
+    display: inline-block;}
 #menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
-#menu_wrap .option{text-align: center;}
+#menu_wrap .option{text-align: center;}e
 #menu_wrap .option p {margin:10px 0;}  
 #menu_wrap .option button {margin-left:5px;}
 #placesList li {list-style: none;}
@@ -43,30 +56,102 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+.imgs_wrap img{
+	max-width:200px;
+}
 </style>
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-<div class="map_wrap" style="margin-top: 60px">
-    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+<div class="outerdiv">
+<div class="innerdiv">
+<form id="upload" action="/writefeed" method="post" enctype="multipart/form-data">
+<input type="hidden" value="${memberId}" id="toId">
+		<input type="hidden" value="${sessionScope.memberId}" id="fromId">
+		<div class="info1">
+   			<label class="info1_label">새 게시물 만들기</label>
+   			<input type="submit" id="submit"  class="info1_btn" value="공유하기" >
+   		</div>
+	
+	
+		<div class="info2"> 
+			<input multiple="multiple" type="file"  id="multiple-image" name="fileList"  class="imgbtn" required >
+			<div class="filediv">
+			</div> 
+			
+			
+			
+				
+			
+			 
+			 
+			
+		
+	
+		</div><div class="info3">
+			<div id="img_div" class="profile_div">
+				<img class="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
+				<label class="nickname" >${nickname} </label>
+			</div>
+			
+			
+      		<input type="hidden" name="memberId" value="${memberId}">
+      		<textarea class="content" name="feedContent" spellcheck="false"  placeholder="문구입력..."></textarea><br>
+      		<div id="hashtag" style="border-top:1px solid rgb(216, 216, 216); margin-bottom:5px;"></div><button type="button" class="addhash" onclick="addHashtag();">add</button><br>
+      		<input type="text" id="placeTitleInput" class="placetitle" name="placeTitle"  placeholder="place title" readonly="readonly"><button type="button" id="placebtn" class="placebtn"><img src="../image/location.png" width="30px" height="30px"></button>
+      		<input type="hidden" id="placeDetailInput" name="placeDetail" placeholder="place detail" readonly="readonly"><br>
+     		
+     		<div class="map_wrap"   id="map_wrap" >
+    			<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden; display:none;border-radius: 0px 0px 30px 0px;"></div>
+    			<div id="menu_wrap" class="bg_white" style="display:none;">
 
-    <div id="menu_wrap" class="bg_white">
         <div class="option">
             <div>
-                <form onsubmit="searchPlaces(); return false;">
+               
                     키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
-                    <button type="submit">검색하기</button> 
-                </form>
+                    <button type="button" onclick="searchPlaces();" >검색하기</button> 
+                
             </div>
         </div>
         <hr>
         <ul id="placesList"></ul>
         <div id="pagination"></div>
     </div>
+
 </div>
+     		
+     	
+     	</div>
+      
+   
+   
+   </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+
+
+ 
+
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f15e87f34a476fe8fa135f049ed1d36b&libraries=services"></script>
 <script>
+
 // 마커를 담을 배열입니다
 var markers = [];
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -239,32 +324,77 @@ function removeAllChildNods(el) {
 }
  
  function addHashtag(){
-	$("#hashtag").after('<input type="text" id="hashtag" name="hashtag" placeholder="hashtag">'	);
+   $("#hashtag").after('<input type="text" id="hashtag" name="hashtag" class="hashtag" placeholder="hashtag">'   );
  }
  
  function inputPlace(param){
-	 let object = $(param);
-	 let placeTitle = object.find("#placeTitle").html();
-	 let placeDetail = object.find("#placeDetail").html();
-	 $("#placeTitleInput").val(placeTitle);
-	 $("#placeDetailInput").val(placeDetail);
+    let object = $(param);
+    let placeTitle = object.find("#placeTitle").html();
+    let placeDetail = object.find("#placeDetail").html();
+    $("#placeTitleInput").val(placeTitle);
+    $("#placeDetailInput").val(placeDetail);
  }
+ 
+
+
+$("#placebtn").click(function () {
+
+	 if($("#map").css("display") == "none")
+	 {
+	   $("#map").show();
+	   $("#menu_wrap").show();
+	   // display: block 이 된 직 후,
+	   window.setTimeout(function() {
+	    	map.relayout();
+	    	menu_wrap.relayout();
+	}, 0);
+	 } // if($("#div_normal").css("display") == "none")
+})
  </script>
+ 
+<script type="text/javascript">
 
-<div>
-	<h1>게시글 작성 예시</h1>
-<form id="upload" action="/writefeed" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="memberId" value="${memberId}">
-		<input type="text" name="feedContent" placeholder="내용입력"><br>
-		<input type="text" id="placeDetailInput" name="placeDetail" placeholder="place detail" readonly="readonly"><br>
-		<input type="text" id="placeTitleInput" name="placeTitle"  placeholder="place title" readonly="readonly"><br>
-		<input type="text" id="hashtag" name="hashtag" placeholder="hashtag"><button type="button" onclick="addHashtag();">해시태그 추가</button><br>
-		<input multiple="multiple" type="file"  name="fileList" required >
-		<input type="submit" id="submit" value="글 작성" >
-	</form>
-</div>
+ 
+var sel_files=[];
 
-<a href="sample2">아이디/비밀번호 찾기</a>
+$(document).ready(function(){
+	$("#multiple-image").on("change",handleImgsFilesSelect);
+	
+	console.log("클릭됨")
+});
 
+function handleImgsFilesSelect(e){
+	var obj = '';
+	var files=e.target.files;
+	var fileArr=Array.prototype.slice.call(files);
+	
+	fileArr.forEach(function(f){
+		if(!f.type.match("image.*")){
+			alert("확장자는 이미지만!!");
+			return;
+		}
+		sel_files.push(f);
+	
+		
+		
+		
+		var reader=new FileReader();
+		reader.onload=function(e){
+			console.log('file');
+			var img_html = "<div><img src=\""+e.target.result+"\" /></div>";
+			$(".filediv").append(img_html);
+			$(".filediv").slick();
+		}
+		
+		reader.readAsDataURL(f);
+		 
+	});
+	
+}
+
+
+
+	
+ </script>
 </body>
 </html>

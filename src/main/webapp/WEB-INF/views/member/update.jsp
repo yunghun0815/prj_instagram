@@ -124,6 +124,23 @@ span{
     width: 258px;
     margin-left: 28%;
 }
+.member-delete{
+    position: relative;
+    left: 101px;
+    top: 62px;
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    background-color: white;
+    border: 1px solid rgb(219,219,219);
+    width: 71px;
+    height: 25px;
+    text-align: center;
+    padding-top: 8px;
+    border-radius: 5px;
+}
 </style>
 <%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
 <body>
@@ -186,6 +203,7 @@ span{
 				</div>
 			</div>
 				<input type="submit" class="button_submit" value="제출">
+				<a class="member-delete" href="/member/delete">회원탈퇴</a>
 		</div>
 	</form:form>
 </body>

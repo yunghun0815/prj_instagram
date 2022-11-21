@@ -12,10 +12,6 @@ $(function(){
 		url:"/mainfeed/0",
 		type: "GET", 
 		success: function(result){
-			if(result.length ==0){
-				let noFeed = `<li id="noFeed">등록된 게시물이 없습니다.</li>`;
-				$(".feed-ul").append(noFeed);
-			}
 			for(let i=0; i<result.length; i++){
 				let feed = result[i]['feed']['feed'];
 				let member = result[i]['member']['member'];
@@ -141,6 +137,10 @@ $(function(){
 				
 				$(".feed-ul").append(view);
 			}
+			if(result.length<10){
+				$(".allCheck").show();
+			}
+			
 			slideImg();
 		}
 	});
@@ -280,6 +280,9 @@ $(function(){
 		    			}
 	    			}else{
 	    				pageNo--;
+	    			}
+	    			if(result.length<10){
+	    				$(".allCheck").show();
 	    			}
 	    		}
 	    	});
