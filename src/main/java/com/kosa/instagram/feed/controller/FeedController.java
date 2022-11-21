@@ -301,9 +301,10 @@ public class FeedController {
 		}
 		
 		feedService.updateFeed(feed);
-		
+		if(hashtag!=null) {
 		for(String hash: hashtag) {
 			feedService.insertFeedHash(feedNo, hash);
+		}
 		}
 		
 		return "redirect:/feed/detail/"+feedNo;
