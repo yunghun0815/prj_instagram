@@ -151,6 +151,8 @@ $(function(){
 					console.log(toId+"를 언팔로우 함");
 					btn.innerText = '팔로우';
 					isFollowing = false;
+					var cnt = $("#followerbtn").html();
+					$("#followerbtn").html(cnt-1);
 				}
 			})
 		} else {
@@ -160,7 +162,9 @@ $(function(){
 				success: function(){
 					console.log(toId+"를 팔로우 함");
 					btn.innerText = '언팔로우';
-					isFollowing = true;					
+					isFollowing = true;			
+					var cnt = $("#followerbtn").html();
+					$("#followerbtn").html(parseInt(cnt)+1);
 				}
 			})
 		}
