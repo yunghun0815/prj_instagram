@@ -124,11 +124,11 @@ $(function(){
 							</li>
 						</ol>
 						<div><!-- 댓글달기 -->
-							<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
+							<form id="replyForm" action="/writereply/`+feed['feedNo']+`" method="post" onsubmit="return false">
 								<img src="/image/face.png">
 								<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
 								<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
-								<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
+								<input type="hidden" value="/writereply/`+feed['feedNo']+`" id="replyWriteUrl">
 							</form> 
 						</div>
 					</div>
@@ -265,11 +265,11 @@ $(function(){
 												</li>
 											</ol>
 											<div><!-- 댓글달기 -->
-												<form id="replyForm" action="/writeReply/`+feed['feedNo']+`" method="post" onsubmit="return false">
+												<form id="replyForm" action="/writereply/`+feed['feedNo']+`" method="post" onsubmit="return false">
 													<img src="/image/face.png">
 													<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
 													<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
-													<input type="hidden" value="/writeReply/`+feed['feedNo']+`" id="replyWriteUrl">
+													<input type="hidden" value="/writereply/`+feed['feedNo']+`" id="replyWriteUrl">
 												</form> 
 											</div>
 										</div>
@@ -375,7 +375,7 @@ function mapLoading(param){
 		var replyNo = object.next().val();
 		var feedNo = object.next().next().val();
 		$.ajax({
-			url: "/deleteReply/" + feedNo + "/" + replyNo,
+			url: "/deletereply/" + feedNo + "/" + replyNo,
 			type: "GET",
 			success: function(result){
 				object.parent().parent().parent().html(replyAddList(result));
@@ -420,7 +420,7 @@ function mapLoading(param){
 		var likeFeedNo = object.prev().val();
 		console.log(likeFeedNo);
 		$.ajax({
-			url: "/increaseLike/" + likeFeedNo,
+			url: "/increaselike/" + likeFeedNo,
 			type: "GET",
 			success: function(result){
 				console.log('test');
@@ -438,7 +438,7 @@ function mapLoading(param){
 		//현재 피드 좋아요 수
 		var likeFeedNo = object.prev().prev().val();
 		$.ajax({
-			url: "/decreaseLike/" + likeFeedNo,
+			url: "/decreaselike/" + likeFeedNo,
 			type: "GET",
 			success: function(result){
 				likeCountHtml.html(result);
