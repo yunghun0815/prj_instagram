@@ -33,7 +33,7 @@
 				<input type="submit" class="submit" value="<fmt:message key='LOGIN'/>"/><br>
 			</form>
 			<div class="inline-block line"></div>
-			<span class="or">또는</span>
+			<span class="or"><fmt:message key="OR"/></span>
 			<div class="inline-block line"></div><br>
 			<fmt:message key="${message }"/><br>
 			<a class="findPassword" href="/member/findMemberId"><fmt:message key="FIND_ACCOUNT"/></a>

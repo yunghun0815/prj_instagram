@@ -41,7 +41,7 @@ public class LogInterceptor implements HandlerInterceptor {
 		log.setMemberId((String)session.getAttribute("memberId"));
 		uri = uri.substring(1);	//remove first slash
 		String[] splitUri = uri.split("/");
-		if(splitUri[0].equals("increaseLike") || splitUri[0].equals("decreaseLike")) {	// [0]���� [1]feedno
+		if(splitUri[0].equals("increaseLike") || splitUri[0].equals("decreaseLike")) {	
 
 			log.setFeedNo(Integer.parseInt(splitUri[1]));
 			if(splitUri[0].equals("increaseLike")) {

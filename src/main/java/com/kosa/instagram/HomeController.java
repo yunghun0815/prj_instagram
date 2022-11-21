@@ -45,22 +45,21 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		
 		return "home";
 	}
-	//로그 테스트 asd
+	//濡쒓렇 �뀒�뒪�듃 asd
 	@GetMapping("/log")
 	public String logPage() {
 		return "log/log";
 	}
 	@GetMapping("/sample")
-	public String sample() { //게시글 작성 페이지
+	public String sample() { //寃뚯떆湲� �옉�꽦 �럹�씠吏�
 		
 		return "sample";
 	}
 	
 	@GetMapping("/sample2")
-	public String sample2() { //아이디 비밀번호 찾기 페이지
+	public String sample2() { //�븘�씠�뵒 鍮꾨�踰덊샇 李얘린 �럹�씠吏�
 		return "sample2";
 	}
 }
