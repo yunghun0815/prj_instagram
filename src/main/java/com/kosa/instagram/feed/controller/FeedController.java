@@ -69,20 +69,11 @@ public class FeedController {
       model.addAttribute("name",member.getName());
       model.addAttribute("memberProfileFileId", member.getFileNo());
       
-
-
-		
 		List<FileVo> getFeedFile =feedService.getFeedFile(memberId);
 		model.addAttribute("contentList",getFeedFile);
 		
-		
-		
-		
-		
 		List<MemberVo> followerList=memberService.selectFollowerByUser(memberId);
 		model.addAttribute("followerList", followerList);
-		
-		
 		
 		List<MemberVo> followList=memberService.selectFollowByUser(memberId);
 		model.addAttribute("followList",followList);
@@ -92,10 +83,8 @@ public class FeedController {
 	}
 	
 
-
-
 	@RequestMapping(value="/writefeed/{memberId}",method=RequestMethod.GET)
-	public String insertFeed(FileVo file,@PathVariable String memberId,Model model ) {
+	public String writefeed(FileVo file,@PathVariable String memberId,Model model ) {
 		model.addAttribute("memberId",memberId);
 		MemberVo member = memberService.selectMember(memberId);
 		model.addAttribute("memberProfileFileId", member.getFileNo());
@@ -104,9 +93,6 @@ public class FeedController {
 	
 	@RequestMapping(value="/writefeed",method=RequestMethod.POST)
 	public String writefeed(List<MultipartFile> fileList, String[] hashtag, HttpServletRequest req,FileVo file) {
-
-
-
 
 		FeedVo feed=new FeedVo();
 		String feedContent=req.getParameter("feedContent");
@@ -119,10 +105,6 @@ public class FeedController {
 		feed.setPlaceDetail(placeDetail);
 		feed.setMemberId(memberId);
 		
-		
-		
-		
-	
 		if(placeTitle!=null && !placeTitle.equals("")) {
 			if(placeDetail == null || placeDetail.equals("")) {
 				placeDetail = placeTitle+"KOSA";
@@ -139,31 +121,22 @@ public class FeedController {
 		
 		int seqnum=(feedService.selectSeqNum())-1;
 		System.out.println(hashtag);
-		if(hashtag!=null) {
+		if(hashtag!=null) { //해시태그가 있을 때
 			for(String hash: hashtag) {
-				feedService.insertFeedHash(seqnum, hash);
+				feedService.insertFeedHash(seqnum, hash); 
 				System.out.println(hash);
 			}			
 		}
 		
 		try {
 		for(MultipartFile mf: fileList) {
-			
-			
-			
-			
+		
 			file.setFeedNo(seqnum);
 			file.setFileName(mf.getOriginalFilename());
 			file.setFileSize(mf.getSize());
 			file.setFileType(mf.getContentType());
 			file.setFileData(mf.getBytes());
 			file.setMemberId(memberId);
-			
-			System.out.println(memberId);
-			System.out.println("시퀀스num: "+seqnum);
-			System.out.println("파일이름: " +mf.getOriginalFilename());
-			System.out.println("파일사이즈: "+mf.getSize());
-			System.out.println("파일타입: "+mf.getContentType());
 			
 			feedService.insertFeedData(file);  //피드에 등록한 사진  db에 insert
 			System.out.println("성공>o<");
