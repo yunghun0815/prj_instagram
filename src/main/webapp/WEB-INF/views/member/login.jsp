@@ -35,7 +35,11 @@
 			<div class="inline-block line"></div>
 			<span class="or">또는</span>
 			<div class="inline-block line"></div><br>
-			<fmt:message key="${message }"/><br>
+			<c:if test="${not empty message}">
+				<span class="error_message">
+					<fmt:message key="${message}"/>
+				</span><br>
+			</c:if>
 			<a class="findPassword" href="/member/findMemberId"><fmt:message key="FIND_ACCOUNT"/></a>
 		</div>
 		<div class="signupBox">
