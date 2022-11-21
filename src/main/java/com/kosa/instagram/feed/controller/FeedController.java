@@ -52,8 +52,6 @@ public class FeedController {
    @Autowired
    IMemberService memberService;
    
-
-
    @RequestMapping("/userfeed/{memberId}")
    public String getUserFeed(@PathVariable String memberId,Model model ) {
       int contentCount=feedService.countContent(memberId);
@@ -69,31 +67,18 @@ public class FeedController {
       model.addAttribute("name",member.getName());
       model.addAttribute("memberProfileFileId", member.getFileNo());
       
-
-
-		
 		List<FileVo> getFeedFile =feedService.getFeedFile(memberId);
 		model.addAttribute("contentList",getFeedFile);
 		
-		
-		
-		
-		
 		List<MemberVo> followerList=memberService.selectFollowerByUser(memberId);
 		model.addAttribute("followerList", followerList);
-		
-		
 		
 		List<MemberVo> followList=memberService.selectFollowByUser(memberId);
 		model.addAttribute("followList",followList);
 		
 		return "feed/userfeed";
-	
 	}
 	
-
-
-
 	@RequestMapping(value="/writefeed/{memberId}",method=RequestMethod.GET)
 	public String insertFeed(FileVo file,@PathVariable String memberId,Model model ) {
 		model.addAttribute("memberId",memberId);
@@ -105,9 +90,6 @@ public class FeedController {
 	@RequestMapping(value="/writefeed",method=RequestMethod.POST)
 	public String writefeed(List<MultipartFile> fileList, String[] hashtag, HttpServletRequest req,FileVo file) {
 
-
-
-
 		FeedVo feed=new FeedVo();
 		String feedContent=req.getParameter("feedContent");
 		String placeTitle=req.getParameter("placeTitle");
@@ -118,11 +100,7 @@ public class FeedController {
 		feed.setPlaceTitle(placeTitle);
 		feed.setPlaceDetail(placeDetail);
 		feed.setMemberId(memberId);
-		
-		
-		
-		
-	
+
 		if(placeTitle!=null && !placeTitle.equals("")) {
 			if(placeDetail == null || placeDetail.equals("")) {
 				placeDetail = placeTitle+"KOSA";
@@ -149,9 +127,6 @@ public class FeedController {
 		try {
 		for(MultipartFile mf: fileList) {
 			
-			
-			
-			
 			file.setFeedNo(seqnum);
 			file.setFileName(mf.getOriginalFilename());
 			file.setFileSize(mf.getSize());
@@ -174,12 +149,8 @@ public class FeedController {
 			System.out.println("error");
 			
 		}
-		
-		
 		return "redirect:/userfeed/"+feed.getMemberId();		
 	}
-	
-
 
    @GetMapping("/file/{fileNo}")
    public ResponseEntity<byte[]> getFile(@PathVariable int fileNo){
@@ -251,11 +222,6 @@ public class FeedController {
       return feedService.feedLikeCount(feedNo);
    }
   
-  
-  
- 
-   
-  
 	@RequestMapping("/getmemberlist/{keyword}")
 	public String getMemberList(String keyword, HttpSession session, Model model) {
 		
@@ -269,8 +235,6 @@ public class FeedController {
 				
 		return "feed/search"; 
 	}
-	
-	
 	
 	@RequestMapping("/filelist/{hashtag}")
 	public  String getFileList(@PathVariable String hashtag, Model model ) {
@@ -286,14 +250,12 @@ public class FeedController {
 		return "/feed/filelist";
 	}
 	
-
-	
-	
 	@GetMapping("/place/find")
 	public @ResponseBody List<FeedVo> placeFileList(@RequestParam String placeDetail){
 		List<FeedVo> list = feedService.placeFileList(placeDetail);
 		return list;
 	}
+	
 	@GetMapping("/feed/detail/{feedNo}")
 	public String detailPage(@PathVariable int feedNo, Model model) {
 		model.addAttribute("feedNo", feedNo);
@@ -315,13 +277,9 @@ public class FeedController {
 		model.addAttribute("feedNo", feedNo);
 		List<Integer> selectContentbyUser =feedService.selectContentListByUser(feedNo);
 		model.addAttribute("contentList",selectContentbyUser);
-		
-		
-		
 		return "feed/updatefeed";
 	}
 	
-
 	@RequestMapping(value="/feed/update/{feedNo}", method=RequestMethod.POST)
 	public String updateFeed(@PathVariable int feedNo, String[] hashtag, HttpServletRequest req) {
 		FeedVo feed=new FeedVo();
@@ -330,7 +288,6 @@ public class FeedController {
 		String placeTitle=req.getParameter("placeTitle");
 		String placeDetail=req.getParameter("placeDetail");
 		String memberId=req.getParameter("memberId");
-
 
 		feed.setFeedNo(feedNo);
 		feed.setFeedContent(feedContent);
@@ -359,9 +316,4 @@ public class FeedController {
 		feedService.deleteFeed(feed);
 		return "redirect:/userfeed/"+memberId;
 	}
-	
-
-
-   
-  
 }
