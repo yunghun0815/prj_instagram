@@ -28,19 +28,19 @@
 				<img src="/image/header/instagram.png">
 			</a>
 			<form action="<c:url value='/member/login'/>" method="post">
-				<input class="formInput" type="text" name="memberId" id="memberId" placeholder="아이디" value="${loginId }"><br>
-				<input class="formInput" type="password" name="password" id="password" placeholder="비밀번호" value="${loginPw}"><br>
-				<input type="submit" class="submit" value="로그인"><br>
+				<input class="formInput" type="text" name="memberId" id="memberId" placeholder="<fmt:message key='MEMBER_ID'/>" value="${loginId }"/><br>
+				<input class="formInput" type="password" name="password" id="password" placeholder="<fmt:message key='MEMBER_PW'/>" value="${loginPw}"/><br>
+				<input type="submit" class="submit" value="<fmt:message key='LOGIN'/>"/><br>
 			</form>
 			<div class="inline-block line"></div>
 			<span class="or">또는</span>
 			<div class="inline-block line"></div><br>
-			${message }<br>
-			<a class="findPassword" href="/member/findMemberId">아이디 / 비밀번호를 잊으셨나요?</a>
+			<fmt:message key="${message }"/><br>
+			<a class="findPassword" href="/member/findMemberId"><fmt:message key="FIND_ACCOUNT"/></a>
 		</div>
 		<div class="signupBox">
-			<span>계정이 없으신가요?</span>
-			<a href="/member/insert">가입하기</a>
+			<span><fmt:message key="SIGN_UP"/></span>
+			<a href="/member/insert"><fmt:message key="INSERT_MEMBER_INFO"/></a>
 		</div>
 	</div>
 </section>

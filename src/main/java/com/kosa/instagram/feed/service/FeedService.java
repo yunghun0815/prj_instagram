@@ -192,11 +192,13 @@ public class FeedService implements IFeedService {
 
 	@Override
 	public void updateFeed(FeedVo feed) {
-		if (feedRepository.checkPlace(feed.getPlaceDetail()) == 0) {
-			feedRepository.insertFeedPlace(feed);
+		if(feed.getPlaceDetail()!=null) {
+			if (feedRepository.checkPlace(feed.getPlaceDetail()) == 0) {
+				feedRepository.insertFeedPlace(feed);
+			}
 		}
 		feedRepository.deleteHashtag(feed.getFeedNo());
-		feedRepository.updateFeedContent(feed);
+		feedRepository.updateFeedContent(feed);	
 	}
 
 	@Override

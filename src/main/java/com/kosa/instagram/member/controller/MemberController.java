@@ -65,6 +65,7 @@ public class MemberController {
 	public String login(HttpServletRequest request, Model model) {
 		request.getAttribute("loginId");
 		request.getAttribute("loginPw");
+		model.addAttribute("message", "BLANK");
 		logger.info((String) request.getAttribute("loginId"));
 		return "member/login";
 	}
@@ -91,7 +92,7 @@ public class MemberController {
 					session.setAttribute("fileNo", member.getFileNo());
 					return "redirect:/";
 				}else {
-					model.addAttribute("message", "WRONG_PASSOWRD");
+					model.addAttribute("message", "WRONG_PASSWORD");
 				}
 			}
 		}else {
