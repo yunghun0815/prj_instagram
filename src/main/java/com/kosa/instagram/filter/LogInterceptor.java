@@ -49,7 +49,7 @@ public class LogInterceptor implements HandlerInterceptor {
 			} else {
 				log.setLogLikeCheck(0);
 			}
-		} else if(splitUri[0].equals("memberlist")) {
+		} else if(splitUri[0].equals("getmemberlist")) {
 			String keyword = (String)request.getParameter("keyword");
 			log.setLogURI("/search");
 			log.setLogKeyword(keyword);

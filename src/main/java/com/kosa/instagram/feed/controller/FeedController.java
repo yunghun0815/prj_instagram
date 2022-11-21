@@ -221,9 +221,10 @@ public class FeedController {
       feedService.decreaseLike(feedNo, memberId, request.getRequestURI());
       return feedService.feedLikeCount(feedNo);
    }
+     
   
-	@RequestMapping("/getmemberlist/{keyword}")
-	public String getMemberList(String keyword, HttpSession session, Model model) {
+	@RequestMapping("/getmemberlist")
+	public String getMemberList(@RequestParam String keyword, HttpSession session, Model model) {
 		
 		// 1. 계정 리스트를 키워드로 검색
 		List<MemberVo> memberList = feedService.searchListByKeyword(keyword);
