@@ -6,9 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <meta charset="UTF-8">
 <title>지도 테스트</title>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
@@ -72,22 +70,19 @@
    			<label class="info1_label">새 게시물 만들기</label>
    			<input type="submit" id="submit"  class="info1_btn" value="공유하기" >
    		</div>
-	
-	
-		<div class="info2"> 
-			<input multiple="multiple" type="file"  id="multiple-image" name="fileList"  class="imgbtn" required >
-			<div class="filediv">
-			</div> 
-			
-			
-			
-				
-			
-			 
-			 
-			
 		
 	
+		<div class="info2"> 
+			
+			<div class="filebox"  >
+  				<label for="multiple-image">업로드</label>
+  				<input multiple="multiple" type="file" id="multiple-image" name="fileList" class="imgbtn" required>
+			</div>
+			<div class="filediv">
+				
+			</div>
+				
+
 		</div><div class="info3">
 			<div id="img_div" class="profile_div">
 				<img class="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
@@ -119,51 +114,14 @@
     </div>
 
 </div>
-     		
-     	
+
      	</div>
-      
-   
-   
+
    </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 </div>
 
-
-
- 
-
-
-
-
-<div>
-	<h1>게시글 작성 예시</h1>
-<form id="upload" action="/writefeed" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="memberId" value="${memberId}">
-		<input type="text" name="feedContent" placeholder="내용입력"><br>
-		<input type="text" id="placeDetailInput" name="placeDetail" placeholder="place detail" readonly="readonly"><br>
-		<input type="text" id="placeTitleInput" name="placeTitle"  placeholder="place title" readonly="readonly"><br>
-		<input type="text" id="hashtag" name="hashtag" placeholder="hashtag"><button type="button" onclick="addHashtag();">해시태그 추가</button><br>
-		<input multiple="multiple" type="file"  id="multiple-image" name="fileList" required >
-		<input type="submit" id="submit" value="글 작성" >
-	</form>
-</div>
-<div id="preview"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f15e87f34a476fe8fa135f049ed1d36b&libraries=services"></script>
 <script>
@@ -375,13 +333,14 @@ $(document).ready(function(){
 	$("#multiple-image").on("change",handleImgsFilesSelect);
 	
 	console.log("클릭됨")
+	
 });
 
 function handleImgsFilesSelect(e){
 	var obj = '';
 	var files=e.target.files;
 	var fileArr=Array.prototype.slice.call(files);
-	
+	console.log(fileArr.length)
 	fileArr.forEach(function(f){
 		if(!f.type.match("image.*")){
 			alert("확장자는 이미지만!!");
@@ -389,7 +348,8 @@ function handleImgsFilesSelect(e){
 		}
 		sel_files.push(f);
 	
-		
+	
+	
 		
 		
 		var reader=new FileReader();
@@ -397,7 +357,7 @@ function handleImgsFilesSelect(e){
 			console.log('file');
 			var img_html = "<div><img src=\""+e.target.result+"\" /></div>";
 			$(".filediv").append(img_html);
-			$(".filediv").slick();
+			
 		}
 		
 		reader.readAsDataURL(f);
@@ -406,9 +366,9 @@ function handleImgsFilesSelect(e){
 	
 }
 
-
-
 	
  </script>
+ 
+ 
 </body>
 </html>
