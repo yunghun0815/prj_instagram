@@ -1,6 +1,6 @@
 package com.kosa.instagram.member.controller;
 
-
+import java.net.http.HttpRequest;
 import java.util.List;
 
 
@@ -30,6 +30,7 @@ import com.kosa.instagram.feed.service.IFeedService;
 import com.kosa.instagram.member.model.MemberVo;
 import com.kosa.instagram.member.service.IMemberService;
 
+import jdk.internal.org.jline.utils.Log;
 import lombok.val;
 
 @Controller
@@ -292,6 +293,21 @@ public class MemberController {
 		}
 		return emailCheck +"";
 	}
+	@ResponseBody
+	@RequestMapping(value ="/member/phoneNumber")
+	public String checkPhoneNumber(String phoneNumber) {
+		int phoneNumberCheck = 0;
+		System.out.println("핸드폰 확인");
+		String result = memberService.checkPhoneNumber(phoneNumber);
+		if (result !=null) {
+			phoneNumberCheck = 0;
+			System.out.println("핸드폰 중복확인");
+		}else {
+			phoneNumberCheck = 1;
+			System.out.println("동일 핸드폰 번호 없음");
+		}
+		return phoneNumberCheck+"";
+	}
 	@RequestMapping("/follow/{toId}")
 	public @ResponseBody void followMember(@PathVariable String toId, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -319,3 +335,5 @@ public class MemberController {
        return false;
     }
 }//class end
+
+

@@ -22,8 +22,6 @@ th, td {
 	border: 1px solid #444444;
 	padding: 20px;
 }
-
-
 </style>
 </head>
 
@@ -36,37 +34,38 @@ th, td {
 		<div class="card-header">
 
 			<ul class="nav nav-pills nav-fill">
-				<li class="nav-item"><a class="nav-link text-dark" href="#" aria-disabled="true">계 정</a></li>
-				<li class="nav-item"><a class="nav-link text-dark" href="#" aria-disabled="true">태 그</a></li>
+				<li class="nav-item"><a class="nav-link text-dark" href="#"
+					aria-disabled="true">계 정</a></li>
+				<li class="nav-item"><a class="nav-link text-dark" href="#"
+					aria-disabled="true">태 그</a></li>
 			</ul>
 
 		</div>
-		<div class="card-body container">
-
+		<div class="card-body">
 			<div class="row">
 				<div class="col">
-					<ul class="list-group"> 
-						<c:forEach var="member" items="${memberList}">
-							<li class="list-group-item">아이디:<a
-								href='<c:url value="/userfeed/${member.memberId}"/>'>${member.memberId}</a>
+					<c:forEach var="member" items="${memberList}">
+						<div class="row card m-1">
+							<div class="col card-body" style="height: 80px; line-height: 48px;">
+								아이디:<a href='<c:url value="/userfeed/${member.memberId}"/>'>${member.memberId}</a>
 								이름:<a href='<c:url value="/userfeed/${member.memberId}"/>'>${member.nickname}</a>
-							</li>
-						</c:forEach>
-					</ul> 
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 				<div class="col">
-					<ul class="list-group">
-						<c:forEach var="hashtag" items="${hashtagList}">
-							<li class="list-group-item"><span>해시태그: <a
+					<c:forEach var="hashtag" items="${hashtagList}">
+						<div class="row card m-1">
+							<div class="col card-body" style="height: 80px;">
+								<span>해시태그: <a
 									href='<c:url value="/filelist/${hashtag.hashtag}"/>'>${hashtag.hashtag}</a></span>
 								<br /> <span style="font-size: 8pt;">카운트: ${hashtag.cnt}</span>
-							</li>
-						</c:forEach>
-					</ul>
+							</div>
+						</div> 
+					</c:forEach>
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
