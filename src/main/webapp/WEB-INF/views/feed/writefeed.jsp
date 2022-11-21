@@ -331,9 +331,6 @@ var sel_files=[];
 
 $(document).ready(function(){
 	$("#multiple-image").on("change",handleImgsFilesSelect);
-	
-	console.log("클릭됨")
-	
 });
 
 function handleImgsFilesSelect(e){
@@ -347,11 +344,7 @@ function handleImgsFilesSelect(e){
 			return;
 		}
 		sel_files.push(f);
-	
-	
-	
-		
-		
+
 		var reader=new FileReader();
 		reader.onload=function(e){
 			console.log('file');
