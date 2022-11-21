@@ -4,13 +4,15 @@
 	
 	<select id="likeCount" resultType="map" parameterType="String">
 		select 
-			count(case when gender='male' then 1 end) as male, 
-			count(case when gender='female' then 1 end) as female
+			count(case when m2.gender='male' then 1 end) as male, 
+			count(case when m2.gender='female' then 1 end) as female
 		from feed f 
 		join member m 
 			on f.member_id = m.member_id 
 		join like_table l 
 			on f.feed_no = l.feed_no 
+        join member m2
+            on l.member_id = m2.member_id
 		where f.member_id = #{memberId}
 	</select>
 	

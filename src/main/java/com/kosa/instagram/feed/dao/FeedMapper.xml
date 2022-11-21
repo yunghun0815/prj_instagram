@@ -302,11 +302,20 @@
         where feed_no = #{feedNo}
 	</select>
 <update id="updateFeedContent" parameterType="com.kosa.instagram.feed.model.FeedVo">
+<if test="placeDetail != null">
 <![CDATA[
 	UPDATE feed
 	SET feed_content=#{feedContent}, place_detail=#{placeDetail}
 	WHERE feed_no=#{feedNo}
 ]]>
+</if>
+<if test="placeDetail == null">
+<![CDATA[
+	UPDATE feed
+	SET feed_content=#{feedContent}, place_detail=null
+	WHERE feed_no=#{feedNo}
+]]>
+</if>
 </update>
 
 <delete id="deleteHashtag" parameterType="int">

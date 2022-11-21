@@ -150,12 +150,12 @@ span{
 			<div class="total_input2">
 				<div class="file_style">
 					<c:if
-						test="${empty sessionScope.fileNo || sessionScope.fileNo==0 }">
-						<input type="hidden" name="fileNo" value=0>
-						<img class="profile-img" src="/image/profile_null.jpg">
+						test="${fileNo==0 }">
+						<img class="profile-img" id="update_profileImg" src="/image/profile_null.jpg">
+						<input type="hidden" name="fileNo" value="${fileNo }">
 					</c:if>
 					<c:if
-						test="${not empty sessionScope.fileNo || !sessionScope.fileNo ==0 }">
+						test="${fileNo != 0}">
 						<img id="update_profileImg" src="/file/${sessionScope.fileNo}">
 						<input type="hidden" name="fileNo" value="${fileNo }">
 					</c:if>
