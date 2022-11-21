@@ -121,7 +121,7 @@ var fromId = fromIdEl.val();
 var toId = toIdEl.val();
 var isFollowing = false;
 $(function(){
-	
+	console.log("from: "+fromId+"to: "+toId);
 	$.ajax({
 		type: "GET",
 		url: "/isfollowing/"+toId,

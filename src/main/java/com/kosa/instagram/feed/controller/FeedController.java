@@ -220,7 +220,7 @@ public class FeedController {
       return jsonList;
    }
 
-   @RequestMapping(value="/writeReply/{feedNo}", method=RequestMethod.POST)
+   @RequestMapping(value="/writereply/{feedNo}", method=RequestMethod.POST)
    public @ResponseBody List<ReplyVo> writeReply(@PathVariable int feedNo, @RequestParam String replyInput, HttpServletRequest request) {
       HttpSession session = request.getSession();
       String memberId = (String)session.getAttribute("memberId");
@@ -228,13 +228,13 @@ public class FeedController {
       return feedService.getReply(feedNo);
    }
    
-   @RequestMapping("/deleteReply/{feedNo}/{replyNo}")
+   @RequestMapping("/deletereply/{feedNo}/{replyNo}")
    public @ResponseBody List<ReplyVo> deleteReply(@PathVariable int feedNo, @PathVariable int replyNo) {
       feedService.deleteReply(replyNo);
       return feedService.getReply(feedNo);
    }
    
-   @RequestMapping("/increaseLike/{feedNo}")
+   @RequestMapping("/increaselike/{feedNo}")
    public @ResponseBody int increaseLike(@PathVariable int feedNo, HttpServletRequest request) {
       System.out.println("좋아요 요청");
       HttpSession session = request.getSession();
@@ -243,7 +243,7 @@ public class FeedController {
       return feedService.feedLikeCount(feedNo); //누른 후 좋아요 갯수
    }
    
-   @RequestMapping("/decreaseLike/{feedNo}")
+   @RequestMapping("/decreaselike/{feedNo}")
    public @ResponseBody int decreaseLike(@PathVariable int feedNo, HttpServletRequest request) {
       HttpSession session = request.getSession();
       String memberId = (String)session.getAttribute("memberId");
