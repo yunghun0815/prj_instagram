@@ -6,9 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <meta charset="UTF-8">
 <title>지도 테스트</title>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
@@ -84,19 +82,7 @@
 				
 			</div>
 				
-				
-			
-			 
-			 
-				
-			
-				
-			
-			 
-			 
-			
-		
-	
+
 		</div><div class="info3">
 			<div id="img_div" class="profile_div">
 				<img class="myProfileImg" src="/file/${memberProfileFileId}" onerror="this.src='/image/profile_null.jpg';">
@@ -128,34 +114,13 @@
     </div>
 
 </div>
-     		
-     	
+
      	</div>
-      
-   
-   
+
    </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 </div>
-
-
-
- 
 
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f15e87f34a476fe8fa135f049ed1d36b&libraries=services"></script>
@@ -344,8 +309,6 @@ function removeAllChildNods(el) {
     $("#placeDetailInput").val(placeDetail);
  }
  
-
-
 $("#placebtn").click(function () {
 
 	 if($("#map").css("display") == "none")
@@ -402,8 +365,6 @@ function handleImgsFilesSelect(e){
 	});
 	
 }
-
-
 
 	
  </script>

@@ -38,6 +38,7 @@ public interface IMemberService {
 	public String checkId(String memberId);
 	public String checkNickname(String nickname);
 	public String checkEmail(String email);
+	public String checkPhoneNumber(String phoneNumber);
 
 	void followMember(String fromId, String toId);
 	void unfollowMember(String fromId, String toId);
