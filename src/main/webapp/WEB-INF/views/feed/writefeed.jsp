@@ -72,14 +72,23 @@
    			<label class="info1_label">새 게시물 만들기</label>
    			<input type="submit" id="submit"  class="info1_btn" value="공유하기" >
    		</div>
-	
+		
 	
 		<div class="info2"> 
-			<input multiple="multiple" type="file"  id="multiple-image" name="fileList"  class="imgbtn" required >
+			
+			<div class="filebox"  >
+  				<label for="multiple-image">업로드</label>
+  				<input multiple="multiple" type="file" id="multiple-image" name="fileList" class="imgbtn" required>
+			</div>
 			<div class="filediv">
-			</div> 
+				
+			</div>
+				
+				
 			
-			
+			 
+			 
+				
 			
 				
 			
@@ -361,13 +370,14 @@ $(document).ready(function(){
 	$("#multiple-image").on("change",handleImgsFilesSelect);
 	
 	console.log("클릭됨")
+	
 });
 
 function handleImgsFilesSelect(e){
 	var obj = '';
 	var files=e.target.files;
 	var fileArr=Array.prototype.slice.call(files);
-	
+	console.log(fileArr.length)
 	fileArr.forEach(function(f){
 		if(!f.type.match("image.*")){
 			alert("확장자는 이미지만!!");
@@ -375,7 +385,8 @@ function handleImgsFilesSelect(e){
 		}
 		sel_files.push(f);
 	
-		
+	
+	
 		
 		
 		var reader=new FileReader();
@@ -383,7 +394,7 @@ function handleImgsFilesSelect(e){
 			console.log('file');
 			var img_html = "<div><img src=\""+e.target.result+"\" /></div>";
 			$(".filediv").append(img_html);
-			$(".filediv").slick();
+			
 		}
 		
 		reader.readAsDataURL(f);
@@ -396,5 +407,7 @@ function handleImgsFilesSelect(e){
 
 	
  </script>
+ 
+ 
 </body>
 </html>
