@@ -93,7 +93,7 @@ $(function(){
 				
 				function feedImage(){
 					let image = '';
-					
+					console.log(uploadFiles);
 					for(let i=0; i<uploadFiles.length; i++){
 						image += `<div><img class="feed-img" src="/file/`+ uploadFiles[i] +`.jpg"></div>`;
 					}

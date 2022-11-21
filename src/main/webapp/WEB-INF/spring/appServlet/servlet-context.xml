@@ -66,9 +66,9 @@
 				class="com.kosa.instagram.filter.LoginInterceptor" />
 		</interceptor>
 		<interceptor>
-			<mapping path="/increaseLike/**" />
-			<mapping path="/decreaseLike/**" />
-			<mapping path="/memberlist" /> <!-- 검색 -->
+			<mapping path="/increaselike/**" />
+			<mapping path="/decreaselike/**" />
+			<mapping path="/getmemberlist/**" /> <!-- 검색 -->
 			<beans:bean
 				class="com.kosa.instagram.filter.LogInterceptor" />
 		</interceptor>

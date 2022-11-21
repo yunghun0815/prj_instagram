@@ -44,12 +44,12 @@ public class LogInterceptor implements HandlerInterceptor {
 		if(splitUri[0].equals("increaseLike") || splitUri[0].equals("decreaseLike")) {	
 
 			log.setFeedNo(Integer.parseInt(splitUri[1]));
-			if(splitUri[0].equals("increaseLike")) {
+			if(splitUri[0].equals("increaselike")) {
 				log.setLogLikeCheck(1);
 			} else {
 				log.setLogLikeCheck(0);
 			}
-		} else if(splitUri[0].equals("memberlist")) {
+		} else if(splitUri[0].equals("getmemberlist")) {
 			String keyword = (String)request.getParameter("keyword");
 			log.setLogURI("/search");
 			log.setLogKeyword(keyword);

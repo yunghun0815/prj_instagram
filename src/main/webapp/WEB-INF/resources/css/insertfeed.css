@@ -59,8 +59,15 @@
 	width:647px;
 	height:650px;
 	border-right: 1px solid rgb(216, 216, 216);
-
+	overflow:scroll;
+	text-align: center;
+	
 }
+
+::-webkit-scrollbar {
+display: none;
+}
+
 .info3{
 	display:inline-block;
 	float:right;
@@ -175,3 +182,48 @@
     display: inline-block;
 }
 
+.filediv {
+	width:600px;
+	height:600px;
+	margin:auto;
+	
+}
+
+.filediv img{
+	width:600px;
+	height:600px;
+}
+
+.filebox label {
+	margin-top:8px;
+	
+  display: inline-block;
+  padding: .5em .75em;
+  color: #fff;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: rgb(0,149,246);
+  cursor: pointer;
+
+  border-radius: .25em;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+}
+
+
+
+.filebox label:active {
+  background-color: rgb(143, 236, 255);
+}
+
+.filebox input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

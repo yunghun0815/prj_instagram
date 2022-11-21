@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 public class MemberVo {
+
    @Pattern(regexp="^[a-zA-Z0-9]{5,15}", message="{MEMBERID_MESSAGE}")
    private String memberId;
    
@@ -22,6 +23,7 @@ public class MemberVo {
    private String nickname;
    
    @Pattern(regexp="^[a-zA-Z°¡-ÆR]{2,20}", message="ÀÌ¸§Àº ¿µ¾î ´ë/¼Ò¹®ÀÚ¿Í ÇÑ±Û·Î ÀÌ·ç¾îÁø 2ÀÚ ÀÌ»óÀ¸·Î ¼³Á¤ÇØ ÁÖ¼¼¿ä.")
+
    private String name;
 
    private String gender;
@@ -34,6 +36,7 @@ public class MemberVo {
    private Date birth;
    
    @Pattern(regexp="^[0-9]{11}", message="ÇÚµåÆù ¹øÈ£´Â'-'¸¦ Á¦¿ÜÇÑ 11°³·Î ÀÌ·ç¾îÁø ¼ıÀÚ¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä")
+
    private String phoneNumber;
    
    
