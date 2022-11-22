@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -6,9 +5,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <fmt:setBundle basename="i18n/member" />
 <!DOCTYPE html>
-
 <html>
-<meta charset="UTF-8">
 <%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
 
 <style type="text/css">
@@ -131,7 +128,7 @@ a {
 		<div class="total_main">
 			<div class="main_sign">
 				<a href="/member/login"><img src="/image/header/instagram.png" ></a>
-				<h2 class="instagram_title">친구들의 사진과 동영상을 보려면 가입하세요.</h2>
+				<h2 class="instagram_title"><fmt:message key="SIGN_UP_ANNOUNCE"/></h2>
 				<div class="input_total">
 					<div class="info_name">
 						<fmt:message key="MEMBER_ID" />
@@ -140,11 +137,11 @@ a {
 						<form:input path="memberId" required="required" class="memberId"
 							id="input_box" />
 						<br> <span id="checkId"></span>
-						<form:errors path="memberId" class="error" />
+						<form:errors path='memberId' class='error' />
 					</div>
 				</div>
 				<div class="input_total">
-					<div class="info_name">비밀번호</div>
+					<div class="info_name"><fmt:message key="MEMBER_PW" /></div>
 					<div class="input_form">
 						<form:input type="password" path="password" required="required"
 							id="input_box" />
@@ -153,7 +150,7 @@ a {
 					</div>
 				</div>
 				<div class="input_total">
-					<div class="info_name">닉네임</div>
+					<div class="info_name"><fmt:message key="MEMBER_NICKNAME" /></div>
 					<div class="input_form">
 						<form:input path="nickname" required="required" class="nickname"
 							id="input_box" />
@@ -162,7 +159,7 @@ a {
 					</div>
 				</div>
 				<div class="input_total">
-					<div class="info_name">이름</div>
+					<div class="info_name"><fmt:message key="MEMBER_NAME" /></div>
 					<div class="input_form">
 						<form:input path="name" required="required" id="input_box" />
 						<br>
@@ -170,21 +167,21 @@ a {
 					</div>
 				</div>
 				<div class="input_total">
-					<div class="info_name">성별</div>
+					<div class="info_name"><fmt:message key="MEMBER_GENDER" /></div>
 					<div class="input_form">
 						<div class="radio_box">
 							<div class="radio_style">
 								<input type="radio" name="gender" value="female"
-									checked="checked" required="required" />여자
+									checked="checked" required="required" /><fmt:message key="FEMALE" />
 							</div>
 							<div class="radio_style">
-								<input type="radio" name="gender" value="male" />남자
+								<input type="radio" name="gender" value="male" /><fmt:message key="MALE" />
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="input_total">
-					<div class="info_name">이메일</div>
+					<div class="info_name"><fmt:message key="MEMBER_EMAIL" /></div>
 					<div class="input_form">
 						<form:input path="email" class="email" required="required"
 							id="input_box" />
@@ -193,7 +190,7 @@ a {
 					</div>
 				</div>
 				<div class="input_total">
-					<div class="info_name">생년월일</div>
+					<div class="info_name"><fmt:message key="MEMBER_BIRTH" /></div>
 					<div class="input_form">
 						<form:input type="date" path="birth" required="required"
 							id="input_box" />
@@ -202,7 +199,7 @@ a {
 					</div>
 				</div>
 				<div class="input_total">
-					<div class="info_name">번호</div>
+					<div class="info_name"><fmt:message key="MEMBER_PHONE" /></div>
 					<div class="input_form">
 						<form:input path="phoneNumber" class="phoneNumber" required="required" id="input_box" />
 						<br>
@@ -212,12 +209,12 @@ a {
 					</div>
 				</div>
 				<div class="input_form">
-					<button type="submit" class="submit" id="sigup_button">가입</button>
+					<button type="submit" class="submit" id="sigup_button"><fmt:message key="SIGN_UP_SUBMIT" /></button>
 				</div>
 			</div>
 			<div class="user_check">
 				<p class="yes_user">
-					계정이 있으신가요? <a href="/member/login">로그인</a>
+					<fmt:message key="HAVE_ACCOUNT" /> <a href="/member/login"><fmt:message key="LOGIN" /></a>
 				</p>
 			</div>
 		</div>

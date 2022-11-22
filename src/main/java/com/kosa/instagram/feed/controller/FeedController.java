@@ -80,7 +80,7 @@ public class FeedController {
 	}
 	
 	@RequestMapping(value="/writefeed/{memberId}",method=RequestMethod.GET)
-	public String insertFeed(FileVo file,@PathVariable String memberId,Model model ) {
+	public String writefeed(FileVo file,@PathVariable String memberId,Model model ) {
 		model.addAttribute("memberId",memberId);
 		MemberVo member = memberService.selectMember(memberId);
 		model.addAttribute("memberProfileFileId", member.getFileNo());
@@ -117,28 +117,22 @@ public class FeedController {
 		
 		int seqnum=(feedService.selectSeqNum())-1;
 		System.out.println(hashtag);
-		if(hashtag!=null) {
+		if(hashtag!=null) { //해시태그가 있을 때
 			for(String hash: hashtag) {
-				feedService.insertFeedHash(seqnum, hash);
+				feedService.insertFeedHash(seqnum, hash); 
 				System.out.println(hash);
 			}			
 		}
 		
 		try {
 		for(MultipartFile mf: fileList) {
-			
+
 			file.setFeedNo(seqnum);
 			file.setFileName(mf.getOriginalFilename());
 			file.setFileSize(mf.getSize());
 			file.setFileType(mf.getContentType());
 			file.setFileData(mf.getBytes());
 			file.setMemberId(memberId);
-			
-			System.out.println(memberId);
-			System.out.println("시퀀스num: "+seqnum);
-			System.out.println("파일이름: " +mf.getOriginalFilename());
-			System.out.println("파일사이즈: "+mf.getSize());
-			System.out.println("파일타입: "+mf.getContentType());
 			
 			feedService.insertFeedData(file);  //피드에 등록한 사진  db에 insert
 			System.out.println("성공>o<");
