@@ -99,7 +99,7 @@ body{
 	font-size: 14px;
 }
 .hashtag{
-    color: #00376B;
+    color: rgb(0 97 229) !important;
 }
 .reply-list{
 	height: 460px;
