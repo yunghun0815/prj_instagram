@@ -119,8 +119,10 @@ public class FeedController {
 		System.out.println(hashtag);
 		if(hashtag!=null) { //해시태그가 있을 때
 			for(String hash: hashtag) {
-				feedService.insertFeedHash(seqnum, hash); 
-				System.out.println(hash);
+				if(hash!=null && !hash.equals("")) {
+					feedService.insertFeedHash(seqnum, hash); 
+					System.out.println(hash);	
+				}
 			}			
 		}
 		
@@ -298,7 +300,9 @@ public class FeedController {
 		feedService.updateFeed(feed);
 		if(hashtag!=null) {
 		for(String hash: hashtag) {
-			feedService.insertFeedHash(feedNo, hash);
+			if(hash!=null && !hash.equals("")) {
+				feedService.insertFeedHash(feedNo, hash);				
+			}
 		}
 		}
 		

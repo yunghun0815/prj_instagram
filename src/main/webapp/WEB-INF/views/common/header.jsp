@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setBundle basename="i18n/main" />
 <link rel="stylesheet" type="text/css" href="/css/common/common.css">
 <meta charset="UTF-8">
 <header>
@@ -13,7 +15,7 @@
 			</a>
 			<div> <!-- 검색바 -->
 				<form action="/getmemberlist" method="post">
-					<input class="search-bar" type="text" name="keyword" placeholder="검색">
+					<input class="search-bar" type="text" name="keyword" placeholder="<fmt:message key='SEARCH'/> ">
 					<input type="submit" style="display: none;">
 				</form>
 			</div>
