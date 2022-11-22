@@ -53,8 +53,6 @@ public class MemberController {
 		if (result.hasErrors()) {
 			return "member/form";
 		}
-		System.out.println("CONTROLLER");
-		System.out.println(member.toString());
 		memberService.insertMember(member);
 		session.invalidate();
 		return "redirect:/	";

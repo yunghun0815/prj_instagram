@@ -33,7 +33,6 @@ $(function(){
 					
 					if(reply.length > 0){
 						for(let k=0; k<reply.length; k++){
-							console.log(reply[k]);
 							let deleteSpan = `<span id="replyDelete" onclick="replyDelete(this);">삭제</span>`;
 							
 							replyText += `
@@ -163,6 +162,7 @@ $(function(){
 	    		url:"/mainfeed/"+pageNo,
 	    		type: "GET", 
 	    		success: function(result){
+	    			console.log(result);
 	    			if(result.length >0){
 		    			for(let i=0; i<result.length; i++){
 		    				let feed = result[i]['feed']['feed'];
@@ -213,7 +213,6 @@ $(function(){
 		    					let heart = '';
 		    					
 		    					if(feed['likeCheck'] == 0){
-		    						console.log(feed['likeCheck']);
 		    						heart = `<img id="heart_blank" src="/image/heart.png" onclick="like(this)">
 		    						<img id="heart_color" src="/image/heart_color.png" style="display: none" onclick="likeCancel(this)">
 		    						`;
@@ -225,56 +224,65 @@ $(function(){
 		    					}
 		    					return heart;
 		    				}
+		    				function feedImage(){
+		    					let image = '';
+		    					
+		    					for(let i=0; i<uploadFiles.length; i++){
+		    						image += `<div><img class="feed-img" src="/file/`+ uploadFiles[i] +`.jpg"></div>`;
+		    					}
+		    					return image;
+		    				}
 		    				
-		    				let view= `<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
-										<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
-											<div class="feed-header">
-												<a href="userfeed/`+member['memberId']+`">
-												<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
-												</a>
-												<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
-													<a href="userfeed/`+member['memberId']+`"><span>`+ member['nickname'] +`</span></a><br>
-													<a href="#">
-														<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map" onclick="mapLoading(this)">`+ `${feed['placeTitle'] == null ? "" : feed['placeTitle']}` +`</span>									
-														<input type="hidden" value="`+ feed['placeDetail'] +`">
-													</a>
-												</p>
-											</div>
-										    <div class="single-item">
-											    ${feedImage()}	
-											</div>			
-										</div>
-										<div class="feed-desc-box">
-											<ol>
-												<li><a href="userfeed/`+member['memberId']+`"><span class="bold">`+ member['nickname'] +`</span></a>
-												    <span>`+ feed['feedContent'] +`</span><br>
-												    <span class="hashtag"> ${hashtagList()} </span>
-												</li>
-												<li>
-												    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
-													${likeImage()}
-													<img src="/image/speech.png" onclick="replyFocus(this)">
-													<img src="/image/plane.png">
-												</li>
-												<li>
-													<span class="bold">좋아요<span id="like_count">`+ feed['likeCount'] +`</span>개</span>	
-													<span class="upload-date">`+ feed['uploadDate'] +`</span>	
-												</li>
-												<li class="reply-list">
-													${replyList()}
-												</li>
-											</ol>
-											<div><!-- 댓글달기 -->
-												<form id="replyForm" action="/writereply/`+feed['feedNo']+`" method="post" onsubmit="return false">
-													<img src="/image/face.png">
-													<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
-													<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
-													<input type="hidden" value="/writereply/`+feed['feedNo']+`" id="replyWriteUrl">
-												</form> 
-											</div>
-										</div>
-									</li>
-								`;
+		    				let view= `
+		    					<li class="feed-li flex"> <!-- DB에서 값 받아서 반복해야 함 --> 
+		    					<div class="feed-img-box"><!-- 게시물 상단바 , 프로필사진, 아이디 --> 
+		    						<div class="feed-header">
+		    							<a href="userfeed/`+member['memberId']+`">
+		    							<img class="profile-img " src="/file/`+ member['fileNo'] +`" onerror="this.src='/image/profile_null.jpg';">
+		    							</a>
+		    							<p class=`+ `${feed['placeDetail'] == null ? "nullPlace" : ""}` +`>
+		    								<a href="userfeed/`+member['memberId']+`"><span>`+ member['nickname'] +`</span></a><br>
+		    								<a href="#">
+		    									<span id="placeTitle" class="place"  data-bs-toggle="modal" data-bs-target="#modal-map" onclick="mapLoading(this)">`+ `${feed['placeTitle'] == null ? "" : feed['placeTitle']}` +`</span>									
+		    									<input type="hidden" value="`+ feed['placeDetail'] +`">
+		    								</a>
+		    							</p>
+		    						</div>
+		    					    <div class="single-item">
+		    						    ${feedImage()}	
+		    						</div>			
+		    					</div>
+		    					<div class="feed-desc-box">
+		    						<ol>
+		    							<li><a href="userfeed/`+member['memberId']+`"><span class="bold">`+ member['nickname'] +`</span></a>
+		    							    <span>`+ feed['feedContent'] +`</span><br>
+		    							    <span class="hashtag"> ${hashtagList()} </span>
+		    							</li>
+		    							<li>
+		    							    <input type="hidden" id="likeFeedNo" value="`+ feed['feedNo'] +`">
+		    								${likeImage()}
+		    								<img src="/image/speech.png" onclick="replyFocus(this)">
+		    								<img src="/image/plane.png">
+		    							</li>
+		    							<li>
+		    								<span class="bold">좋아요<span id="like_count">`+ feed['likeCount'] +`</span>개</span>	
+		    								<span class="upload-date">`+ feed['uploadDate'] +`</span>	
+		    							</li>
+		    							<li class="reply-list">
+		    								${replyList()}
+		    							</li>
+		    						</ol>
+		    						<div><!-- 댓글달기 -->
+		    							<form id="replyForm" action="/writereply/`+feed['feedNo']+`" method="post" onsubmit="return false">
+		    								<img src="/image/face.png">
+		    								<input id="replyInput" type="text" name="replyInput" placeholder="댓글 달기...">
+		    								<input type="submit" value="게시" class="replySubmit" onclick="replySubmit(this)">
+		    								<input type="hidden" value="/writereply/`+feed['feedNo']+`" id="replyWriteUrl">
+		    							</form> 
+		    						</div>
+		    					</div>
+		    				</li>
+		    			`;
 		    				
 		    				$(".feed-ul").append(view);
 		    			}
@@ -418,12 +426,10 @@ function mapLoading(param){
 		var likeCount = parseInt(object.parent().next().find($("span #like_count")).html());
 		//feedNo
 		var likeFeedNo = object.prev().val();
-		console.log(likeFeedNo);
 		$.ajax({
 			url: "/increaselike/" + likeFeedNo,
 			type: "GET",
 			success: function(result){
-				console.log('test');
 				likeCountHtml.html(result);
 			}
 		});
