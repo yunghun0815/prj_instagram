@@ -128,18 +128,14 @@ $(function(){
 		dataType: "json",
 		success: function(result, status, xhr){
 			isFollowing = result;
-			console.log("isFollowing: "+isFollowing);
 			const btn = document.getElementById('btn');
 			if(isFollowing == true){
-				console.log("if문");
 				btn.innerText = '언팔로우';
 			} else {
-				console.log("else문");
 				btn.innerText = '팔로우';
 			}
 		}
 	})
-	
 })
 	function changeFollowing(){
 		const btn = document.getElementById('btn');
