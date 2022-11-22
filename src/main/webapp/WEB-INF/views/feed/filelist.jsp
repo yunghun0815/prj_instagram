@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>해시태그눌렀을때나올피드</title>
+<title>해시태그 클릭 시 나오는 피드</title>
 
 <jsp:include page="../common/header.jsp"></jsp:include>
 
