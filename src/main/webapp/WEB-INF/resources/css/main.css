@@ -10,7 +10,7 @@ body{
 	margin: 0 auto;
 }
 .feed-li{
-	height: 650px;
+	height: 578px;
 	border: 1px solid rgb(219, 219, 219);
 	border-radius: 8px;
 	margin-top:30px;
@@ -43,7 +43,7 @@ body{
 }
 .feed-img{
 	width: 450px;
-	height: 600px;
+	height: 522px;
 }
 
 .feed-desc-box{
@@ -51,7 +51,7 @@ body{
 }
 .feed-desc-box ol{
 	padding: 10px 0 0 10px;
-    height: 600px;
+    height: 527px;
 }
 .feed-desc-box li:nth-child(1){
 	margin-bottom: 10px;	
@@ -168,7 +168,7 @@ body{
 .prevBtn{
 	position: absolute;
     z-index: 999;
-    top: 290px;
+    top: 255px;
     background: none;
     width: 30px;
     height: 30px;
@@ -184,7 +184,7 @@ body{
 .nextBtn{
     position: absolute;
     z-index: 999;
-    top: 290px;
+    top: 255px;
     left: 415px;
     background: none;
     width: 30px;
