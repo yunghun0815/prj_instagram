@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setBundle basename="i18n/main"/>
 <link rel="stylesheet" type="text/css" href="/css/log/log.css">
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript" src="/js/log/log.js" ></script>
@@ -15,43 +17,43 @@
 	<section class="main">
 		<div class="log-box flex">
 			<ul class="log-nav">
-				<li class="log-nav-title">전체</li>
-				<li id="menuSearchRanking" class="log-nav-content" onclick="searchRanking(this)">실시간 검색순위</li>
-				<li class="log-nav-title">내 피드</li>
-				<li class="log-nav-content" onclick="likeCount(this)">날짜별 좋아요 수 조회</li>
+				<li class="log-nav-title"><fmt:message key="COMMON"/></li>
+				<li id="menuSearchRanking" class="log-nav-content" onclick="searchRanking(this)"><fmt:message key="REALTIME"/></li>
+				<li class="log-nav-title"><fmt:message key="MYFEED"/></li>
+				<li class="log-nav-content" onclick="likeCount(this)"><fmt:message key="LIKES_DATE"/></li>
 				<!-- <li class="log-nav-content" onclick="visitorCount(this)">날짜별 방문자 수 조회</li> -->
-				<li class="log-nav-content" onclick="genderRatio(this)">좋아요 성비 조회</li>
+				<li class="log-nav-content" onclick="genderRatio(this)"><fmt:message key="LIKES_GENDER"/></li>
 			</ul>
 			<div class="chart-box">
 				<div id="searchRanking" class="chart">
-					<h1>연령대별 검색어 1위</h1>	
+					<h1><fmt:message key="REALTIME_TITLE"/></h1>	
 					<table id ="searchTable">
 						<tr>
-							<th>연령대</th>
-							<th>키워드</th>
+							<th><fmt:message key="AGE_GROUP"/></th>
+							<th><fmt:message key="KEYWORD"/></th>
 						</tr>
 						<tr>
-							<td>10대</td>
+							<td><fmt:message key="AGE_10"/></td>
 							<td class="10">-</td>
 						</tr>
 						<tr>
-							<td>20대</td>
+							<td><fmt:message key="AGE_20"/></td>
 							<td class="20">-</td>
 						</tr>
 						<tr>
-							<td>30대</td>
+							<td><fmt:message key="AGE_30"/></td>
 							<td class="30">-</td>
 						</tr>
 						<tr>
-							<td>40대</td>
+							<td><fmt:message key="AGE_40"/></td>
 							<td class="40">-</td>
 						</tr>
 						<tr>
-							<td>50대</td>
+							<td><fmt:message key="AGE_50"/></td>
 							<td class="50">-</td>
 						</tr>
 						<tr>
-							<td>60대</td>
+							<td><fmt:message key="AGE_60"/></td>
 							<td class="60">-</td>
 						</tr>
 					</table>

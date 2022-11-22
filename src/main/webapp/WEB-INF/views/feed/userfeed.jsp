@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setBundle basename="i18n/main"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +26,7 @@
 					<div style="display: inline-block; margin-top:30px">
 					<label id="nickname">${nickname }</label>
 					<c:if test="${sessionScope.memberId eq memberId}">
-						<span id="updateprofile"><a href='<c:url value="/member/update"/>'>프로필 편집</a></span>
+						<span id="updateprofile"><a href='<c:url value="/member/update"/>'><fmt:message key="EDIT_PROFILE"/></a></span>
 						
 					</c:if>
 					<c:if test="${sessionScope.memberId ne memberId}">
@@ -33,10 +35,10 @@
 					</div>
 				</div>
 				<div id="info2_div">
-					<label style="margin-right:10px">게시글 수 </label><label style="font-family:'segoe'; font-weight:700"> ${contentCount } </label>
-					<label>팔로워 수 <button class="followsbtn" id="followerbtn">${followerCount}</button></label>
+					<label style="margin-right:10px"><fmt:message key="POSTS"/></label><label style="font-family:'segoe'; font-weight:700"> ${contentCount } </label>
+					<label><fmt:message key="FOLLOWERS"/>&nbsp;<button class="followsbtn" id="followerbtn">${followerCount}</button></label>
 						
-					<label>팔로우 수 <button class="followsbtn" id="followbtn">${followCount }</button></label> <br>
+					<label><fmt:message key="FOLLOWING"/> <button class="followsbtn" id="followbtn">${followCount }</button></label> <br>
 					<label style="font-family:'segoe'; font-weight:400; font-size:17px;">${name }</label><br>
 				</div>
 		</div> <!-- info_div-end -->

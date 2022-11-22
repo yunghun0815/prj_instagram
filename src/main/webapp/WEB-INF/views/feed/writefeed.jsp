@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<fmt:setBundle basename="i18n/main"/>
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <meta charset="UTF-8">
-<title>지도 테스트</title>
+<title>Instagram</title>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
@@ -67,15 +69,15 @@
 <input type="hidden" value="${memberId}" id="toId">
 		<input type="hidden" value="${sessionScope.memberId}" id="fromId">
 		<div class="info1">
-   			<label class="info1_label">새 게시물 만들기</label>
-   			<input type="submit" id="submit"  class="info1_btn" value="공유하기" >
+   			<label class="info1_label"><fmt:message key="NEW_POST"/></label>
+   			<input type="submit" id="submit"  class="info1_btn" value="<fmt:message key='REGISTER'/>" >
    		</div>
 		
 	
 		<div class="info2"> 
 			
 			<div class="filebox"  >
-  				<label for="multiple-image">업로드</label>
+  				<label for="multiple-image"><fmt:message key="UPLOAD"/></label>
   				<input multiple="multiple" type="file" id="multiple-image" name="fileList" class="imgbtn" required>
 			</div>
 			<div class="filediv">
@@ -91,7 +93,7 @@
 			
 			
       		<input type="hidden" name="memberId" value="${memberId}">
-      		<textarea class="content" name="feedContent" spellcheck="false"  placeholder="문구입력..."></textarea><br>
+      		<textarea class="content" name="feedContent" spellcheck="false"  placeholder="<fmt:message key='CAPTION'/>"></textarea><br>
       		<div id="hashtag" style="border-top:1px solid rgb(216, 216, 216); margin-bottom:5px;"></div><button type="button" class="addhash" onclick="addHashtag();">add</button><br>
       		<input type="text" id="placeTitleInput" class="placetitle" name="placeTitle"  placeholder="place title" readonly="readonly"><button type="button" id="placebtn" class="placebtn"><img src="../image/location.png" width="30px" height="30px"></button>
       		<input type="hidden" id="placeDetailInput" name="placeDetail" placeholder="place detail" readonly="readonly"><br>
@@ -103,8 +105,8 @@
         <div class="option">
             <div>
                
-                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
-                    <button type="button" onclick="searchPlaces();" >검색하기</button> 
+                    <fmt:message key="KEYWORD"/> : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
+                    <button type="button" onclick="searchPlaces();" ><fmt:message key="SEARCH"/></button> 
                 
             </div>
         </div>

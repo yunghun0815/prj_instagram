@@ -3,8 +3,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<fmt:setBundle basename="i18n/main"/>
 <!DOCTYPE html>
 <html>
+<title>Instagram</title>
 <style type="text/css">
 .error {
 	color: red
@@ -169,41 +171,40 @@ span{
 					</div>
 				</div>
 				<div class="input_file">
-					<label for="chooseFile">프로필 사진 바꾸기</label>
+					<label for="chooseFile"><fmt:message key="CHANGE_PROFILE"/></label>
 					<!--accept 속성은 image/*하면 image 파일만 선택되도록 만들 수 있다-->
 					<input type="file" name="file" id="chooseFile" accept="image/*">
 				</div>
 			</div>
 			<div class="total_input">
-				<div class="update_name">닉네임</div>
+				<div class="update_name"><fmt:message key="NICKNAME"/></div>
 				<div class="update_input">
 					<form:input type="text" path="nickname" value="${member.nickname }"
 						class="input_box" />
-					<p>회원님의 알려진 별명을 사용하여 회원님의 계정을 찾을 수 있도록
-						도와주세요.</p>
+					<p><fmt:message key="CHANGE_NICKNAME"/></p>
 					<form:errors path="nickname" class="error" />
 				</div>
 			</div>
 			<div class="total_input">
-				<div class="update_name">비밀번호</div>
+				<div class="update_name"><fmt:message key="PW"/></div>
 				<div class="update_input">
 					<form:input type="password" path="password"
 						value="${member.password }" required="required" class="input_box" />
-					<p>비밀번호를 변경하거나 재설정하면 모든 기기에서 로그아웃됩니다.</p>
+					<p><fmt:message key="CHANGE_PW"/></p>
 					<form:errors path="password" class="error" />
 				</div>
 			</div>
 			<div class="total_input">
-				<div class="update_name">전화번호</div>
+				<div class="update_name"><fmt:message key="PHONE"/></div>
 				<div class="update_input">
 					<form:input type="text" path="phoneNumber"
 						value="${member.phoneNumber }" class="input_box" />
-					<p>번호 변경 시 번호 재사용이 불가능 합니다. 신중하게 변경해 주세요.</p>
+					<p><fmt:message key="CHANGE_PHONE"/></p>
 					<form:errors path="phoneNumber" class="error" />
 				</div>
 			</div>
-				<input type="submit" class="button_submit" value="제출">
-				<a class="member-delete" href="/member/delete">회원탈퇴</a>
+				<input type="submit" class="button_submit" value="<fmt:message key='SUBMIT'/> ">
+				<a class="member-delete" href="/member/delete"><fmt:message key="EXIT_MEMBER"/></a>
 		</div>
 	</form:form>
 </body>
