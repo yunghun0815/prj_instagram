@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -96,7 +98,7 @@ public class FeedController {
 		String placeDetail=req.getParameter("placeDetail");
 		
 		String memberId=req.getParameter("memberId");
-		feed.setFeedContent(feedContent);
+		feed.setFeedContent(Jsoup.clean(feedContent, Whitelist.basic()));
 		feed.setPlaceTitle(placeTitle);
 		feed.setPlaceDetail(placeDetail);
 		feed.setMemberId(memberId);
@@ -120,7 +122,7 @@ public class FeedController {
 		if(hashtag!=null) { //해시태그가 있을 때
 			for(String hash: hashtag) {
 				if(hash!=null && !hash.equals("")) {
-					feedService.insertFeedHash(seqnum, hash); 
+					feedService.insertFeedHash(seqnum, Jsoup.clean(hash, Whitelist.basic())); 
 					System.out.println(hash);	
 				}
 			}			
@@ -191,7 +193,7 @@ public class FeedController {
    public @ResponseBody List<ReplyVo> writeReply(@PathVariable int feedNo, @RequestParam String replyInput, HttpServletRequest request) {
       HttpSession session = request.getSession();
       String memberId = (String)session.getAttribute("memberId");
-      feedService.writeReply(feedNo, memberId, replyInput);
+      feedService.writeReply(feedNo, memberId, Jsoup.clean(replyInput, Whitelist.basic()));
       return feedService.getReply(feedNo);
    }
    
@@ -287,7 +289,7 @@ public class FeedController {
 		String memberId=req.getParameter("memberId");
 
 		feed.setFeedNo(feedNo);
-		feed.setFeedContent(feedContent);
+		feed.setFeedContent(Jsoup.clean(feedContent, Whitelist.basic()));
 		feed.setPlaceTitle(placeTitle);
 		feed.setPlaceDetail(placeDetail);
 		feed.setMemberId(memberId);
